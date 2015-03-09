@@ -1,0 +1,112 @@
+/*@group general style
+-------------------------------------------------------------------------------------------------------------------*/
+html{
+	height:100%;
+}
+ul,ol{
+	list-style: none;
+}
+/***reset bootstrap**/
+a{
+	display:block;
+}
+a:hover,a:focus{
+	text-decoration: none;
+	cursor: pointer;
+}
+input[disabled], select[disabled], textarea[disabled], input[readonly], select[readonly], textarea[readonly]{
+	background-color: #fff;
+}
+input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{
+    border-radius:0px;
+    height:19px;
+}
+textarea{
+	border-radius:0px;
+}
+input, button, select, textarea{
+	font-family: Microsoft YaHei,Arial,Helvetica,sans-serif;
+}
+[class^="icon-"], [class*=" icon-"]{
+	 vertical-align: -1px;
+}
+.radio input[type="radio"], .checkbox input[type="checkbox"] {
+    margin-left: -20px;
+    vertical-align: -1px;
+}
+input[type="text"].wider{
+	width: 640px;
+}
+.ui-draggable-dragging{
+	z-index:9999;
+}
+.btn:hover, .btn:focus{
+	background-position: 0 0;
+}
+img{
+	max-width:none;
+}
+/*button.btn, input.btn[type="submit"]{    
+    border-radius:0px;
+    background-image:none;
+    box-shadow:none;
+    border: 1px solid #D6D6D6;
+}
+.btn-group > .btn + .dropdown-toggle{
+	box-shadow:none;
+	background-color:#fff;
+}*/
+
+
+
+
+/****body style*****/
+body {
+    color: #333333;
+    font-family: Microsoft YaHei,Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+    height:100%;
+    min-width:1280px;
+    max-width:1920px;
+    width:100%;
+}
+
+/********************util**************************/
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:after,.campaign-diagram .diagram:after {
+  display: block;
+  height: 0;
+  content: "";
+  clear:both;
+}
+.right{
+	float:right;
+}
+.left{
+	float:left;
+}
+.center {
+	margin: 0 auto;
+    max-width: 940px;
+    width: 90%;
+}
+.text-hidden{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.required{
+	font-size: 20px;
+	color:red;
+	margin-right: 6px;
+    vertical-align: -5px;
+}
+.inline{
+	display:inline-block;
+}
+.error{
+	color:red;
+}

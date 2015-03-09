@@ -1,0 +1,16 @@
+.business_area_modal{
+	height:500px;
+}
+.business_area_modal .modal-body{
+	height: 392px;
+	overflow-y: auto;
+}
+.hot_circle_list{
+	width: 283px;
+}
+span.space{
+	width: 42px;
+}
+.selected-circles-list-container ul{
+	margin-left:0px;
+}

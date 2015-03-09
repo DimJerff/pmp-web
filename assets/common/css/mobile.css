@@ -1,0 +1,55 @@
+#header ul{
+	display:none;
+}
+.tel_footer_nav {
+	display:block;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    width: 100%;
+}
+.tel_footer_nav a {
+    color: #2384C4;
+    font-size: 14px;
+    font-weight: bold;
+    display:inline-block;
+}
+.login-inner-container{ 
+	width:100%;
+}
+.login-banner{
+	float: none;
+	margin:0 auto;
+}
+.login{
+	width:100%;
+	height:auto;
+	float:none;
+	margin-right:0;
+	margin-top:0px;
+	background-color:#EFEFF1;
+    padding: 70px 0 10px 0;
+    
+    text-align: center;
+    background-position:50% top;
+}
+.login_form{
+	width:300px;
+	margin:0px auto;
+}
+.login-container{
+	background:none;
+	padding-top:70px;
+}
+.login-banner{
+    display:none;
+}
+.tel-login-banner{
+	display:block;
+}
+.intro1,.intro2,.intro3,.customer-list{
+	  display:none;
+}
+.tel_sec{
+	  display:block;
+}

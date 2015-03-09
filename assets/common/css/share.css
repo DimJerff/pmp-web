@@ -1,0 +1,88 @@
+.share_library .desp{
+	background: url("../img/share_desp.png") no-repeat scroll left top transparent;
+	height:73px;
+	line-height: 58px;
+	font-size:16px;
+	padding-left:130px;
+	margin: 20px 0 97px 0;
+}
+.share_library .share_type{
+	margin:0;
+	margin-bottom:150px;
+}
+.share_library .share_type li{
+	float:left;
+	display:inline-block;
+	width:20%;
+	padding:0 20% 0 0;
+}
+.share_library .share_type li.last{
+	padding-right:0;
+}
+.share_library .share_type li:last-child{
+	padding-right:0;
+}
+.share_library .share_type li h5{
+	border-bottom: 1px solid #CBCBCB;
+    font-size: 16px;
+    margin: 0 auto 12px;
+    padding-bottom: 24px;
+}
+.share_library .share_type li button{
+	margin-top: 14px;
+	display:block;
+	background:none;
+	color:#fff;
+	text-shadow:none;
+	box-shadow:none;
+	border:none;
+}
+.share_library .share_type li button.btn-light-green{
+	background-color:#A9CD05;
+}
+.share_library .share_type li button.btn-light-green:hover{
+	background-color:#A2BF1B;
+}
+.share_library .share_type li button.btn-light-blue{
+	background-color:#75C6F0;
+}
+.share_library .share_type li button.btn-light-blue:hover{
+	background-color:#54B0DF;
+}
+.share_library .share_type li button.btn-orange{
+	background-color:#FAA832;
+}
+.share_library .share_type li button.btn-orange:hover{
+	background-color:#E99A28;
+}
+.info{
+	margin:10px 0;
+}
+.selecte_project .btn{
+	padding:4px 0 0 0 ;
+}
+.selecte_project .current-selected-creative{
+	margin:0;
+}
+.selected-creative-list span {
+    color: #999999;
+}
+.idfa_msg{
+	margin-bottom:30px;
+}
+.share_library .icon-ios{
+	vertical-align: -5px;
+}
+.data-range .dropdown-menu{
+	/*width:85px;*/
+	min-width: 85px;
+}
+.data-range .btn-add{
+	display:inline-block;
+}
+.data-range .control-sets{
+	margin:10px 0 0 21px;
+}
+.data-range input[type="text"]{
+	width:82px;
+}

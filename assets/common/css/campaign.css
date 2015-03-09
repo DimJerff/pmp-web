@@ -1,0 +1,502 @@
+/************************campaign-list.html***************************/
+.campaign-info h5 {
+	margin: 10px 0;
+	color: #333;
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 20px;
+}
+.campaign-info .part {
+	float: left;
+	letter-spacing: 1px;
+	line-height: 30px;
+	color: #656565;
+	font-size: 15px;
+}
+
+.campaign-info .part:first-child {
+	width: 20%;
+	min-width: 100px;
+	max-width: 200px;
+}
+.campaign-info .part.last {
+	margin-left: 91px;
+}
+.campaign-info .part span {
+	color: #333;
+}
+.campaign-info .part a {
+	width: 16px;
+	height: 16px;
+	background: url(../img/campaign-detail-icon.png) left top no-repeat;
+	display: inline-block;
+	margin-left: 10px;
+	vertical-align: -3px;
+}
+.campaign-info .part .on {
+	background-position: -1px -247px;
+}
+.campaign-info .part .off {
+	background-position: -35px -248px;
+}
+.campaign-diagram {
+	margin: 20px 0;
+	padding: 20px 0;
+	position: relative;
+}
+.campaign-diagram .diagram {
+	float: left;
+	min-width: 220px;
+	width: 25%;
+}
+.campaign-diagram .diagram-right {
+	float: right;
+	width: auto;
+	min-width: 0px;
+}
+.campaign-diagram .level-2 {
+	position: absolute;
+	width: 42%;
+	height: 50px;
+	left: 31%;
+}
+.campaign-diagram .diagram:first-child {
+	margin-left: 0px;
+}
+.campaign-diagram .diagram:last-child {
+	margin-right: 0px;
+}
+
+.campaign-diagram .diagram-body {
+	display: inline-block;
+	vertical-align: -18px;
+	font-size: 24px;
+	color: #656565;
+	font-weight: 500;
+	margin-left: 5px;
+}
+.campaign-diagram .diagram-body h4 {
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 14px;
+	margin: 0 0 12px;
+}
+
+.fieldset-header{
+	background-color:#f1f1f1;
+	border-top: 1px solid #CBCBCB;
+	padding: 5px 20px;
+	margin-bottom: 25px;
+	font-weight:bold;
+}
+span.info{
+	color:#ccc;
+	margin-left:20px;
+	font-size: 14px;
+}
+.creative-carousel .dropdown-menu,.bidding-strategy .dropdown-menu{
+	min-width: 96px;
+}
+.rate-limit input[type="text"],.bidding-strategy input[type="text"]{
+	width:50px;
+}
+.rate-limit .dropdown-menu{
+	min-width: 96px;
+}
+.rate-limit .controls > div{
+	margin-bottom:10px;
+}
+.bidding-strategy .controls > div{
+	margin-bottom:10px;
+}
+.bidding-strategy .select-box{
+	 margin: 0 16px;
+}
+
+.bidding-strategy .price{
+	display:inline-block;
+}
+.campaign-form .settings a{
+	padding-left:0px;
+}
+.campaign-form .settings i{
+	margin-right:10px;
+}
+.settings table{
+	width: auto;
+}
+.settings table tbody{
+  background-color: #fff;
+  border-bottom: 3px solid #e5e5e5;
+  margin: 0px;
+}
+.settings table thead {
+  background-color: #67c2ef;
+  border-top: 3px solid #e5e5e5;
+  font-weight: bolder;
+  font-size: 12pt;
+  color: #fff;
+}
+.settings table thead th{
+    text-align:center;
+}
+.settings table td{
+  text-align:center; 
+  border-top: 2px dotted #e5e5e5; 
+}
+.selected-audience-targeting-list{
+	min-width: 1044px;
+	max-width: 1170px;
+	width:100%;
+}
+.selected-audience-targeting-list>div>div{
+	float:left;
+	background-color:#F8F8F8;
+	padding: 10px 20px 10px 47px;
+	position: relative;
+	max-width: 252px;
+	margin-top: 16px;
+}
+.selected-audience-targeting-list>div>div>div{
+	left: 18px;
+    position: absolute;
+    top: 40%;
+    font-size:16px;
+}
+.selected-audience-targeting-list ul{
+	float:left;
+	margin:0;
+}
+.campaign-form .settings .selected-audience-targeting-list i{
+	background: url("../img/icon.png") no-repeat scroll -8px -745px transparent;
+	width:37px;
+	height:31px;
+	margin:0  17px;
+	display:block;
+	float:left;
+	margin-top: 16px;
+}
+.campaign-form .campaign-table .table {
+    width: 90%;
+}
+.campaign-table-header .btn-group.customrize.history-creative{
+	border-radius: 4px 4px 4px 4px;
+    margin-left: 0px;
+}
+.campaign-table-header .customrize.history-creative .btn,.campaign-table-header .customrize.history-creative .btn:hover{
+	color:#fff;
+	/*height:31px;*/
+	background-color:#84AF25;
+	background-image: -webkit-linear-gradient(bottom, #84af25, #a0e11f);
+	background-image: -moz-linear-gradient(bottom, #84af25, #a0e11f);
+	background-image: -o-linear-gradient(bottom, #84af25, #a0e11f);
+	background-image: linear-gradient(to top, #84af25, #a0e11f);
+
+}
+.campaign-table-header .customrize.history-creative .btn:hover{
+	background-position: 0 0;
+}
+.progress{
+	width:60%;
+	display:inline-block;
+	margin: 0;
+	vertical-align: -6px;
+}
+.campaign-form .campaign-table{
+	margin-top:25px;
+}
+.campaign-table-header .btn.customrize i {
+    margin-right: 5px;
+}
+.campaign-form .campaign-table button{
+	display:inline-block;
+}
+.rules{
+	margin-top:5px;
+}
+.rules a{
+	display:inline-block;
+}
+div.error-msg,.campaign-form .campaign-table .error-msg{
+	color:#FF3858;
+}
+div.error-msg{
+	float:left;
+}
+.dbclick{
+	background: url(../img/brand_icon.png) left -478px no-repeat;
+	display: inline-block;
+    height: 21px;
+    width: 71px;
+    margin-left:20px;
+    vertical-align: -10px;
+}
+.mz{
+	background: url(../img/brand_icon.png) left -104px no-repeat;
+	display: inline-block;
+    height: 35px;
+    width: 49px;
+    margin-left:20px;
+    vertical-align: -10px;
+}
+.talkingdata{
+	background: url(../img/brand_icon.png) left -67px no-repeat;
+	display: inline-block;
+    height: 27px;
+    width: 102px;
+    margin-left:20px;
+    vertical-align: -10px;
+}
+.admaster{
+	background: url(../img/brand_icon.png) left top no-repeat;
+	display: inline-block;
+    height: 25px;
+    width: 103px;
+    margin-left:20px;
+    vertical-align: -10px;
+}
+.adsame{
+	background: url(../img/brand_icon.png) left -253px no-repeat;
+	display: inline-block;
+    height: 35px;
+    width: 209px;
+    margin-left:20px;
+    vertical-align: -10px;
+}
+.youku{
+	background: url(../img/brand_icon.png) left -388px no-repeat;
+	display: inline-block;
+    height: 37px;
+    width: 54px;
+    margin-left:20px;
+    vertical-align: -10px;
+}
+.inmobi{
+	background: url(../img/brand_icon.png) left -304px no-repeat;
+	display: inline-block;
+    height: 23px;
+    width: 60px;
+    margin-left:20px;
+    vertical-align: -10px;
+}
+.mango{
+	background: url(../img/brand_icon.png) left -346px no-repeat;
+	display: inline-block;
+    height: 16px;
+    width: 89px;
+    margin-left:20px;
+    vertical-align: -10px;
+}
+.limei{
+	background: url(../img/brand_icon.png) left -443px no-repeat;
+	display: inline-block;
+    height: 19px;
+    width: 63px;
+    margin-left:20px;
+    vertical-align: -10px;
+}
+.icon-sina{
+	background: url(../img/brand_icon.png) left -202px no-repeat;
+	width:73px;
+	height:21px;
+	margin:0 3px;
+}
+.icon-google{
+	background: url(../img/brand_icon.png) left -149px no-repeat;
+	width:45px;
+	height:21px;
+	margin:0 3px;
+}
+.icon-sohu{
+	background: url(../img/brand_icon.png) left -177px no-repeat;
+	width:32px;
+	height:21px;
+	margin:0 3px;
+}
+.icon-tencent{
+	background: url(../img/brand_icon.png) left -230px no-repeat;
+	width:19px;
+	height:21px;
+	margin:0 3px;
+}
+.tooltip_qa{
+	display:inline-block;
+	margin-left:5px;
+	vertical-align: -2px;
+    margin-right: -18px;
+}
+.campaign-form.adgroup .form-horizontal .control-label {
+    width: 148px;
+}
+.uploaded_img{
+	display:block;
+	width:auto;
+	max-width:100%;
+	margin-top:20px;
+}
+.fileinput-button span{
+	display: inline-block;
+    height: 22px;
+}
+.campaign-table-body a{
+	display:inline-block;
+	/*margin-left:5px;*/
+}
+.tabbable.campaign{
+	margin: 25px 0;
+}
+.tabbable.campaign>div{
+	border-bottom: 1px solid #DDDDDD;
+}
+.tabbable.campaign .nav-tabs{
+	border-bottom: none;
+}
+.tabbable.campaign #diagram-tab {
+    font-size: 14px;
+}
+.diagram-words{
+	line-height: 31px;
+	margin-left:30px;
+	font-size: 14px;
+}
+.diagram-words span {
+	color:#0085C9;
+}
+.tabbable.campaign #diagram-tab.nav-tabs > li > a{
+	padding: 5px 20px 5px 50px;
+}
+.tabbable.campaign #diagram-tab.nav-tabs > li > a.hits:focus, .tabbable.campaign #diagram-tab.nav-tabs > li.active > a.hits {
+ 	background-position: 19px -84px;
+}
+.tabbable.campaign #diagram-tab.nav-tabs > li > a.hits{
+	 background-position: 19px -254px;
+}
+.tabbable.campaign #diagram-tab.nav-tabs > li > a.price:focus, .tabbable.campaign #diagram-tab.nav-tabs > li.active > a.price {
+    background-position: 16px 0px;
+}
+.tabbable.campaign #diagram-tab.nav-tabs > li > a.price{
+	background-position: 16px -176px;
+}
+.tabbable.campaign #diagram-tab.nav-tabs > li > a.shows {
+    background-position: 16px -217px;
+}
+.tabbable.campaign #diagram-tab.nav-tabs > li > a.shows:focus, .tabbable.campaign #diagram-tab.nav-tabs > li.active > a.shows {
+    background-position: 16px -43px;
+}
+.tabbable.campaign #diagram-tab.nav-tabs > li > a.ctr:focus, .tabbable.campaign #diagram-tab.nav-tabs > li.active > a.ctr {
+    background-position: 16px -132px;
+}
+.tabbable.campaign #diagram-tab.nav-tabs > li > a.ctr {
+    background-position: 16px -294px;
+}
+.status_row span{
+	width: 65px;
+	display:inline-block;
+}
+.dropdown-menu a.customrize-item:hover .icon-copy{
+	background: url("../img/icon.png") no-repeat scroll -10px -1388px transparent;
+}
+.dropdown-menu a.customrize-item:hover .icon-paste{
+	background: url("../img/icon.png") no-repeat scroll -30px -1388px transparent;
+}
+.paste-modal{
+	width:260px;
+	margin-left: -80px;
+}
+/*************账户信息**************/
+.edit-account .nav-tabs{
+	margin-bottom:0px;
+	padding-left:16px;
+}
+.edit-account .tab-content{
+	border:none;
+}
+
+.edit-account .controls span.caret,.edit-account .controls .select-box a{
+	line-height: 22px;
+}
+.edit-account .controls input.small{
+	width:50px;
+}
+.change-pwd-modal .notice{
+	margin-left:105px;
+	font-size:12px;
+	color:#999;
+}
+.edit-account .controls div .checkbox{
+	display:inline-block;
+}
+.edit-account .controls span.info{
+	margin-top:10px;
+}
+.edit-account .controls span.info i{
+	vertical-align:-3px;
+	margin-right:5px;
+}
+.campaign .tab-pane{
+	height:100px;
+}
+.btn-detail{
+	background: url("../img/icon.png") no-repeat scroll -27px -1722px transparent;
+	width: 22px;
+	margin-right:8px;
+	height: 22px;
+	display:inline-block;
+}
+.btn-detail:hover{
+	background-position:-1px -1722px;
+}
+.video-type span.info{
+	 color: #333333;
+}
+.imp_es{
+	position: fixed;
+	bottom:10px;
+	right:0;
+	overflow: hidden;
+	cursor: pointer;
+	width: 27px;
+	display:none;
+}
+.imp_es .switch_icon{
+	float:left;
+	background: url("../img/imp_es.png") no-repeat 0 0;
+	width:27px;
+	height:89px;
+	margin:5px 0;
+}
+.imp_es .switch_icon:hover{
+	background-position: 0 -90px;
+}
+.imp_es.open{
+	width:auto;
+}
+.imp_es.open ul{
+	display:block;
+}
+.imp_es ul{
+	position: relative;
+	float:left;
+	border:1px solid #cbcbcb;
+	margin:0;
+	list-style: none;
+	display: none;
+	padding:10px;
+	background:#fff;
+}
+.imp_es li{
+	float:left;
+	text-align: center;
+	font-weight: bold;
+	padding:10px 20px;
+	line-height: 60px;
+}
+.imp_es li:first-child{
+	/*width:60px;*/
+}
+.imp_es li:nth-child(odd){
+	background:#fafafa;
+}
+.imp_es li:last-child{
+/*background:#f1f1f1;*/
+}

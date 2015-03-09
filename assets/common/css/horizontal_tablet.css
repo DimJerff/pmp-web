@@ -1,0 +1,45 @@
+body {
+	min-width:1024px;
+    max-width:1279px;
+}
+.header{
+	min-width:1024px;
+    max-width:1279px;
+}
+/* 全局提示框*/
+.alert {
+	left: 559px;
+}
+/*导航右边的内容*/
+.action-bar .user-name.desktop{
+	display:none;
+}
+.action-bar .user-name.tablet{
+	display:block;
+}
+/*dashboard.html页面调整*/
+.dashboard .add-adgroup{
+	display:none;
+}
+.dashboard .company-account.info-box .info{
+	 width: 176px;
+}
+.dashboard .diagram-container .info-box .info{
+	width: 145px;
+}
+
+
+.company-info {
+	 padding-right: 25px;
+}
+.info-box {
+    margin-left: 25px;
+}
+/*login.html页面调整*/
+.login-page .alert{
+	left:30%;
+}
+/***campaign.list页面调整****/
+th.ecpc,td.ecpc{
+	display:none;
+}

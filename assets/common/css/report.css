@@ -1,0 +1,295 @@
+/************************report.html**********************************/
+#diagram-tab{
+	margin-bottom:0px;
+	font-size:18px;
+	padding-left:10px;
+}
+#diagram-tab.nav-tabs > li{
+	margin-left:10px;
+}
+#diagram-tab.nav-tabs > li > a {
+	color:#fff;
+	background:url(../img/tabs-icon.png) 20px 0px no-repeat #67C2EF;
+	padding: 11px 20px 7px 58px;
+}
+#diagram-tab.nav-tabs > li > a.price{
+	background-position: 20px -171px;
+}
+#diagram-tab.nav-tabs > li > a.shows{
+	background-position: 20px -214px;
+}
+#diagram-tab.nav-tabs > li > a.hits{
+	background-position: 25px -251px;
+}
+#diagram-tab.nav-tabs > li > a.ctr{
+	background-position: 20px -291px;
+}
+#diagram-tab.nav-tabs > li > a.price:focus,#diagram-tab.nav-tabs > li.active > a.price {
+	 background-position: 20px 6px;
+}
+#diagram-tab.nav-tabs > li > a.shows:focus,#diagram-tab.nav-tabs > li.active > a.shows {
+	background-position: 20px -39px;
+}
+#diagram-tab.nav-tabs > li > a.hits:focus,#diagram-tab.nav-tabs > li.active > a.hits {
+	background-position: 25px -80px;
+}
+#diagram-tab.nav-tabs > li > a.ctr:focus,#diagram-tab.nav-tabs > li.active > a.ctr {
+	background-position: 20px -127px;
+}
+#diagram-tab.nav-tabs > li > a:focus,#diagram-tab.nav-tabs > li.active > a {
+	background-color: #FFF;
+	color:#333;
+}
+.tab-pane{
+	padding:10px;
+}
+.tab-content{
+	border:1px solid #ddd;
+	border-top:none;
+}
+.report .diagram:first-child{
+	margin-top:20px;
+}
+.diagram-title{
+	margin: 30px 0 30px 20px;
+	font-size:18px;
+	
+}
+.diagram-title div:first-child{
+	margin-bottom:10px;
+}
+.diagram-title span{
+	display:inline-block;
+	height:24px;
+	line-height: 24px;
+}
+.diagram-title i{
+	display:inline-block;
+	width:24px;
+	height:24px;
+	margin: 0 10px;
+	vertical-align: -5px;
+	background:url(../img/compare.png) left top no-repeat;
+}
+.diagram-bar{
+	background-color:#F1F1F1;
+	padding: 4px 4px 4px 10px;
+	border-top:1px solid #CBCBCB;
+	margin: 0 16px;
+}
+.diagram-bar h5{
+	float:left;
+	margin:0;
+}
+.diagram-bar .btn-group{
+	float:left;
+}
+.diagram-bar a{
+	display:inline-block;
+	height:15px;
+	background: url(../img/icon.png) left top no-repeat;
+	vertical-align: -3px;
+}
+.diagram-bar .table-type{
+	width:13px;
+	margin-left: 22px;
+	background-position: -9px -387px;
+}
+.diagram-bar .table-type.selected{
+	background-position: -9px -458px;
+}
+.diagram-bar .diagram-type{
+	width:17px;
+	background-position: -7px -409px;
+}
+.diagram-bar .diagram-type.selected{
+	
+	background-position: -7px -479px;
+}
+.diagram-bar .hotmap_type{
+	width:17px;
+	background-position: -7px -963px;
+}
+.diagram-bar .hotmap_type.selected{
+	background-position: -7px -992px;
+}
+.diagram-bar .download-report{
+	float:right;
+	background-position:10px 10px;
+    width: 50px;
+	margin-right: 4px;
+	color:#656565;
+	
+}
+.diagram-bar .download-report:hover{
+	
+	color:#333;
+}
+.diagram-container-outer{
+	border-top:1px dashed #DDDDDD;
+}
+.diagram-container-outer:first-child{
+	border-top:none;
+}
+.diagram-container{
+	margin: 0 16px;
+    padding: 10px 4px 10px 10px;
+    
+}
+
+
+.diagram .diagram-subtitle{
+	color:#333;
+	font-weight: bold;
+	margin-left: 26px;
+	margin-top: 10px;
+}
+.diagram-container .small-diagram-container{
+	float: left;
+	margin:20px 0;
+	padding: 0px 3%;
+    width: 43.94%;
+}
+.diagram-container .small-diagram-container:first-child{
+	border-right:1px solid #ccc;
+}
+.diagram-container .small-diagram-container .small-diagram-container{
+	margin:0;
+	border-right:none;
+}
+.diagram-container .show_more{
+	text-align: right;
+	color:#0377FF;
+	margin:10px 0;
+}
+.diagram-container table{
+	border:none;
+	border-top:1px dashed #DDDDDD;
+}
+.diagram-container table:first-child{
+	border-top:none;
+}
+.report .loading{
+	background: url("../img/list-loading.gif") no-repeat scroll center transparent;
+}
+.nodata {
+    font-size: 24px;
+    padding: 30px 0;
+    text-align: center;
+}
+.nodata div {
+    background: url("../img/icon-nodata.png") no-repeat scroll left top transparent;
+    color: #999999;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 41px;
+    width: 120px;
+      margin: 0 auto;
+}
+
+.report .table-striped tbody > tr:nth-child(2n+1) > td, .table-striped tbody > tr:nth-child(2n+1) > th,.dashboard .table-striped tbody > tr:nth-child(2n+1) > td {
+    background-color: #F9F9F9;
+}
+
+.report .table-striped tbody > tr:nth-child(2n) > td, .table-striped tbody > tr:nth-child(2n) > th,.dashboard .table-striped tbody > tr:nth-child(2n) > td{
+    
+    background-color: #FFFFFF;
+}
+.report .table th,.dashboard .table th{
+	 border-bottom: 1px solid #DDDDDD;
+}
+/****************************create report****************/
+.create_report form{
+	margin-top:50px;
+	width: 700px;
+}
+.current-selected-creative{
+	margin-left: 181px;
+	margin-bottom:40px;
+	
+}
+.current-selected-creative h5{
+	border-bottom:1px dashed #ddd;
+	width: 283px;
+	padding-bottom:5px;
+}
+.current-selected-creative ul{
+	margin:0;
+}
+.current-selected-creative ul li span{
+	color:#999;
+}
+.current-selected-creative ul li a{
+	margin-left:10px;
+	margin-top:4px;
+}
+.reportrange,.reportrange2{
+	width: 263px;
+	background: #fff;
+	cursor: pointer; 
+	padding: 4px 10px;
+	border: 1px solid #ccc;
+}
+.reportrange2{
+	position:relative;
+	background-image: linear-gradient(to bottom, #FFFFFF, #E6E6E6); 
+}
+.reportrange2 .caret{
+	 position: absolute;
+    right: 12px;
+    top: 13px;
+}
+.reportrange.small{
+	width: 199px;
+}
+.reportrange i{
+	margin-top:3px;
+}
+.reportrange.wider span{
+	margin-left:20px;
+}
+.control-group.type .radio{
+	display:inline-block;
+	margin-right: 42px;
+}
+.control-group.type .radio input,.compare-date .radio input{
+	vertical-align: -2px;
+}
+.compare-date .customrize .reportrange,.start-end-date .customrize .reportrange{
+	display:inline-block;
+	margin-left: 11px;
+	width: 192px;
+}
+.compare-date .radio,.start-end-date .radio{
+	margin-bottom:20px;
+}
+.compare-date .radio>span{
+	margin-left: 29px;
+}
+.create_report .select-box{
+	 width: 283px;
+}
+.create_report .select-box a.dropdown-toggle{
+	 width: 239px;
+}
+.create_report .select-box.open > .dropdown-menu{
+	width: 281px;
+}
+.diagram .radio-box{
+	 margin: 50px auto 0;
+}
+.report .table-striped tbody > tr td.highlight{
+	  font-weight: bold;
+}
+.compare-data{
+	color:#0085C9;
+}
+.share-link{
+	margin:30px 30px 0 0;
+	height:30px;
+	line-height: 30px;
+	color:#333;
+}
+.content-header .popover-content{
+	line-height: 30px;
+}

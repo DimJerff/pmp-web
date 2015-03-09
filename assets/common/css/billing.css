@@ -1,0 +1,98 @@
+.billing-container{
+	border:1px solid #ccc;
+}
+.billing-container .diagram-container{
+	margin:0;
+	padding:0;
+}
+.billing-container .diagram-container .info-box{
+	margin:0 auto;
+}
+.billing-container .diagram-container .info-box .info{
+	border:none;
+	height: auto;
+    margin: 10px auto;
+    padding-left:35px;
+    color:#656565;
+    font-size:14px;
+	background: url("../img/billing_icon.png") no-repeat scroll left top transparent;
+}
+.billing-container .diagram-container .info-box .info span{
+	color:#333;
+	font-size:24px;
+}
+.billing-container .diagram-container .info-box .info.recharge{
+	  background-position: 0 7px;
+}
+.billing-container .diagram-container .info-box .info.consume{
+	background-position: 0 -53px;
+}
+.billing-container .diagram-container .info-box .info.present{
+	 background-position: 0 -22px;
+}
+.billing-container .diagram-container .info-box .info.refund{
+	background-position: 0 -81px;
+}
+.billing-container .diagram-container .info-box .info.adjust{
+	background-position: 0 -140px;
+}
+.btn.recharge{
+	font-size:16px;
+	line-height: 26px;
+	margin-left:20px;
+	vertical-align: 6px;
+}
+
+.billing .account{
+	height: 39px;
+    line-height: 39px;
+    margin:20px 0;
+    font-size: 24px;
+	 
+}
+
+.billing .reportrange {
+    border: medium none;
+    padding: 0px;
+    width: 223px;
+    margin-top: 2px;
+}
+.billing .reportrange i {
+    background: url("../img/dashboard-icon.png") no-repeat scroll -11px -620px transparent;
+    height: 18px;
+    vertical-align: -2px;
+    width: 18px;
+    margin-left: 5px;
+}
+.billing .start-date{
+	margin-bottom:5px;
+}
+
+.billing .title{
+    font-size: 14px;
+    height: 30px;
+    line-height: 39px;
+    margin-right:20px;
+}
+.billing .start-date .title{
+	line-height: 30px;
+}
+
+.billing .export .dropdown-menu{
+	min-width: 78px;
+}
+.billing{
+	position: relative;
+}
+.billing .payment_info{
+	position: absolute;
+	right:100px;
+	top:130px;
+	background:#f1f1f1;
+}
+
+.billing .payment_info .help{
+	margin:10px;
+	background:#fff;
+	padding:20px;
+}

@@ -17,3 +17,4 @@ share/processed/*
 
 /index.php
 /.project
+.idea/

@@ -9,6 +9,5 @@ protected/runtime/*
 protected/modules/*/views/*/*/tpl_c/*.php
 protected/views/*/tpl_c/*.php
 
-/index.php
 /.project
 .idea/

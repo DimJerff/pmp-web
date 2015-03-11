@@ -40,13 +40,13 @@ class UserIdentity extends CUserIdentity
 			return false;
 		}
 		$userInstance = new UserInstance();
-		if($userInstance->checkAccessNoLogin($record->currentRoleId(), '#develop/denyLogin')) {
-			$this->errorCode = self::ERROR_DENY_LOGIN;
-			return false;
-		}else{
+		if($userInstance->checkAccessNoLogin($record->currentRoleId(), '#develop/login')) {
 			$this->_id = $record->id;
 			$this->errorCode = self::ERROR_NONE;
 			return true;
+		}else{
+			$this->errorCode = self::ERROR_DENY_LOGIN;
+			return false;
 		}
 	}
 }

@@ -1,0 +1,12 @@
+<title>
+<{if $domainModel && $domainModel.title}>
+<{$domainModel.title|escape:'html'}>
+<{else}>
+力美科技——中国最大的移动营销解决方案提供商
+<{/if}>
+</title>
+<{if $domainModel && $domainModel.metaKeyword}>
+<meta name="keywords" content="<{$domainModel.metaKeyword|escape:'html'}>"/>
+<{else}>
+<meta name="keywords" content="limei力美 力美广告 力美科技 中国最大的移动广告平台 手机广告联盟 移动广告联盟 移动互联网广告 力美广告平台 移动广告  移动应用广告 手机应用广告 wap联盟">
+<{/if}>

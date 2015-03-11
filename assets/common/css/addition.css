@@ -1,0 +1,76 @@
+.iqiyi{
+	background: url(../img/iqiyi.png) left no-repeat;
+	display: inline-block;
+	height: 40px;
+	width: 114px;
+	vertical-align: -10px;
+}
+.pptv{
+	background: url(../img/pptv.png) left no-repeat;
+	display: inline-block;
+	height: 40px;
+	width: 114px;
+	vertical-align: -10px;
+}
+.controls .inline-controls{
+	margin-top:5px;
+	display: inline-block;
+}
+.control-label .icon{
+	margin:0 5px;
+}
+.controls p.image img{
+	margin-top:20px;
+}
+.creative-native-app-image-list ul{
+	list-style: none;
+	margin:0;
+}
+.creative-native-app-image-list li{
+	float:left;
+	padding-right:10px;
+}
+.creative-native-app-image-list li img{
+	width:90px;
+	height:160px;
+}
+.adx-brand-logo{
+    background: url(../common/img/brand_icon.png) 0px 100px no-repeat;
+    vertical-align: -10px;
+    display: inline-block;
+    width: 90px; height: 30px;
+    line-height: 30px;
+}
+.adx-brand-logo-id-1{
+    background-position: 0px -340px;
+}
+.adx-brand-logo-id-3{
+    background-position: 0px -145px;
+}
+.adx-brand-logo-id-6{
+    background-position: 0px -224px;
+}
+.adx-brand-logo-id-9{
+    background-position: 0px -300px;
+}
+.adx-brand-logo-id-10{
+    background-position: 0px -512px;
+}
+.adx-brand-logo-id-11{
+    background-position: 0px -552px;
+}
+.adx-brand-logo-id-13{
+    background-position: 0px -592px;
+}
+.adx-brand-logo-id-14{
+    background-position: 0px -632px;
+}
+.adx-brand-logo-id-15{
+    background-position: 0px -170px;
+}
+.adx-brand-logo-id-17{
+    background-position: 0px -672px;
+}
+.adx-brand-logo-id-18{
+    background-position: 0px -712px;
+}

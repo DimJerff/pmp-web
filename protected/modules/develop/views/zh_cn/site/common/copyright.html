@@ -1,0 +1,6 @@
+&copy; <{$smarty.now|date_format:'%Y'}>
+<{if $domainModel && $domainModel.copyright}>
+<{$domainModel.copyright|escape:'html'}>
+<{else}>
+上海力竞广告有限公司（力美控股）
+<{/if}>

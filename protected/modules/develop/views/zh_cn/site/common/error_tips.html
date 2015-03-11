@@ -1,0 +1,15 @@
+<{if $errors && !$errors.normal}>
+<script>
+$(function(){
+	<{foreach name="foo" from=$errors item=item}>
+		<{if $smarty.foreach.foo.index eq 0}>
+			<{foreach name="foo2" from=$item item=item2}>
+				<{if $smarty.foreach.foo2.index eq 0}>
+					$.alert('<{$item2}>', null, 300);
+				<{/if}>
+			<{/foreach}>
+		<{/if}>
+	<{/foreach}>
+});
+</script>
+<{/if}>

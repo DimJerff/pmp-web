@@ -1,0 +1,31 @@
+<div class="campaign-table-footer clearfix">
+	<div class="pagination  pagination-right right">
+		<ul>
+			<{if $pagingData.pagePreviours neq $pagingData.pageNum}>
+				<li class="disabled"><a href="<{pagingurl pageNum=$pagingData.pagePreviours}>">«</a></li>
+			<{/if}>
+			<{section name="paging" start=$pagingData.pageLeft loop=$pagingData.pageRight+1}>
+			<li<{if $pagingData.pageNum eq $smarty.section.paging.index}> class="selected"<{/if}>>
+				<a href="<{pagingurl pageNum=$smarty.section.paging.index}>"><{$smarty.section.paging.index}></a>
+			</li>
+			<{/section}>
+			<{if $pagingData.pageNext neq $pagingData.pageNum}>
+				<li><a href="<{pagingurl pageNum=$pagingData.pageNext}>">»</a></li>
+			<{/if}>
+		</ul>
+	</div>
+    <{if !$hidePageSize}>
+	<div class="btn-group  right">
+		<button class="btn"><{$pagingData.pageSize}></button>
+		<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+		<ul id="select-pagesize" class="dropdown-menu">
+			<li class="csv"><a href="#">10</a></li>
+			<li class="excel"><a href="#">20</a></li>
+			<li class="excel"><a href="#">50</a></li>
+		</ul>
+	</div>
+    <{/if}>
+</div>
+<{if $pagingData.pageNum > 1 && $pagingData.pageNum > $pagingData.pageCount}>
+<script>location.href="<{pagingurl pageNum=$pagingData.pageCount}>";</script>
+<{/if}>

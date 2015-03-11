@@ -148,6 +148,7 @@ class Controller extends CController
 		
 		$smarty->assign(array(
 			'assetsUrl' => $this->assetsUrl,
+			'assetsCommon' => $this->assetsUrl,
 			'user' => $userState,
 			'checkAccess' => $checkAccess,
 			'language' => $yii->language,

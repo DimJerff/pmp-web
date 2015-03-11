@@ -7,8 +7,8 @@
  * @property integer $id
  * @property string $name
  * @property integer $companyId
- * @property integer $campaignId
- * @property integer $adGroupId
+ * @property integer $mediaId
+ * @property integer $adslotId
  * @property string $metaType
  * @property integer $fileSize
  * @property string $sourcePath
@@ -34,13 +34,13 @@ class Attachment extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, companyId, campaignId, adGroupId, metaType, fileSize, sourcePath, thumbPath, operatorUID, creationTime', 'required'),
-			array('companyId, campaignId, adGroupId, fileSize, operatorUID, creationTime', 'numerical', 'integerOnly'=>true),
+			array('name, companyId, mediaId, adslotId, metaType, fileSize, sourcePath, thumbPath, operatorUID, creationTime', 'required'),
+			array('companyId, mediaId, adslotId, fileSize, operatorUID, creationTime', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>64),
 			array('metaType, sourcePath, thumbPath', 'length', 'max'=>256),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, companyId, campaignId, adGroupId, metaType, fileSize, sourcePath, thumbPath, operatorUID, creationTime', 'safe', 'on'=>'search'),
+			array('id, name, companyId, mediaId, adslotId, metaType, fileSize, sourcePath, thumbPath, operatorUID, creationTime', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -96,8 +96,8 @@ class Attachment extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('companyId',$this->companyId);
-		$criteria->compare('campaignId',$this->campaignId);
-		$criteria->compare('adGroupId',$this->adGroupId);
+		$criteria->compare('mediaId',$this->mediaId);
+		$criteria->compare('adslotId',$this->adslotId);
 		$criteria->compare('metaType',$this->metaType,true);
 		$criteria->compare('fileSize',$this->fileSize);
 		$criteria->compare('sourcePath',$this->sourcePath,true);

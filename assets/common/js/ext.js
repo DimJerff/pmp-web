@@ -875,8 +875,8 @@ function arrayIntersect(arrs){
  * @returns {boolean}
  */
 function inArray(stringToSearch, arrayToSearch) {
-    for (s = 0; s < arrayToSearch.length; s++) {
-        thisEntry = arrayToSearch[s].toString();
+    for (var s = 0; s < arrayToSearch.length; s++) {
+        var thisEntry = arrayToSearch[s].toString();
         if (thisEntry == stringToSearch) {
             return true;
         }

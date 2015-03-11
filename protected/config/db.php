@@ -8,5 +8,5 @@ return array(
 	/* 表结构缓存有效期， 单位：秒  */
 	'schemaCachingDuration' => 0,
 	/* 表前缀 */
-	'tablePrefix' => 'b_',
+	'tablePrefix' => 'c_',
 );

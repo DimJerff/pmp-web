@@ -15,14 +15,10 @@
  * @property integer $city
  * @property integer $state
  * @property string $address
- * @property integer $linkUserId
+ * @property integer $status
  * @property integer $mflag
  * @property integer $creationTime
- * @property integer $updateTime
- * @property integer $status
- * @property integer $checkUserId
- * @property integer $checkTime
- * @property integer $validTime
+ * @property integer $modificationTime
  */
 class Company extends CActiveRecord
 {
@@ -43,12 +39,12 @@ class Company extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('roleID, companyName, currency, timezone, creationTime', 'required'),
-			array('currency, timezone, postalCode, country, city, state, mflag, creationTime, updateTime, status, checkTime, linkUserId, checkUserId, validTime', 'numerical', 'integerOnly'=>true),
+			array('currency, timezone, postalCode, country, city, state, mflag, creationTime, modificationTime, status', 'numerical', 'integerOnly'=>true),
 			array('companyName', 'length', 'max'=>32),
 			array('telephone', 'length', 'max'=>16),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, roleID, companyName, currency, timezone, telephone, postalCode, country, city, state, address, mflag, creationTime, status, checkTime', 'safe', 'on'=>'search'),
+			array('id, roleID, companyName, currency, timezone, telephone, postalCode, country, city, state, address, mflag, creationTime', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -80,14 +76,10 @@ class Company extends CActiveRecord
 			'city' => 'City',
 			'state' => 'State',
 			'address' => 'Address',
-			'linkUserId' => 'LinkMan',
+			'status' => 'Status',
 			'mflag' => 'Mflag',
 			'creationTime' => 'Creation Time',
-			'updateTime' => 'Update Time',
-			'status' => 'Status',
-			'checkUserId' => 'Check User',
-			'checkTime' => 'Check Time',
-			'validTime' => 'Valid Time',
+			'modificationTime' => 'Update Time',
 		);
 	}
 
@@ -112,28 +104,18 @@ class Company extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('roleID',$this->roleID);
 		$criteria->compare('companyName',$this->companyName,true);
-		$criteria->compare('parentCompanyId',$this->parentCompanyId);
-		$criteria->compare('budget',$this->budget);
-		$criteria->compare('cost',$this->cost);
 		$criteria->compare('currency',$this->currency);
 		$criteria->compare('timezone',$this->timezone);
-		$criteria->compare('website',$this->website,true);
 		$criteria->compare('telephone',$this->telephone,true);
 		$criteria->compare('postalCode',$this->postalCode);
 		$criteria->compare('country',$this->country);
 		$criteria->compare('city',$this->city);
 		$criteria->compare('state',$this->state);
 		$criteria->compare('address',$this->address,true);
-		$criteria->compare('category',$this->category);
-		$criteria->compare('businessLicense',$this->businessLicense,true);
-		$criteria->compare('identityCard',$this->identityCard,true);
-		$criteria->compare('identityCard2',$this->identityCard2,true);
+		$criteria->compare('status',$this->status);
 		$criteria->compare('mflag',$this->mflag);
 		$criteria->compare('creationTime',$this->creationTime);
-		$criteria->compare('status',$this->status);
-		$criteria->compare('checkPoint',$this->checkPoint);
-		$criteria->compare('repairPoint',$this->repairPoint);
-		$criteria->compare('checkTime',$this->checkTime);
+		$criteria->compare('modificationTime',$this->modificationTime);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -150,6 +132,7 @@ class Company extends CActiveRecord
 		if(!$this->creationTime) {
 			$this->creationTime = $_SERVER['REQUEST_TIME'];
 		}
+		$this->modificationTime = $_SERVER['REQUEST_TIME'];
 		if(!isset($this->status)) {
 			$this->status = 2;
 		}

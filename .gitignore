@@ -9,12 +9,6 @@ protected/runtime/*
 protected/modules/*/views/*/*/tpl_c/*.php
 protected/views/*/tpl_c/*.php
 
-share/script/logs/*
-share/script/ini/rsync.passwd
-share/script/ini/user.passwd
-share/fetch/*
-share/processed/*
-
 /index.php
 /.project
 .idea/

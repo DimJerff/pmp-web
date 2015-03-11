@@ -98,7 +98,10 @@ return array(
 			'defaultRoleId' => 0,
 			/* 支持的语言列表 */
 			'languageList' => array(
-				'pc' => array(
+				'develop' => array(
+					'zh_cn',
+				),
+				'operate' => array(
 					'zh_cn',
 				),
 			),

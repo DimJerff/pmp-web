@@ -18,7 +18,7 @@ return array(
 		'gii' => array(
 			'class' => 'system.gii.GiiModule',
 			'password' => '123',
-			'ipFilters' => array('127.0.0.1', '192.168.2.106'),
+			'ipFilters' => array('127.0.0.1', '192.168.168.225'),
 		),
 	),
 	
@@ -27,6 +27,7 @@ return array(
 			'timeout' => 3600,
 		),
 		'db' => require $__curDir.'db.php',
+		'db2' => require $__curDir.'db2.php',
 		'urlManager' => array(
             'class'  => 'CUrlManager',
 			'urlFormat' => 'path',
@@ -34,7 +35,7 @@ return array(
 			/* 不显示脚本名 */
 			'showScriptName' => false,
 			'rules' => array(
-				'<id:[^\/]{6,}>' => array('pc/shortUrl/index', 'urlSuffix' => false,),
+				'<id:[^\/]{6,}>' => array('develop/site/index', 'urlSuffix' => false,),
 			),
 		),
 		'user' => array(
@@ -55,10 +56,10 @@ return array(
 		'log' => array(
 			'class' => 'CLogRouter',
 			'routes' => array(
-// 				array(
-// 					'class'=>'CWebLogRoute',
-// 					'levels'=>'trace, info, error, warning',
-// 				),
+ 				/*array(
+ 					'class'=>'CWebLogRoute',
+ 					'levels'=>'trace, info, error, warning',
+ 				),*/
 				 array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning',
@@ -87,7 +88,10 @@ return array(
 		),
 		'cache' => array(
 			'class' => 'system.caching.C'.(function_exists('apc_store') ? 'Apc':'File').'Cache',
-		)
+		),
+        'jump'=>array(
+            'class'=>'ext.jumpage.jumpage',
+        ),
 	),
 	
 	'params' => CMap::mergeArray(
@@ -111,7 +115,35 @@ return array(
 			'decodeEncodeKey' => "dsp.corp.limei.com",
 			/* 默认邮箱 */
 			'defaultEmail' => 'support@service.limei.com',
-
-		),array()
+            // 设备分辨率
+            'deviceDpi' => array(
+                '1' => array(
+                    'zhName' => '智能手机',
+                    'enName' => 'phone',
+                    'type'   => array(
+                        array(300, 250, '300x250'),
+                        array(320, 50, '320x50'),
+                        array(320, 480, '320x480'),
+                        array(480, 320, '480x320'),
+                        array(-1, -1, '全屏'),
+                    ),
+                ),
+                '2' => array(
+                    'zhName' => '平板电脑',
+                    'enName' => 'pad',
+                    'type'   => array(
+                        array(300, 250, '300x250'),
+                        array(320, 50, '320x50'),
+                        array(728, 90, '728x90'),
+                        array(768, 1024, '768x1024'),
+                        array(1024, 768, '1024x768'),
+                        array(1024, 768, '1024x768'),
+                        array(-1, -1, '全屏'),
+                    ),
+                ),
+            ),
+		),
+        // 文件上传配置
+        require $__curDir.'upload.php'
 	),
 );

@@ -1,0 +1,70 @@
+<{include file="../_common/head.html"}>
+<body>
+<!-- 头部导航 start -->
+<{include file="../_common/header.html"}>
+<!-- 头部导航 end -->
+<!-- 主体内容 start -->
+<div class="main-container clearfix">
+    <div class="main-content">
+        <div class="content-body">
+            <div class="clearfix company-info-container content-body-head">
+                <div class="company-info left">
+                    <h4><{$company.companyName}></h4>
+                    <div class="company-info-detail">
+                        <a href="/pc/user/edit.html">开发者 <span> <script src="<{url route='user/userCount' companyId=$company.id}>"></script></span></a>
+                        <a href="/pc/user/edit.html">应用 <span> <script src="<{url route='media/mediaCount' companyId=$company.id}>"></script></span></a>
+                        <a href="/pc/message/index.html">交易 <span> <script src="<{url route='deal/dealCount' companyId=$company.id}>"></script></span></a>
+                    </div>
+                </div>
+                <div class="company-account info-box left">
+                    <div class="info expense">
+                        <h4>今日收入</h4>
+                        ¥<span><script src="<{url route='site/todayCost' companyId=$company.id}>"></script></span>
+                    </div>
+                    <div class="info balance">
+                        <h4>累计收入</h4>
+                        ¥<span><script src="<{url route='site/allCost' companyId=$company.id}>"></script></span>
+                    </div>
+                </div>
+                <a class="btn add-adgroup btn-primary-customize right" href="<{url route='add'}>" style="margin-top: 10px;">
+                    <i class="icon-plus icon-white"></i>新建交易
+                </a>
+            </div>
+            <div class="block-space"></div>
+            <!-- 表单时间选择 start -->
+            <{include file="../_common/doubleCalendarForm.html"}>
+            <!-- 表单时间选择 end -->
+            <div class="block-space"></div>
+            <!-- 交易区块 start -->
+            <div class="campaign-table">
+                <div class="campaign-table-header campaign-table-header-f">
+                    <div class="stat-type-btn">
+                        <span>交易</span>
+                    </div>
+                    <div class="stat-filter-btn contentOpt hide" style="display: block;">
+                        <a class="filter-down-a" href=""></a>
+                        <span style=" vertical-align: bottom; display: block; float: right; height: 46px; margin-right: 10px;">仅显示投放中</span>
+                    </div>
+                </div>
+                <div class="contentList" id="dealList" data-pagenum ="1" data-timestr="<{$timeStr}>"></div>
+            </div>
+            <!-- 交易区块 end -->
+
+        </div>
+    </div>
+</div>
+<!-- 主体内容 end -->
+<!-- 页脚 -->
+<{include file="../_common/footer.html"}>
+</body>
+<script>
+    $(function() {
+        ajaxDealPage("pagenum=1");
+    });
+
+    // 异步获取交易列表的数据
+    function ajaxDealPage(param) {
+        ajaxPage("dealList", '/develop/deal/dealList', param);
+    }
+</script>
+</html>

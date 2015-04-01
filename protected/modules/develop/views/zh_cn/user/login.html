@@ -1,0 +1,49 @@
+<{include file="../site/common/header_bj.html"}>
+<link href="<{$assetsUrl}>/bj/css/reset.css" rel="stylesheet">
+<link href="<{$assetsUrl}>/bj/css/reg.css" rel="stylesheet">
+<div class="content reg_login">
+    <div class="reg_wrap login">
+        <form action="" method="post" id="login_form">
+            <h1>登录</h1>
+            <div class="reg_text reg_email">
+                <label for="email"></label>
+                <input type="text" placeholder="电子邮件" id="login_email" name="login[email]" maxlength="50">
+            </div>
+            <div class="reg_text reg_password">
+                <label for="password"></label>
+                <input type="password" placeholder="密码" id="login_passwd" name="login[passwd]" maxlength="50">
+            </div>
+            <{if $errors.email}>
+            <label id="error_msg" class="error"><{$errors.email.0}></label>
+            <{elseif $errors.passwd}>
+            <label id="login_passwd" class="error"><{$errors.passwd.0}></label>
+            <{else}>
+            <label id="login_passwd"></label>
+            <{/if}>
+            <div class="v_0">
+                <span class="fl"><input type="checkbox" name="login[rememberMe]" id="login_rememberMe" value="1" /><label for="login_rememberMe">记住我</label></span><a href="<{url route='user/forgot'}>">忘记密码</a>
+            </div>
+            <div class="reg_adn_btn">
+                <a href="" onclick="$(this).closest('form').submit();return false" id="reg_adn_btn">登录</a>
+            </div>
+            <input type="submit" style="margin:0 0 0 -999px">
+        </form>
+    </div>
+    <{if !$domainModel}>
+    <div class="reg_adn_login reg_reg">
+        没有账号?
+        <a href="<{url route='user/register'}>">立即注册</a>
+    </div>
+    <{/if}>
+    <div class="reg_help">
+        <div class="v_0">
+            <h2>如有疑问</h2>
+        </div>
+        <div class="v_1">
+            <span><a href="tencent://message/?uin=120676692&Site=&Menu=yes" style="color: #fff">在线QQ客服</a></span>
+            <em>(8621)56662036</em>
+        </div>
+    </div>
+</div>
+<{include file="../site/common/footer_bj.html"}>
+<script>$('#login_email').focus();</script>

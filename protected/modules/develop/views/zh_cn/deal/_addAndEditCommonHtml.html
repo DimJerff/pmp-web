@@ -1,0 +1,108 @@
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>交易名称</label>
+    <div class="controls">
+        <input type="text" placeholder="交易名称…" name="deal[dealName]" value="<{$deal.dealName}>">
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>交易类型</label>
+    <div class="controls">
+        <label class="radio inline">
+            <input type="radio" name="deal[dealType]" value="0"> 公开竞价
+        </label>
+        <br />
+        <label class="radio inline">
+            <input type="radio" name="deal[dealType]" value="1"> 私有竞价
+        </label>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>结算方式</label>
+    <div class="controls">
+        <label class="radio inline">
+            <input type="radio" name="deal[_mediaPrice_mediaSharingRate]" value="0">
+            <span>协议支付价格</span>
+            <input type="text" name="deal[mediaPrice]" value="<{if $deal}><{if $deal.payType < 100}><{$deal.mediaPrice}><{/if}><{/if}>"  placeholder="金额..." style="width: 60px;" />
+            <span>元</span>
+                            <span class="radio-frequency">
+                                <select name="deal[payType]" style="width: 100px;">
+                                    <option value="3" <{if $deal}><{if $deal.payType eq 3}>selected="selected"<{/if}><{/if}> >每天</option>
+                                    <option value="2" <{if $deal}><{if $deal.payType eq 2}>selected="selected"<{/if}><{/if}> >每次点击</option>
+                                    <option value="1" <{if $deal}><{if $deal.payType eq 1}>selected="selected"<{/if}><{/if}> >每千次展示</option>
+                                </select>
+                            </span>
+        </label>
+        <br />
+        <label class="radio inline">
+            <input type="radio" name="deal[_mediaPrice_mediaSharingRate]" value="101" />
+            <span>媒体收入占售出额比例</span>
+            <input type="text" name="deal[mediaSharingRate]" value="<{if $deal}><{if $deal.payType > 100}><{$deal.mediaSharingRate}><{/if}><{/if}>" style="width: 60px;"  />
+            <span>%</span>
+        </label>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>开发者</label>
+    <div class="controls">
+        <select name="deal[developId]" id="deal_developId">
+            <{foreach from=$develops item=v}>
+            <option value="<{$v.id}>"  <{if $deal}><{if $deal.developId eq $v.id}>selected="selected"<{/if}><{/if}> ><{$v.firstname}> <{$v.lastname}></option>
+            <{/foreach}>
+        </select>
+        <label for="deal_developId" class="error"></label>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>应用/广告位</label>
+    <div class="controls ">
+        <input type="hidden" name="deal[medias]" value="<{if $deal}><{$deal.medias}><{/if}>">
+        <input type="hidden" name="deal[adslots]" value="<{if $deal}><{$deal.adslots}><{/if}>">
+        <div class="settings">
+            <a data-choosed="" data-choose="" data-name="media_adslot" data-title="" id="deal_medias_adslots" class="btn btn-link">设置</a>
+            <div>
+                <span>您已经选择了<span class="choosed-num"><{if $deal}><{$dealAttach.mediaAdslotCount}><{else}>0<{/if}></span>个</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="control-group hide">
+    <label class="control-label">公司/广告系列</label>
+    <div class="controls">
+        <input type="hidden" name="deal[companies]" value="<{if $deal}><{$deal.companies}><{/if}>">
+        <input type="hidden" name="deal[campaigns]" value="<{if $deal}><{$deal.campaigns}><{/if}>">
+        <div class="settings">
+            <a data-choosed="" data-choose="" data-name="company_campaign" data-title="" id="deal_companies_campaigns" class="btn btn-link">设置</a>
+            <div>
+                <span>您已经选择了<span class="choosed-num"><{if $deal}><{$dealAttach.companyCampaignCount}><{else}>0<{/if}></span>个</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>开始日期</label>
+    <div class="controls">
+        <div class="date-picker">
+            <i class="glyphicon glyphicon-calendar icon-calendar icon-large"></i>
+            <input class="start-date-picker" type="text" id="deal_startDate" name="deal[startDate]" readonly="readonly" data-date-format="yyyy-mm-dd" value="<{if $deal}><{$deal.startDate|date_format:'%Y/%m/%d'}><{/if}>" />
+        </div>
+        <label for="deal_startDate" class="error"></label>
+    </div>
+</div>
+<div class="control-group compare-range">
+    <label class="control-label"><span class="required">*</span>结束日期</label>
+    <div class="controls">
+        <div class="date-picker inline">
+            <i class="glyphicon glyphicon-calendar icon-calendar icon-large"></i>
+            <input class="end-date-picker" type="text" id="deal_endDate" name="deal[endDate]" readonly="readonly" data-date-format="yyyy-mm-dd" value="<{if $deal}><{$deal.endDate|date_format:'%Y/%m/%d'}><{/if}>" />
+        </div>
+        <label for="deal_endDate" class="error"></label>
+    </div>
+</div>
+
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>售出低价</label>
+    <div class="controls">
+        <input type="text" name="deal[bidfloor]" value="<{if $deal}><{$deal.bidfloor}><{/if}>" placeholder="金额..." />
+        <span>元/千次展示</span>
+    </div>
+</div>

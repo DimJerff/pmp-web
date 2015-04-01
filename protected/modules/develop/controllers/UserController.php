@@ -17,6 +17,7 @@ class UserController extends Controller
 	/* 登陆页面*/
 	public function actionLogin()
 	{
+
 		$yii = Yii::app();
 		/* Guest jump to homepage */
 		if(!$yii->user->isGuest) {
@@ -213,10 +214,10 @@ class UserController extends Controller
 	
 	/* 编辑用户信息 */
 	public function actionEdit() {
-		$this->checkAccess();
+		//$this->checkAccess();
 		$user = Yii::app()->user;
 		$userState = $user->getRecord();
-		
+
 		$errors = null;
 		if($_POST['edit'] && $this->checkAccess('save')) {
 			/* 用户信息 */
@@ -245,6 +246,28 @@ class UserController extends Controller
 			'errors' => $errors,
 		));
 	}
+
+    /* 上传文件 */
+    public function actionUpload($type)
+    {
+        $type = ucfirst(strval($type));
+        if(!in_array($type, array('BusinessLicense', 'IdentityCard', 'IdentityCard2', 'Creative', 'CompanyDomainLogo1', 'CompanyDomainLogo2', ))) {
+            throw new CHttpException(403, 'Invalid Request');
+        }
+        $clsname = ($type == 'IdentityCard2' ? 'IdentityCard' : $type).'File';
+        $model = new $clsname;
+        $model->instance = CUploadedFile::getInstanceByName(lcfirst($type));
+        if($model->save()) {
+            $this->rspJSON(array(
+                'path' => $model->path,
+                'urlPath' => $model->urlPath,
+                'absUrl' => $model->absUrl,
+                'size' => $model->size,
+            ));
+        }else{
+            $this->rspErrorJSON(403, $model->getErrors());
+        }
+    }
 
 
 	/* 修改密码 */
@@ -301,9 +324,55 @@ class UserController extends Controller
 		}
 	}
 
+    /* 公司信息 */
+    public function actionCompany_info()
+    {
+        $this->checkAccess();
+        $user = Yii::app()->user;
+        $userState = $user->getRecord();
+
+        $errors = null;
+        if($_POST['edit'] && $this->checkAccess('save')) {
+            /* 用户信息 */
+            $formModel = new CompanyForm('edit');
+            $formModel->attributes = $_POST['edit'];
+            if($formModel->validate()) {
+                if(Company::model()->updateByPk($userState->defaultCompanyID, array(
+                    'companyName' => $formModel->companyName,
+                    'website' => $formModel->website,
+                    'businessLicense' => $formModel->businessLicense,
+                    'identityCard' => $formModel->identityCard,
+                    'identityCard2' => $formModel->identityCard2,
+                ))) {
+                    /* 更新状态 */
+                    $user->setState('user', User::model()->findByPk($user->id));
+                }
+                $errors = array('normal' => true,);
+            }else{
+                /* get format errors */
+                $errors = $formModel->getErrors();
+            }
+        }
+
+
+        $this->smartyRender(array(
+            'errors' => $errors,
+        ));
+    }
+
 	/* 隐私保护政策 */
 	public function actionPrivacy_policy() {
 		$this->smartyRender();
 	}
+
+    /**
+     * 获取开发者数目
+     * @param $companyId 公司id
+     */
+    public function actionUserCount($companyId) {
+        $count = User::model()->count("defaultCompanyID=:companyId",array(":companyId"=>$companyId));
+        $count = $count ? $count : 0;
+        echo "document.write(". $count . ");";
+    }
 
 }

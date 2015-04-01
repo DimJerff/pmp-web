@@ -1,8 +1,9 @@
 <?php
 class FormModel extends CFormModel {
 	const idName = '';
-	
+	// 上传控制器名的标识
 	private $__id;
+    // 上传的实例对象
 	public $instance;
 	public $path;
 	public $urlPath;
@@ -18,22 +19,41 @@ class FormModel extends CFormModel {
 	private $ruleType = 'img';
 	private $extensionName;
 	private $instance_error = null;
-	
+
+    /**
+     * 构造初始化
+     * @param string $scenario
+     */
 	public function __construct($scenario = '') {
 		parent::__construct($scenario);
 		$this->setId();
 		$itemParams = $this->getUploadLimit();
 		if(isset($itemParams) && $itemParams['ruleType']) $this->ruleType = $itemParams['ruleType'];
 	}
-	
+
+    /**
+     * 验证规则
+     * @return array
+     */
 	public function rules() {
 		return $this->createRule($this->ruleType);
 	}
-	
+
+    /**
+     * 保存前对属性的验证和上传实例对象的验证
+     * @param array $attr
+     * @return bool
+     */
 	public function save($attr = array()) {
 		return $this->validate() && is_object($this->instance);
 	}
-	
+
+    /**
+     * 创建验证规则
+     * @param $type
+     * @param null $key
+     * @return array
+     */
 	public function createRule($type, $key = NULL) {
 		$rule = Yii::app()->params['uploadRuleType'][$type];
 		if(is_string($rule)) $rule = array($rule, '');
@@ -101,21 +121,43 @@ class FormModel extends CFormModel {
 	public function setId($id = ''){
 		return $this->__id = static::idName.$id;
 	}
-	
+
+    /**
+     * 获取当前的上传对象标识
+     * @return mixed
+     */
 	public function getId() {
 		return $this->__id;
 	}
-	
+
+    /**
+     * 从配置文件中获取上传限制配置信息
+     * @param null $key 需要处理的控制器名如：media控制器
+     * @return mixed
+     */
 	public function getUploadLimit($key = NULL) {
 		if(!isset($key)) $key = $this->getId();
 		return Yii::app()->params['uploadLimit'][$key];
 	}
-	
+
+    /**
+     * 创建随机文件名
+     * @param null $extName 文件后缀名
+     * @return string
+     */
 	public function createRandomName($extName = NULL) {
 		if(!isset($extName)) $extName = $this->extensionName;
 		return substr($_SERVER['REQUEST_TIME'], 2).'.'.mt_rand(0, (double)microtime() * 1000000).'.'.$extName;
 	}
-	
+
+    /**
+     * 初始化上传文件名称
+     * @param null $params
+     * @param null $itemParams
+     * @param null $extName
+     * @return array
+     * @throws CHttpException
+     */
 	public function initFileName($params = NULL, $itemParams = NULL, $extName = NULL) {
 		if(!isset($params)) $params = Yii::app()->params;
 		if(!isset($itemParams)) $itemParams = $this->getUploadLimit();
@@ -131,11 +173,20 @@ class FormModel extends CFormModel {
 		$this->instance->saveAs($localPath);
 		$this->path = $this->thumbPath = $itemParams['savePath'].'/'.$fileName;
 		$this->urlPath = $this->thumbUrlPath = $itemParams['urlPath'].'/'.$fileName;
+        $this->thumbUrlPath .= '.thumb.jpg';
 		$this->absUrl = $this->absThumbUrl = $params['uploadUrl'] . $itemParams['urlPath'] . '/' . $fileName;;
 		$this->size = $this->instance->size;
 		return array($fileName, $localPath);
 	}
-	
+
+    /**
+     * 图片生成缩图
+     * @param $localPath
+     * @param null $params
+     * @param null $itemParams
+     * @return bool|resource
+     * @throws CHttpException
+     */
 	public function thumbImage($localPath, $params = NULL, $itemParams = NULL) {
 		if(!isset($params)) $params = Yii::app()->params;
 		if(!isset($itemParams)) $itemParams = $this->getUploadLimit();
@@ -165,6 +216,11 @@ class FormModel extends CFormModel {
 		return $im;
 	}
 
+    /**
+     * 附件入库前的初始化
+     * @param null $attr
+     * @return Attachment
+     */
 	public function initDBAttachment($attr = NULL) {
 		$instance = $this->instance;
 		
@@ -184,8 +240,15 @@ class FormModel extends CFormModel {
 		return $attachModel;
 	}
 
+    /**
+     * 附件信息入库
+     * @param $model
+     * @param null $localPath
+     * @throws CHttpException
+     */
 	public function saveDBAttachment($model, $localPath = NULL) {
-		$model->thumbPath = $this->thumbUrlPath;
+		//$model->thumbPath = $this->thumbUrlPath;
+		$model->thumbPath = $this->thumbUrlPath . 'thumb.jpg';
 		if($model->save()) {
 			if(isset($localPath) && (!$this->width || !$this->height)) {
 				$imgInfo = getimagesize($localPath);
@@ -201,6 +264,11 @@ class FormModel extends CFormModel {
 		}
 	}
 
+    /**
+     * 默认返回信息
+     * @param array $otherKeys
+     * @return array
+     */
 	public function defaultResult($otherKeys = array()) {
 		$result = array(
 			'fileName' => $this->instance->name,
@@ -221,7 +289,12 @@ class FormModel extends CFormModel {
 		}
 		return $result;
 	}
-	
+
+    /**
+     * mime转换成文件后缀名
+     * @param $mime
+     * @return mixed|null
+     */
 	private function mime2extName($mime) {
 		$params = Yii::app()->params;
 		$extTypes = $params['uploadExtTypes'];
@@ -237,7 +310,13 @@ class FormModel extends CFormModel {
 		}
 		return null;
 	}
-	
+
+    /**
+     * 格式化扩展名
+     * @param $mime
+     * @return mixed|null
+     * @throws CHttpException
+     */
 	public function formatExtName($mime) {
 		$extName = $this->mime2extName($mime);
 		if(empty($extName))

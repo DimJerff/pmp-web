@@ -1,5 +1,5 @@
 <?php
-class PcModule extends CWebModule
+class OperateModule extends CWebModule
 {
 	public $defaultController = 'deal';
 	

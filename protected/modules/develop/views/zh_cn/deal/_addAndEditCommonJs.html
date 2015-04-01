@@ -1,0 +1,242 @@
+<script>
+    // 公司和广告系列列表数据
+    var companyCampaignList = <{$companyCampaignList}>;
+
+    $(function() {
+        /**
+         * 交易类型单选点击事件
+         */
+        $("input[name='deal[dealType]']").click(function() {
+            if (parseInt($(this).val())) { // 私有
+                $("#deal_companies_campaigns").parents(".control-group").show();
+            } else { // 公开
+                $("#deal_companies_campaigns").parents(".control-group").hide();
+            }
+        }).eq(<{if $deal}><{$deal.dealType}><{else}>0<{/if}>).click();
+
+    /**
+     * 结算方式单选点击事件
+     */
+    $("input[name='deal[_mediaPrice_mediaSharingRate]']").click(function() {
+        $(this).parent().siblings().find("input:text, select").prop('disabled', true);
+        $(this).siblings().prop('disabled', false);
+    }).eq(<{if $deal}><{if $deal.payType > 100}>1<{else}>0<{/if}><{else}>0<{/if}>).click();
+
+    /**
+     * 开发者改变事件
+     */
+    $("select[name='deal[developId]']").change(function() {
+        $("input[name='deal[medias]']").val('');
+        $("input[name='deal[adslots]']").val('');
+    });
+
+    /**
+     * 应用/广告位-设置点击事件
+     */
+    $("#deal_medias_adslots").click(function() {
+        var developId = $("select[name='deal[developId]']").val();
+        var url = '/develop/media/getMediaByDevelopId/developId/' + developId;
+        $.ajaxCall(url, function(result) {
+            if (!result.length) {
+                $.alert("当前开发者 无应用/广告位", null, 400);
+                return false;
+            }
+            var data = {
+                'list' : result
+            };
+            var body = template('modalbox_left', data);
+            var channelBtn = "$('#modalbox').modal('hide')";
+            // 生成弹框
+            var box = $.modalBox('选择应用/广告位', body, '<a class="btn btn-primary" id="box-save" href="javascript:void(0);">确定</a><a class="btn btn-cancel" href="javascript:void(0);" onclick="'+channelBtn+'">取消</a>');
+            var boxWidth = 762;
+            box.modal().css({width: boxWidth, marginLeft:-(boxWidth/2)}).addClass("two-column");
+            modalbox_set1_js(['medias', 'adslots']);
+        });
+    });
+
+    /**
+     * 应用/广告位-设置点击事件
+     */
+    $("#deal_companies_campaigns").click(function() {
+        var data = {
+            'list' : companyCampaignList
+        };
+        var body = template('modalbox_left', data);
+        var channelBtn = "$('#modalbox').modal('hide')";
+        // 生成弹框
+        var box = $.modalBox('选择公司/广告系列', body, '<a class="btn btn-primary" id="box-save" href="javascript:void(0);">确定</a><a class="btn btn-cancel" href="javascript:void(0);" onclick="'+channelBtn+'">取消</a>');
+        var boxWidth = 762;
+        box.modal().css({width: boxWidth, marginLeft:-(boxWidth/2)}).addClass("two-column");
+        modalbox_set1_js(['companies', 'campaigns']);
+    });
+
+    /**
+     * 开始日期和结束日期日历插件
+     */
+    $("#deal_startDate,#deal_endDate").each(function(){
+        $(this).datepicker({
+            format:'yyyy-mm-dd',
+            onRender:function(date) {
+                var nowTemp = new Date();
+                var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+                return date.valueOf() < now.valueOf() ? 'disabled' : '';
+            }
+        }).on('changeDate', function(ev) {
+            $(this).datepicker("hide");
+            $(this).blur();
+        });
+    }).prev().click(function(){
+        $(this).next().focus();
+    });
+
+    /**
+     * 表单提交保存
+     */
+    $('#deal_form').ajaxFormCall({
+        url : '/develop/deal/postData',
+        tips:'新增交易成功，5秒钟后将自动跳转',
+        href:"<{url route='deal/index'}>"
+    });
+    });
+
+    /**
+     * 应用/广告位 公司/广告系列 弹框公共执行js
+     * @param inputNames
+     */
+    function modalbox_set1_js(inputNames) {
+        // 展开箭头点击事件
+        $(".arrow-btn").click(function() {
+            var pid = $(this).next().val();
+            if ($(this).hasClass("opened")) { // 关闭
+                $(this).removeClass("opened");
+                $("#chooseList input[pid='"+ pid +"']:checkbox").parent().hide();
+            } else { // 展开
+                $(this).addClass("opened");
+                var val = $(".search>input").val();
+                if (val.length) {
+                    $("#chooseList input[pid='"+ pid +"']:checkbox").each(function() {
+                        var tag = $(this).attr('tag');
+                        if (tag.toLowerCase().indexOf(val.toLowerCase()) != -1) {
+                            $(this).parent().show();
+                        }
+                    });
+                } else {
+                    $("#chooseList input[pid='"+ pid +"']:checkbox").parent().show();
+                }
+
+            }
+        });
+
+        /**
+         * 复选框点击事件
+         */
+        $("#chooseList input:checkbox").change(function() {
+            var val = $(this).val();
+            var pid = $(this).attr("pid");
+            if ($(this).prop("checked")) { // 被选中
+                $("#chooseList input[pid='"+ val +"']:checkbox").prop("checked", true);
+            } else { // 未被选中
+                $("#chooseList input[pid='"+ val +"']:checkbox").prop("checked", false);
+            }
+
+            if ($("#chooseList input[pid='"+ pid +"']:checkbox").length == $("#chooseList input[pid='"+ pid +"']:checkbox:checked").length) {
+                $("#chooseList input[value='"+ pid +"']:checkbox").prop("checked", true)
+            } else {
+                $("#chooseList input[value='"+ pid +"']:checkbox").prop("checked", false)
+            }
+
+            upChoosedList();
+        });
+
+        /**
+         * 更新已经选择的广告列表
+         */
+        function upChoosedList() {
+            var list = [];
+            // 递归获取选中的元素
+            recursionInput(0);
+            // 渲染选中的元素
+            $("#choosedList>ul").html(template('modalbox_rigth', {'list' : list}));
+
+            // 专属的递归获取顶成input值的函数
+            // 名称暂不支持多层级
+            function recursionInput(pid) {
+                $("#chooseList input[pid='"+ pid +"']:checkbox").each(function() {
+                    if ($(this).prop("checked")) {
+                        var temp = {'id' : $(this).val(), 'name' : $(this).next().html()};
+
+                        if ($(this).attr("pid") != 0) {
+                            temp.name = $("#chooseList input[value='"+ $(this).attr("pid") +"']:checkbox").next().html() + " > " + temp.name;
+                        }
+                        list.push(temp);
+                    } else {
+                        recursionInput($(this).val());
+                    }
+                });
+            }
+        }
+
+        /* 搜索事件 */
+        $(".search>input").keyup(function(){
+            var val = this.value;
+            $("#chooseList li").hide();
+            if (val.length > 0) {
+                $("#chooseList li input:checkbox").each(function() {
+                    var tag = $(this).attr('tag');
+                    if (tag.toLowerCase().indexOf(val.toLowerCase()) != -1) {
+                        if ( parseInt($(this).attr('pid'))) {
+                            $("#chooseList li input[value='"+ $(this).attr('pid') +"']:checkbox").parent().show().children(".arrow-btn").addClass("opened");
+                        }
+                        $(this).parent().show();
+                    }
+                });
+            } else {
+                $("#chooseList li>a.arrow-btn").removeClass('opened');
+                $("#chooseList li>input[pid=0]:checkbox").parent().show();
+            }
+        });
+
+        /**
+         * 按钮保存
+         */
+        $("#box-save").click(function() {
+            var levelArr1 = [];
+            var levelArr2 = [];
+            $("#choosedList>ul>li").each(function() {
+                if ($(this).data('id') > 0) {
+                    levelArr1.push($(this).data('id'));
+                } else {
+                    levelArr2.push($(this).data('id') * -1);
+                }
+            });
+            $("input[name='deal["+ inputNames[0] +"]']").val(levelArr1.length > 0 ? JSON.stringify(levelArr1) : '');
+            $("input[name='deal["+ inputNames[1] +"]']").val(levelArr2.length > 0 ? JSON.stringify(levelArr2) : '');
+            $('#modalbox').modal('hide');
+            var choosedNum = levelArr1.length + levelArr2.length;
+            choosedNum = choosedNum ? choosedNum : 0;
+            $("#deal_"+ inputNames[0] +"_" + inputNames[1]).next().find(".choosed-num").html(choosedNum);
+        });
+
+        /**
+         * 初始化
+         */
+        // 初始化选中列表
+        var inputIds = [];
+        if ($("input[name='deal["+ inputNames[0] +"]']").val()) {
+            inputIds = eval('(' + $("input[name='deal["+ inputNames[0] +"]']").val() + ')');
+        }
+        if ($("input[name='deal["+ inputNames[1] +"]']").val()) {
+            temp = eval('(' + $("input[name='deal["+ inputNames[1] +"]']").val() + ')');
+            for (var i=0; i<temp.length; i++) {
+                inputIds.push(temp[i] * -1);
+            }
+        }
+        // 初始化选中已经勾选上的
+        $("#chooseList li>input:checkbox").each(function() {
+            if (inArray($(this).val(), inputIds)) {
+                $(this).prop("checked", true);
+            }
+        });
+        $("#chooseList li>input:checkbox:checked").eq(0).change();
+    }
+</script>

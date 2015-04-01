@@ -28,11 +28,30 @@ class UserInstance extends CWebUser
 	
 	public function checkAccessNoLogin($roleId, $operation = '') {
 		static $itemList;
+        /* 范例
+        $itemList = array(
+            "frontend" => array(
+                "develop/login" => 1,
+                "develop/media/index" => 2,
+                "develop/user/switch" => 3,
+            ),
+        );
+        */
 		static $roleItemList;
+        /* 范例
+        $roleItemList = array(
+            "1" => array(
+                "1"=> 1,
+                "2"=> 1,
+                "3"=> 1,
+            ),
+        );
+        */
 		
 		$controller = Yii::app()->controller;
 		$prefix = $controller->authItemPrefix;
-		
+
+
 		/* 初始化key to id */
 		if(!isset($itemList)) {
 			$itemList = array();
@@ -41,7 +60,7 @@ class UserInstance extends CWebUser
 				$itemList[$key[0]][$key[1]] = $item->id;
 			}
 		}
-		
+
 		/* 获取用户所在角色的权限关系 */
 		if(!isset($roleItemList)) {
 			$roleItemList = array();
@@ -52,8 +71,10 @@ class UserInstance extends CWebUser
 				}
 			}
 		}
+
 		$relations = $roleItemList[$roleId];
-		
+
+
 		$operation = strtolower($operation);
 		$index = strpos($operation, '#');
 		if($index > 0) {

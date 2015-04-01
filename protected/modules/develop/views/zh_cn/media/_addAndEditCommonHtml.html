@@ -1,0 +1,53 @@
+<{* 添加页面和编辑页面共用的HTML代码 *}>
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>应用名称</label>
+    <div class="controls">
+        <input type="text" placeholder="应用名称…" id="media_appName" name="media[appName]" value="<{$media.appName}>">
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">平台类型</label>
+    <div class="controls" id="" value="1">
+        <label class="radio inline">
+            <input type="radio" name="media[os]" value="1"> Android
+        </label>
+        <label class="radio inline">
+            <input type="radio" name="media[os]" value="2"> IOS
+        </label>
+    </div>
+</div>
+<div class="control-group" data-image-choosed="1">
+    <label class="control-label"><span class="required">*</span>图标</label>
+    <div class="controls ">
+        <div class="campaign-table" style="margin-top:0;">
+            <div class="campaign-table-header">
+                <span class="btn btn-success fileinput-button btn-primary-customize">
+                    <i class="icon-picture icon-white"></i>
+                    <span>添加图标</span>
+                    <input id="iconUpload" data-url="iconupload/" class="imgupload" data-list="#imageList" type="file" name="file" multiple>
+                </span>
+            </div>
+        </div>
+        <input type="hidden" name="media[appIcon]" value="<{if $media}><{$media.appIcon}><{/if}>" />
+        <img class="<{if !$media}>hide<{/if}>" id="iconShow" src="<{if $media}><{$media.appIcon|attach_url}><{/if}>" width="100px" height="100px" />
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label" id="media_appBundle_label">
+        <span class="hide">
+            <span class="required">*</span>应用包名称
+        </span>
+        <span class="hide">
+            <span class="required">*</span>iTunes URL
+        </span>
+    </label>
+    <div class="controls">
+        <input type="text" placeholder="" id="media_appBundle" name="media[appBundle]" value="<{$media.appBundle}>">
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>媒体类型</label>
+    <input type="hidden" name="media[appCategory]" value="" />
+    <div class="controls" id="media_appCategory">
+    </div>
+</div>

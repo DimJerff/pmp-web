@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, user-scalable=1" />
+    <{include file="./header_title.html"}>
+    <link rel="shortcut icon" href="/favicon.ico" />
+<body>
+<div class="mini_header">
+    <div class="wrap">
+        <div class="logo">
+            <a href="<{url route="site/index"}>">
+            <{if $domainModel && $domainModel.logoFile1}>
+            <img src="<{$domainModel.logoFile1|attach_url}>"/>
+            <{else}>
+            <img src="<{$assetsUrl}>/bj/images/logo_mini.png"/>
+            <{/if}>
+            </a>
+        </div>
+        <div class="regTxt" style="">PMP平台</div>
+    </div>
+</div>

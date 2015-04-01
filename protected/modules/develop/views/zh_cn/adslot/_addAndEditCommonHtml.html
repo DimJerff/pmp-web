@@ -1,0 +1,60 @@
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>广告位名称</label>
+    <div class="controls">
+        <input type="text" placeholder="广告位名称…" name="adslot[adslotName]" value="<{if $adslot}><{$adslot.adslotName}><{/if}>">
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>设备类型</label>
+    <div class="controls">
+        <{foreach from=$deviceDpi key=k item=v}>
+        <label class="radio inline">
+            <input type="radio" name="adslot[deviceType]" value="<{$k}>" data-enname="<{$v.enName}>"> <{$v.zhName}>
+        </label>
+        <{/foreach}>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>尺寸</label>
+    <div class="controls">
+        <{foreach from=$deviceDpi key=k item=v}>
+        <select class="select-dpi hide" name="adslot[_widthHeight<{$k}>]" id="select-dpi-<{$v.enName}>">
+            <{foreach from=$v.type item=vv}>
+            <option value="<{$vv[0]}>,<{$vv[1]}>"><{$vv[2]}></option>
+            <{/foreach}>
+            <option value="">自定义</option>
+        </select>
+        <{/foreach}>
+        <span class="hide" id="diyDpi">
+            <br /><br />
+            <input name="adslot[width]" type="text" value="<{if $adslot}><{$adslot.width}><{/if}>" style="width: 40px;" /> X <input name="adslot[height]" type="text" value="<{if $adslot}><{$adslot.height}><{/if}>" style="width: 40px;" />
+        </span>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>刷新时间间隔</label>
+    <div class="controls">
+        <input name="adslot[refreshTime]" type="text" value="<{if $adslot}><{$adslot.refreshTime}><{/if}>" style="width: 40px;" /> 秒
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">频次限制</label>
+    <div class="controls">
+        <label class="radio inline">
+            <input type="radio" value="-1" name="adslot[_frequencyCapUnitCapAmount]">
+            无限制
+        </label>
+        <br>
+        <label class="radio inline">
+            <input type="radio" value="" name="adslot[_frequencyCapUnitCapAmount]">
+                <span class="radio-frequency">
+                    <select name="adslot[frequencyCapUnit]" style="width: 100px;" disabled="disabled">
+                        <option value="1" <{if $adslot}><{if $adslot.frequencyCapUnit == 1}>selected="selected"<{/if}><{/if}>>每小时</option>
+                        <option value="2" <{if $adslot}><{if $adslot.frequencyCapUnit == 2}>selected="selected"<{/if}><{/if}>>每天</option>
+                    </select>
+                    在每个设备上展示
+                    <input name="adslot[frequencyCapAmount]" type="text" value="<{if $adslot}><{if $adslot.frequencyCapAmount gt 0}><{$adslot.frequencyCapAmount}><{/if}><{/if}>" style="width: 40px;" disabled="disabled" /> 次
+                </span>
+        </label>
+    </div>
+</div>

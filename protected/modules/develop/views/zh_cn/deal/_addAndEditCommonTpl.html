@@ -1,0 +1,43 @@
+
+<script id="modalbox_left" type="text/html">
+    <div>
+        <div class="search">
+            <i class="icon-search"></i>
+            <input type="text">
+        </div>
+        <ul id="chooseList" class="list-level2">
+            <%for (var i in list) {%>
+            <% if(list[i].pid != 0) {%>
+            <li style="display: none; margin-left: <%= (list[i].Level-1) * 24 %>px;">
+                <% } else { %>
+            <li style="display: list-item; margin-left: <%= (list[i].Level-1) * 24 %>px;">
+                <% } %>
+                <% if (list[i].HasChild) { %>
+                <a class="arrow-btn"></a>
+                <% } else { %>
+                <a class="placeholder"></a>
+                <% } %>
+                <input type="checkbox" value="<%=list[i].id%>" pid="<%= list[i].pid %>" tag="<%=list[i].name%>" />
+                <a href="" onclick="$(this).prev().each(function(){this.checked=!this.checked}).change();return false" title="<%=list[i].name%>"><%=list[i].name%></a>
+            </li>
+            <%}%>
+        </ul>
+    </div>
+    <div id="choosedList" class="selected-creative-list">
+        <div>
+            <span style="float: left">已选择的应用/广告位</span>
+            <a href="" onclick="return false" name="unselect_enable" style="float: right">清空</a>
+            <div style="clear: both; height: 5px;"></div>
+        </div>
+        <ul></ul>
+    </div>
+</script>
+
+<script id="modalbox_rigth" type="text/html">
+    <% for (var i in list) { %>
+    <li class="selected" data-id="<%= list[i].id %>">
+        <span><%= list[i].name %></span>
+        <button onclick="$('#chooseList input[value=<%= list[i].id %>]:checkbox').prop('checked', false).change()" type="button" class="close">X</button>
+    </li>
+    <% } %>
+</script>

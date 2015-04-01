@@ -154,6 +154,7 @@ class Controller extends CController
 			'language' => $yii->language,
 			'cookies' => $cookies,
 			'controllerId' => $this->id,
+            'basePath' => Yii::app()->basePath,
 		));
 
 		return $smarty->renderFile(Null, $path, $params, $isReturn);

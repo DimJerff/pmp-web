@@ -1,0 +1,56 @@
+<{include file="../_common/head.html"}>
+<{include file="../_common/header.html"}>
+		<div class="main-container clearfix">
+          	<div class="main-content full">
+          		<div class="content-header clearfix">
+          			<h3 class="content-name left">修改密码</h3>
+          		</div>
+          		<div class="content-body edit-account">
+          			    <div class="tabbable">
+						    <div class="tab-content">
+							    <div class="tab-pane active">
+							    	<{if $errors.normal}>
+							    	密码成功修改！5秒后跳回控制面板
+							    	<script>setTimeout(function(){location.href='<{url route="site/index"}>'}, 5000);</script>
+							    	<{else}>
+							    	<form action="" method="post" id="change_form" class="form-horizontal">
+									    <div class="control-group">
+									    	<label class="control-label"><span class="required">*</span>旧密码</label>
+										    <div class="controls">
+										    	<input type="password" id="change_passwd" name="change[passwd]" placeholder="旧密码…" value="" maxlength="64" class="input-xlarge" />
+										    	<{if $errors.passwd}><label for="change_oldPasswd" class="error"><{$errors.passwd.0}></label><{/if}>
+										    </div>
+									    </div>
+									    <div class="control-group">
+									    	<label class="control-label"><span class="required">*</span>新密码</label>
+										    <div class="controls">
+										    	<input type="password" id="change_newPasswd" name="change[newPasswd]" placeholder="新密码…" value="" maxlength="64" class="input-xlarge">
+										    </div>
+									    </div>
+									   <div class="control-group">
+									    	<label class="control-label"><span class="required">*</span>确认密码</label>
+										    <div class="controls">
+										    	<input type="password"id="change_confirmPasswd" name="change[confirmPasswd]" placeholder="确认密码…" value="" maxlength="64" class="input-xlarge">
+										    </div>
+									    </div>
+									    <{if $checkAccess['save']}>
+									   <div class="control-group">
+											<div class="controls">
+												<button class="btn btn-primary" type="submit">保存</button>
+												<button class="btn btn-cancel" type="cancel" onclick="location.reload();return false">取消</button>
+											</div>
+										</div>
+										<{/if}>
+								    </form>
+								    <{/if}>
+							    </div>
+						    </div>
+					    </div>
+          		</div>
+          	</div>
+		</div>
+		<div class="footer"><{include file="../site/common/copyright.html"}></div>
+		<{include file="../site/common/footer_js.html"}>
+		<script>$('#change_oldPasswd').focus();</script>
+	</body>
+</html>

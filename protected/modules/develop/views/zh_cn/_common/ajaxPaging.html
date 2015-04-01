@@ -1,0 +1,24 @@
+<{* 分页码HTML *}>
+<{if $pagingData && $pagingData.pageCount}>
+<div class="campaign-table-footer clearfix">
+    <div class="pagination  pagination-right right"  <{if $hidePageSize}>style="margin-right:10px;"<{/if}>>
+        <ul>
+            <{if $pagingData.pagePreviours neq $pagingData.pageNum}>
+            <li>
+                <a href="javascript: <{$ajaxFun}>('pagenum=<{$pagingData.pagePreviours}>');">«</a>
+            </li>
+            <{/if}>
+            <{section name="paging" start=$pagingData.pageLeft loop=$pagingData.pageRight+1}>
+            <li<{if $pagingData.pageNum eq $smarty.section.paging.index}> class="selected"<{/if}>>
+                <a href="javascript: <{$ajaxFun}>('pagenum=<{$smarty.section.paging.index}>');"><{$smarty.section.paging.index}></a>
+            </li>
+            <{/section}>
+            <{if $pagingData.pageNext neq $pagingData.pageNum}>
+            <li>
+                <a href="javascript: <{$ajaxFun}>('pagenum=<{$pagingData.pageNext}>');">»</a>
+            </li>
+            <{/if}>
+        </ul>
+    </div>
+</div>
+<{/if}>

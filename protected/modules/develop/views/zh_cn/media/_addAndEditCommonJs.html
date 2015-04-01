@@ -1,0 +1,98 @@
+<{* 添加页面和编辑页面共用的JS代码 *}>
+<script>
+var categoryTree = <{$categoryTree}>;
+$(function () {
+    // 图标上传
+    $('#iconUpload').fileupload({
+        dataType: 'json',
+        maxFileSize: 5000000,
+        previewMaxWidth: 100,
+        previewMaxHeight: 100,
+        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+        done : function(e, data) {
+            var res = data.result;
+            if (res[0] == 'normal') {
+                $("#iconShow").attr("src", $.showAttachUrl(res[1]['thumbUrlPath'])).show();
+                $("input[name='media[appIcon]']").val(res[1]['urlPath']);
+                return;
+            }
+
+            if (res[0] == 'error') {
+                $.tipsError(res[1].message[1]);
+                return;
+            }
+        }
+    });
+
+    // 平台类型单选按钮点击事件
+    $("input[name='media[os]']").click(function() {
+        var curVal = parseInt($(this).val());
+        $("#media_appBundle_label").children().hide().eq(curVal - 1).show();
+        $("#media_appCategory").html('');
+        buildSelect(curVal);
+
+    });
+    $("input[name='media[os]']").eq(<{if $media}><{$media.os-1}><{else}>0<{/if}>).click();
+
+    // 选择框改变事件
+    $(document).on( 'change', '.selectpicker', function () {
+        $(this).nextAll().remove();
+        buildSelectHtml($(this).val());
+    });
+
+    // 异步表单提交
+    $('#media_form').ajaxFormCall({
+        url : '/develop/media/postMedia',
+        tips:'应用<{if $media}>编辑<{else}>创建<{/if}>成功，5秒钟后页面将自动跳转',
+        href:"<{url route='site/index'}>"
+    });
+
+    /**
+     * 平台类型点击触发选择框建立
+     */
+    function buildSelect(curVal) {
+        for (var i in categoryTree) {
+            if (categoryTree[i]['storeType'] == curVal) {
+                var pid = categoryTree[i]['id'];
+                buildSelectHtml(pid);
+                break;
+            }
+        }
+    }
+
+    /**
+     * 创建选择框HTML内容
+     * @param pid
+     * @returns {boolean}
+     */
+    function buildSelectHtml(pid) {
+        var selectHtml = '';
+        selectHtml+= '<select class="selectpicker">';
+
+        var level = 0;
+        for (var n in categoryTree) {
+            if (categoryTree[n]['parentId'] == pid) {
+                level = categoryTree[n]['Level'];
+                selectHtml += '<option value="' + categoryTree[n]['id'] + '"> ' + categoryTree[n]['zhName'] + ' </option>';
+            }
+        }
+        selectHtml+= '</select>';
+        if (level == 0) {
+            $("input[name='media[appCategory]']").val($('#media_appCategory .selectpicker:last').val());
+            return false;
+        }
+
+        $(selectHtml).appendTo("#media_appCategory");
+        buildSelectHtml($('#media_appCategory .selectpicker:last').val());
+    }
+
+    <{* 单独为编辑页面--初始化选择框 *}>
+    <{if $media}>
+    <{foreach from=$curCatePath key=k item=v}>
+    $(".selectpicker").eq(<{$k}>).val(<{$v}>).change();
+    <{/foreach}>
+    <{/if}>
+
+});
+
+</script>

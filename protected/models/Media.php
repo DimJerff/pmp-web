@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * 应用表数据模型
  * This is the model class for table "{{company}}".
  *
  * The followings are the available columns in table '{{company}}':
@@ -15,17 +16,31 @@
  * @property integer $creationTime
  * @property integer $modificationTime
  */
-class Company extends CActiveRecord
+class Media extends DbActiveRecord
 {
 	/**
+     * 返回当前表名
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{company}}';
+		return '{{media}}';
 	}
 
+    /**
+     * 返回当前数据模型
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return Company the static model class
+     */
+    public static function model($className=__CLASS__)
+    {
+        return parent::model($className);
+    }
+
 	/**
+     * 验证规则
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -33,10 +48,9 @@ class Company extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('companyId, os, appName, appCategory, appBundle', 'required'),
+			array('companyId, os, appName, appCategory, appBundle, appIcon', 'required'),
 			array('companyId, os, appCategory', 'numerical', 'integerOnly'=>true),
 			array('appName, ', 'length', 'max'=>32),
-			array('telephone', 'length', 'max'=>16),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, companyId, os, appName, appCategory, appBundle', 'safe', 'on'=>'search'),
@@ -44,6 +58,7 @@ class Company extends CActiveRecord
 	}
 
 	/**
+     * 多表关联关系
 	 * @return array relational rules.
 	 */
 	public function relations()
@@ -55,6 +70,7 @@ class Company extends CActiveRecord
 	}
 
 	/**
+     * 属性名
 	 * @return array customized attribute labels (name=>label)
 	 */
 	public function attributeLabels()
@@ -63,9 +79,10 @@ class Company extends CActiveRecord
 			'id' => 'ID',
 			'companyId' => 'companyId',
 			'os' => 'OS',
-			'appName' => 'App Name',
+            'appIcon' => '图标',
+			'appName' => '应用名称必填',
 			'appCategory' => 'App Category',
-			'appBundle' => 'App Bundle',
+			'appBundle' => 'iTunes URL 或 应用包名称不能为空',
 			'status' => 'Status',
 			'mflag' => 'Mflag',
 			'creationTime' => 'Creation Time',
@@ -74,6 +91,7 @@ class Company extends CActiveRecord
 	}
 
 	/**
+     * 搜索
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
 	 * Typical usecase:
@@ -107,10 +125,10 @@ class Company extends CActiveRecord
 		));
 	}
 
-	public function afterFind() {
-		parent::afterFind();
-	}
-	
+    /**
+     * 触发验证前的处理
+     * @return bool
+     */
 	public function beforeValidate()
 	{
 		parent::beforeValidate();
@@ -119,11 +137,18 @@ class Company extends CActiveRecord
 		}
 		$this->modificationTime = $_SERVER['REQUEST_TIME'];
 		if(!isset($this->status)) {
-			$this->status = 2;
+			$this->status = 1;
 		}
+        if (!isset($this->developId)) {
+            $this->developId = Yii::app()->user->getId();
+        }
 		return true;
 	}
 
+    /**
+     * 触发保存前的处理
+     * @return bool
+     */
 	public function beforeSave() {
 		parent::beforeSave();
 	
@@ -131,15 +156,119 @@ class Company extends CActiveRecord
 	
 		return true;
 	}
-	
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Company the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+
+    /**
+     * 获取统计应用的列表
+     * @param $companyId 公司id
+     * @param int $os 操作系统id
+     * @param array $dateTimeArr 起始时间
+     * @param string $order 排序
+     * @return array
+     */
+    public function getMediaPageList($companyId, $os=0, $dateTimeArr=array(), $order = '') {
+        $field = array(
+            "m.id",
+            "m.companyId",
+            "m.os",
+            "m.appName",
+            "m.appIcon",
+            "m.developId",
+            "m.modificationTime",
+            "m.creationTime",
+            "o.osName",
+            "SUM(cost) AS cost",
+            "SUM(bidRequest) AS bidRequest",
+            "SUM(impressions) AS impressions",
+            "SUM(clicks) AS clicks",
+            "IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
+            "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions)*100), 2), 0) AS ctr",
+            "IF(SUM(impressions), SUM(cost)/SUM(impressions)/1000, 0) AS ecpm",
+            "IF(SUM(clicks), SUM(cost)/SUM(clicks)/1000000, 0) AS ecpc",
+            "(SELECT COUNT(*) FROM c_media_adslot a WHERE a.mediaId = m.id) AS adslotCount"
+        );
+
+        $where = array(
+            "m.`status` = 1",
+            "m.companyId = {$companyId}",
+        );
+
+        if(!empty($os)) {
+            $where[] =  "m.os = {$os}";
+        }
+
+        $sql  = 'SELECT SQL_CALC_FOUND_ROWS ';
+        $sql .= implode(", ", $field). " ";
+        $sql .= 'FROM ';
+        $sql .= '{{media}} m ';
+        $sql .= 'LEFT JOIN {{base_os}} o ON m.os = o.id ';
+        $sql .= "LEFT JOIN {{report_media_daily}} rm ON (m.id = rm.mediaId AND rm.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]}) ";
+        $sql .= "WHERE ";
+        $sql .= implode(" AND ", $where) ." ";
+        $sql .= 'GROUP BY m.id ';
+        if (!empty($order)) {
+            $sql .= "ORDER BY {$order}";
+        }
+
+        $paging = Paging::instance();
+        $paging->setPageSize(5);
+        $paging->setPageNumKey('pagenum');
+        $list = $paging->query($sql);
+        return array(
+            'list' => $list,
+            'page' => $paging->data(),
+        );
+    }
+
+
+    /**
+     * 通过主键id获取应用信息带系统名称
+     * @param $id
+     * @return mixed
+     */
+    public function getMediaById($id) {
+        $sql  = '';
+        $sql .= "SELECT ";
+        $sql .= "m.*, b.osName ";
+        $sql .= "FROM ";
+        $sql .= "{{media}} m ";
+        $sql .= "LEFT JOIN {{base_os}} b ON b.id = m.os ";
+        $sql .= "WHERE ";
+        $sql .= "m.id = {$id}";
+
+        return $this->_find($sql);
+
+    }
+
+    /**
+     * 通过开发者id获取应用信息
+     * @param $developId 开发者id
+     * @return mixed
+     */
+    public function getMediaByDevelopId($developId) {
+        $sql  = "";
+        $sql .= "SELECT ";
+        $sql .= "id AS mediaId, appName ";
+        $sql .= "FROM {{media}} ";
+        $sql .= "WHERE developId = {$developId} AND `status` = 1";
+
+        return $this->_query($sql);
+    }
+
+    /**
+     * 通过开发者id获取应用
+     * @param $developId 开发者id
+     * @return mixed
+     */
+    public function getMediaDealByDid($developId) {
+        $sql = "";
+        $sql .= "SELECT ";
+        $sql .= "id, appName AS name, 0 as pid ";
+        $sql .= "FROM {{media}} ";
+        $sql .= "WHERE ";
+        $sql .= "developId = {$developId} AND `status` = 1";
+
+        return $this->_query($sql);
+    }
+
+
 }

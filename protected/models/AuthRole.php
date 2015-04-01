@@ -43,7 +43,7 @@ class AuthRole extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'items' => array(self::MANY_MANY, 'AuthItem', 'b_auth_role_item(roleId, itemId)', ),
+			'items' => array(self::MANY_MANY, 'AuthItem', Yii::app()->db->tablePrefix . 'auth_role_item(roleId, itemId)', ),
 		);
 	}
 

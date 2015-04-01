@@ -1,0 +1,80 @@
+<{* 页面head头部文件 *}>
+<!DOCTYPE html>
+<!--[if IE 8 ]> <html class="ie8"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class=""> <!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>
+        <{if $domainModel && $domainModel.title}>
+        <{$domainModel.title|escape:'html'}>
+        <{else}>
+        力美科技——中国最大的移动营销解决方案提供商
+        <{/if}>
+    </title>
+    <{if $domainModel && $domainModel.metaKeyword}>
+    <meta name="keywords" content="<{$domainModel.metaKeyword|escape:'html'}>"/>
+    <{else}>
+    <meta name="keywords" content="limei力美 力美广告 力美科技 中国最大的移动广告平台 手机广告联盟 移动广告联盟 移动互联网广告 力美广告平台 移动广告  移动应用广告 手机应用广告 wap联盟">
+    <{/if}>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'/>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="<{$assetsCommon}>/common/css/bootstrap.css" />
+    <link rel="stylesheet" href="<{$assetsCommon}>/common/css/jquery.fileupload-ui.css" />
+    <!-- desktop -->
+    <!-- <link rel="stylesheet" href="<{$assetsCommon}>/css/base_src.css" /> -->
+    <link rel="stylesheet" href="<{$assetsCommon}>/common/css/base.css" />
+    <link rel="stylesheet" href="<{$assetsUrl}>/common/css/addition.css" />
+    <!-- datepicker -->
+    <link rel="stylesheet" href="<{$assetsCommon}>/common/components/daterangepicker/daterangepicker-bs2.css" />
+    <!-- horizontal tablet -->
+    <link rel="stylesheet" media="only screen and (min-width: 1024px) and (max-width: 1279px)" href="<{$assetsCommon}>/common/css/horizontal_tablet.css" />
+    <!-- horizontal tablet -->
+    <link rel="stylesheet" media="only screen and (max-height: 800px)" href="<{$assetsCommon}>/common/css/short_screen.css" />
+    <!-- tablet -->
+    <link rel="stylesheet" media="only screen and (min-width: 481px) and (max-width: 1023px)" href="<{$assetsCommon}>/common/css/tablet.css" />
+    <!-- iphone -->
+    <link rel="stylesheet" media="only screen and (max-width: 480px)" href="<{$assetsCommon}>/common/css/mobile.css"/>
+    <!-- jquery -->
+    <script src="<{$assetsCommon}>/common/js/lib/jquery.1.10.1.min.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="<{$assetsCommon}>/common/js/lib/html5shiv.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        label.valid{
+            width:24px;
+            height:24px;
+            background:url(<{$assetsCommon}>/common/img/valid.png) center center no-repeat;
+            display:inline-block;
+            text-indent:-9999px;
+            vertical-align:middle;
+        }
+        label.error{
+            font-weight:bold;
+            color:red;
+            padding:2px 8px;
+            margin-top:2px;
+        }
+        .required{
+            color:#FF0000;
+            margin-right:5px;
+        }
+        .areas-direct{
+            margin-right: 10px;
+            width: 9px;
+            height: 12px;
+            background-position: 0 -192px;
+            background-image: url(<{$assetsCommon}>/img/icon.png);
+            display: inline-block;
+            width: 9px;
+            height: 12px;
+            background-position: 0 -192px;
+        }
+        .dp-none{
+            display:none;
+        }
+        .pr {
+            position:relative;
+        }
+    </style>
+</head>

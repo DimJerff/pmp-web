@@ -7,7 +7,7 @@
 		<{if $domainModel && $domainModel.logoFile2}>
 		<img src="<{$domainModel.logoFile2|attach_url}>"/>
 		<{else}>
-		<img src="<{$assetsCommon}>/img/logo.png"/>
+		<img src="<{$assetsCommon}>/common/img/logo.png"/>
 		<{/if}>
 	</div>
 	<ul class="top-nav left clearfix">
@@ -15,16 +15,9 @@
 		<li class="report"><a href="#" class="selected">统计报表</a></li>
 	<{else}>
 		<li class="index"><a href="<{url route='site/index'}>"<{if $controllerid eq 'site' || $controllerid eq 'billing'}> class="selected"<{/if}>>首页</a></li>
-		<{if $checkAccess['#pc/campaign/index']}>
+		<li class="ads-throw"><a href="<{url route='campaign/index'}>"<{if $controllerid eq 'campaign' || $controllerid eq 'adgroup' || $controllerid eq 'creative'}> class="selected"<{/if}>>库存管理</a></li>
 		<li class="ads-throw"><a href="<{url route='campaign/index'}>"<{if $controllerid eq 'campaign' || $controllerid eq 'adgroup' || $controllerid eq 'creative'}> class="selected"<{/if}>>投放管理</a></li>
-		<{/if}>
-		<{if $checkAccess['#pc/report/index']}>
 		<li class="report"><a href="<{url route='report/index'}>"<{if $controllerid eq 'report'}> class="selected"<{/if}>>统计报表</a></li>
-		<{/if}>
-		<{if $checkAccess['#pc/share/list/sharetype/1'] || $checkAccess['#pc/share/list/sharetype/3']}>
-			<li class="share"><a href="<{url route='share/index'}>"<{if $controllerid eq 'share'}> class="selected"<{/if}>>共享库</a></li>
-		<{/if}>
-		<{*<li class="bill"><a href="<{url route='billing/index'}>"<{if $controllerid eq 'billing'}> class="selected"<{/if}>>充值流水</a></li>*}>
 	<{/if}>
 	</ul>
 	<{if $controllerId neq 'reportShare'}>
@@ -32,14 +25,14 @@
 		<div class="user-name clearfix left">
 		    <a class="dropdown-toggle text-hidden" data-toggle="dropdown" href="<{url route='user/edit'}>"><{$user.firstname}> <{$user.lastname}></a>
 		    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-			    <{if $checkAccess['#pc/user/edit']}><li><a href="<{url route='user/edit'}>"><i class="icon-cog"></i>账户信息</a></li><{/if}>
-			    <{if $checkAccess['#pc/user/edit_passwd']}><li><a href="<{url route='user/edit_passwd'}>"><i class="icon-lock"></i>修改密码</a></li><{/if}>
-			    <{if $checkAccess['#pc/user/switch']}><li><a href="javascript:;" id="switchCompany"><i class="icon-resize-horizontal"></i>切换公司</a></li><{/if}>
+			    <li><a href="<{url route='user/edit'}>"><i class="icon-cog"></i>账户信息</a></li>
+			    <li><a href="<{url route='user/edit_passwd'}>"><i class="icon-lock"></i>修改密码</a></li>
+			    <li><a href="javascript:;" id="switchCompany"><i class="icon-resize-horizontal"></i>切换公司</a></li>
 			    <li class="divider"></li>
 			    <li><a id="logout_btn" href="<{url route='user/logout'}>" onclick="$.confirm('确定退出系统？', function(){location.href=$('#logout_btn').attr('href')}, null, 300);return false;"><i class="icon-off"></i>退出系统</a></li>
 		    </ul>
 	    </div>
-	    <{if $checkAccess['#pc/message/index']}>
+
 	    <div class="mail clearfix left">
 		    <a class="dropdown-toggle text-hidden" data-toggle="dropdown" href=""></a>
 		    <i class="num"><{if $unReadMessageCount > 9}>9+<{else}><{$unReadMessageCount}><{/if}></i>
@@ -76,7 +69,7 @@
 			    <{/if}>
 		    </ul>
 	    </div>
-	    <{/if}>
+
 	</div>
 	<{/if}>
 </div>

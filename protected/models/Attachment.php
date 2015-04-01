@@ -26,6 +26,17 @@ class Attachment extends CActiveRecord
 		return '{{attachment}}';
 	}
 
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return Attachment the static model class
+     */
+    public static function model($className=__CLASS__)
+    {
+        return parent::model($className);
+    }
+
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -34,44 +45,13 @@ class Attachment extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, companyId, mediaId, adslotId, metaType, fileSize, sourcePath, thumbPath, operatorUID, creationTime', 'required'),
-			array('companyId, mediaId, adslotId, fileSize, operatorUID, creationTime', 'numerical', 'integerOnly'=>true),
+			array('name, companyId, metaType, fileSize, sourcePath, thumbPath, operatorUID, creationTime', 'required'),
+			array('companyId, fileSize, operatorUID, creationTime', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>64),
 			array('metaType, sourcePath, thumbPath', 'length', 'max'=>256),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, companyId, mediaId, adslotId, metaType, fileSize, sourcePath, thumbPath, operatorUID, creationTime', 'safe', 'on'=>'search'),
-		);
-	}
-
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-		);
-	}
-
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'name' => 'Name',
-			'companyId' => 'Company',
-			'campaignId' => 'Campaign',
-			'adGroupId' => 'Ad Group',
-			'metaType' => 'Meta Type',
-			'fileSize' => 'File Size',
-			'sourcePath' => 'Source Path',
-			'thumbPath' => 'Thumb Path',
-			'operatorUID' => 'Operator Uid',
-			'creationTime' => 'Creation Time',
+			array('id, name, companyId, metaType, fileSize, sourcePath, thumbPath, operatorUID, creationTime', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -110,17 +90,11 @@ class Attachment extends CActiveRecord
 		));
 	}
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Attachment the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
-	
+
+    /**
+     * 在验证之前压入操作者和操作时间
+     * @return bool
+     */
 	public function beforeValidate() {
 		parent::beforeValidate();
 

@@ -13,14 +13,53 @@ class SiteController extends Controller
 		$this->redirect($this->createUrl('site/dashboard'));
 	}
 
-	/* 仪表盘 */
+    /**
+     * 首页
+     * @param string $time
+     */
 	public function actionDashboard($time = ''){
+        // 获取当前用户的信息
 		$yii = Yii::app();
 		$user = $yii->user;
 		$userState = $user->getRecord();
-		
+
+		// 获取当前用户的默认公司id
 		$this->defaultCompanyID = $defaultCompanyId = $userState->defaultCompanyID;
 
+        // 对时间进行判断处理
+        if (empty($time)) {
+            $time = date('Y/m/d', strtotime('-7 days')) . '-' . date('Y/m/d');
+        }
+        $timeArr = explode('-', $time);
+
+        // 获取当前公司的信息
+        $company = Company::model()->findByPk($defaultCompanyId);
+
+        // 模板分配显示
+        $this->smartyRender(array(
+            'time'    => $time,
+            'timeStr' => strtotime($timeArr[0]) . '_' . strtotime($timeArr[1]),
+            'company' => $company,
+        ));
 	}
 
+    /**
+     * 获取当前当天的公司交易消耗
+     * @param $companyId 公司id
+     */
+    public function actionTodayCost($companyId) {
+        // 今日消耗
+        $todayCost = ReportMediaDaily::model()->getTodayCost($companyId);
+        echo "document.write('". number_format($todayCost) . "');";
+    }
+
+    /**
+     * 获取当前累计公司交易消耗
+     * @param $companyId 公司id
+     */
+    public function actionAllCost($companyId) {
+        // 累计消耗
+        $allCost = ReportMediaDaily::model()->getAllCost($companyId);
+        echo "document.write('". number_format($allCost) . "');";
+    }
 }

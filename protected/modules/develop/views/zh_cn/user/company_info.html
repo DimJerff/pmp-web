@@ -1,0 +1,99 @@
+<{include file="../_common/head.html"}>
+<{include file="../_common/header.html"}>
+		<div class="main-container clearfix">
+          	
+          	<div class="main-content full">
+          		<div class="content-header clearfix">
+          			<h3 class="content-name left">帐户信息</h3>
+          		</div>
+          		<div class="content-body edit-account">
+          			    <div class="tabbable">
+							<{if !$errors.normal}><{include file="common/setting_navigator.html"}><{/if}>
+						    <div class="tab-content">
+						   		<{if $errors.normal}>
+						    	信息成功修改！5秒后跳回控制面板
+						    	<script>setTimeout(function(){location.href='<{url route="site/index"}>'}, 5000);</script>
+						    	<{else}>
+							    <div class="tab-pane active">
+							    	<form id="company_form" method="POST" class="form-horizontal">
+				      			    	<div class="fieldset-header">
+				      			    		基本信息
+				      			    	</div>
+									    <div class="control-group">
+									    	<label class="control-label"><span class="required">*</span>公司名称</label>
+										    <div class="controls">
+										    	<input type="text" id="edit_firstname" name="edit[companyName]" placeholder="公司名称…" value="<{$user.defaultCompany.companyName|escape:'html'}>" />
+										    </div>
+									    </div>
+									    <div class="control-group">
+									    	<label class="control-label"><span class="required">*</span>公司网址</label>
+										    <div class="controls">
+										    	<input type="text" id="edit_lastname" name="edit[website]" placeholder="公司网址…" value="<{$user.defaultCompany.website|escape:'html'}>" >
+										    </div>
+									    </div>
+									   <div class="control-group">
+											<label class="control-label" for="businessLicense">营业执照</label>
+											<div class="controls">
+											    <span class="btn btn-success fileinput-button">
+											        <span>营业执照</span>
+											        <input type="file" id="businessLicense" name="businessLicense">
+											    </span>
+											</div>
+											<div class="controls " style="margin-top:15px;">
+												<input type="hidden" id="file_businessLicense" name="edit[businessLicense]" value="<{$user.defaultCompany.businessLicense|escape:'html'}>" class="input-xlarge">
+												<img style="width:60px;height:60px; " src="<{$user.defaultCompany.businessLicense|attach_url}>" id="businessLicense_img" class="img-polaroid">
+										    </div>
+										</div>
+										<div class="control-group">
+					                        <label class="control-label" for="identityCard">身份证</label>
+					                        <div class="controls">
+					                            <span class="btn btn-success fileinput-button">
+						                            <span>正面</span>
+						                            <input id="identityCard" type="file" name="identityCard">
+					                            </span>
+					                            <span style="margin-left:25px;" class="btn btn-success fileinput-button">
+					                            <span>反面</span>
+					                            	<input id="identityCard2" type="file" name="identityCard2">
+					                            </span>
+					                        </div>
+					                        <div class="controls">
+					                            <div style="width:60px;height:60px;margin-top:15px;" class="pull-left">
+					                            	<input type="hidden" id="file_identityCard" name="edit[identityCard]" value="<{$user.defaultCompany.identityCard|escape:'html'}>" class="input-xlarge">
+					                                <img style="width:60px;height:60px;" src="<{$user.defaultCompany.identityCard|attach_url}>" class="img-polaroid" id="identityCard_img" name="identityCard_img">
+					                            </div>
+					                            <div style="width:60px;height:60px; margin-left:20px;margin-top:15px;" class="pull-left">
+					                            	<input type="hidden" id="file_identityCard2" name="edit[identityCard2]" value="<{$user.defaultCompany.identityCard2|escape:'html'}>" class="input-xlarge">
+					                                <img style="width:60px;height:60px;" src="<{$user.defaultCompany.identityCard2|attach_url}>" class=" img-polaroid" id="identityCard2_img" name="identityCard2_img">
+					                            </div>
+					                        </div>
+					                    </div>
+					                    <div class="control-group">
+											<label class="control-label" for="currency">结算货币</label>
+											<div class="controls"><span style="line-height:30px;"><{if $user.defaultCompany.currency eq 11}>人民币 (￥)<{else}><{$user.defaultCompany.currencyData.currencyName}> (<{$user.defaultCompany.currencyData.currencyCode}>)<{/if}></span></div>
+										</div>
+										<div class="control-group">
+											<label class="control-label" for="currency">时区</label>
+											<div class="controls"><span style="line-height:30px;"><{$user.defaultCompany.timezone_data.POSIXZhName}></span></div>
+										</div>
+										<{if $checkAccess['save']}>
+									   <div class="control-group">
+											<div class="controls">
+												<button class="btn btn-primary" type="submit">保存</button>
+												<button class="btn btn-cancel" type="cancel" onclick="location.reload();return false">取消</button>
+											</div>
+										</div>
+									   <{/if}>
+								    </form>
+							    </div>
+							    <{/if}>
+						    </div>
+					    </div>
+      			    
+          		</div>
+          	</div>
+		</div>
+
+		<div class="footer"><{include file="../site/common/copyright.html"}></div>
+		<{include file="../site/common/footer_js.html"}>
+	</body>
+</html>

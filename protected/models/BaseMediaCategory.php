@@ -105,4 +105,17 @@ class BaseMediaCategory extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    // 获取所有的分类并形成树
+    public function getAllCateToTree() {
+        $cates =  array_map(function($record) {
+            return $record->attributes;
+        },self::model()->findAll());
+
+        if (!empty($cates)) {
+            $cates = Data::order($cates, 'id', 'parentId');
+        }
+
+        return $cates;
+    }
 }

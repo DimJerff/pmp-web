@@ -1,0 +1,8 @@
+<ul class="nav nav-tabs">
+	<{if $checkAccess['#develop/user/edit']}>
+	<li<{if $actionid eq 'edit'}> class="active"<{/if}>><a href="<{url route='user/edit'}>">个人信息</a></li>
+	<{/if}>
+	<{if $checkAccess['#develop/user/company_info']}>
+	<li<{if $actionid eq 'company_info'}> class="active"<{/if}>><a href="<{url route='user/company_info'}>">公司信息</a></li>
+	<{/if}>
+</ul>

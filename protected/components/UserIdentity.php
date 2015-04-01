@@ -10,6 +10,7 @@ class UserIdentity extends CUserIdentity
 		$model = User::model()->findByAttributes(array(
 			'email' => $this->username,
 		));
+
 		if($model === null) {
 			/* 帐号不存在 */
 			$this->errorCode = self::ERROR_USERNAME_INVALID;

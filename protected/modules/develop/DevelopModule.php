@@ -1,5 +1,5 @@
 <?php
-class PcModule extends CWebModule
+class DevelopModule extends CWebModule
 {
 	public $defaultController = 'site';
 	

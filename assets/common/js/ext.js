@@ -132,12 +132,12 @@
 			}
 		});
 		return box;
-	}
+	};
 
 	$.stopBubble = function(e) {
 		if (e && e.stopPropagation)  e.stopPropagation();
 		else window.event.cancelBubble = true;
-	}
+	};
 
 	/* 警告框 */
 	$.alert = function(text, callback, widthSize) {
@@ -150,7 +150,7 @@
 				return false;
 			}
 		}).click(function(){ box.modal('hide'); return false; });
-	}
+	};
 
 	/* 确认框 */
 	$.confirm = function(text, okCallback, cancelCallback, widthSize) {
@@ -657,6 +657,7 @@
 		ajaxFormCall: function(params){
 			$(this).submit(function(event){
 				if(event.isDefaultPrevented() || event.isPropagationStopped()) return false;
+                if (params['func'] && typeof params['func'] == 'function') params['func']();
 				if(!$(this).valid()) return false;
 				var button = $(this).find(':button');
 				button.prop('disabled', true);
@@ -668,6 +669,11 @@
 					success: function(data){
 						if($.isArray(data)) {
 							if(data[0] == 'normal') {
+                                if (params['successFunc'] && typeof params['successFunc'] == 'function') {
+                                    params['successFunc'](data[1]);
+                                    return false;
+                                }
+
 								$.tips(params['tips']);
 								if(params['href']){
 									setTimeout(function(){location.href=params['href']}, 5000);
@@ -795,6 +801,185 @@
 })(jQuery);
 
 /**
+ * pmp图表
+ * @param data
+ * data 参数范例
+ * var data = {
+		'bidRequest': [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+		'impressions': [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+		'clicks': [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+		'fillingr': [1016, 1016, 1015.9, 1015.5, 1012.3, 1009.5, 1009.6, 1010.2, 1013.1, 1016.9, 1018.2, 1016.7],
+		'ctr': [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
+		'categories': ['2014/02', '2014/03', '2014/04', '2014/05', '2014/06', '2014/07', '2014/08', '2014/09', '2014/10', '2014/11', '2014/12', '2015/01']
+	}
+ */
+$.fn.chartPMP = function (data) {
+    // 生成图表
+    $(this).highcharts({
+        chart: {
+            zoomType: 'xy'
+        },
+        title: {
+            text: ''
+        },
+        credits: {
+            enabled: false
+        },
+        exporting: {
+            enabled:false
+        },
+        xAxis: [{
+            categories: data.categories
+        }],
+        yAxis: [{
+            labels: {
+                style: {
+                    color: '#009DE0'
+                }
+            },
+            title: {
+                text: '请求数',
+                style: {
+                    color: '#009DE0'
+                }
+            }
+
+        }, {
+            title: {
+                text: '展示数',
+                style: {
+                    color: '#89BD2C'
+                }
+            },
+            labels: {
+                style: {
+                    color: '#89BD2C'
+                }
+            }
+
+        }, {
+            title: {
+                text: '点击数',
+                style: {
+                    color: '#FCCC00'
+                }
+            },
+            labels: {
+                style: {
+                    color: '#FCCC00'
+                }
+            }
+
+        },{
+            title: {
+                text: '填充率',
+                style: {
+                    color: '#FE9A00'
+                }
+            },
+            labels: {
+                formatter: function() {
+                    return this.value +' %';
+                },
+                style: {
+                    color: '#FE9A00'
+                }
+            },
+            opposite: true
+        }, {
+            title: {
+                text: '点击率',
+                style: {
+                    color: '#CE3533'
+                }
+            },
+            labels: {
+                formatter: function() {
+                    return this.value +' %';
+                },
+                style: {
+                    color: '#CE3533'
+                }
+            },
+            opposite: true
+        }],
+        tooltip: {
+            shared: true
+        },
+        plotOptions: {
+            column: {
+                events:{
+                    legendItemClick: function(event) {
+                        if (event.currentTarget.name == event.target.chart.options.series[1].name) {
+                            return false;
+                        }
+                        if (event.currentTarget.name == event.target.chart.options.series[0].name) {
+                            if (event.currentTarget.visible) {
+                                this.chart.series[3].hide();
+                            } else {
+                                this.chart.series[3].show();
+                            }
+                        }
+                        if (event.currentTarget.name == event.target.chart.options.series[2].name) {
+                            if (event.currentTarget.visible) {
+                                this.chart.series[4].hide();
+                            } else {
+                                this.chart.series[4].show();
+                            }
+                        }
+                    }
+                }
+            },
+            line: {
+                events:{
+                    legendItemClick: function(event) {
+                        return false;
+                    }
+                }
+            }
+        },
+        series: [{
+            name: '请求数',
+            color: '#009DE0',
+            type: 'column',
+            yAxis: 0,
+            data: data.bidRequest
+        },{
+            name: '展示数',
+            color: '#89BD2C',
+            type: 'column',
+            yAxis: 1,
+            data: data.impressions
+        },{
+            name: '点击数',
+            color: '#FCCC00',
+            type: 'column',
+            yAxis: 2,
+            data: data.clicks
+        }, {
+            name: '填充率',
+            type: 'line',
+            color: '#FE9A00',
+            yAxis: 3,
+            data: data.fillingr,
+            tooltip: {
+                valueSuffix: '%'
+            }
+
+        }, {
+            name: '点击率',
+            color: '#CE3533',
+            type: 'line',
+            yAxis: 4,
+            data: data.ctr,
+            tooltip: {
+                valueSuffix: '%'
+            }
+        }]
+    });
+};
+
+/**
  * 小弹框提示
  */
 function popoverNote() {
@@ -882,6 +1067,40 @@ function inArray(stringToSearch, arrayToSearch) {
         }
     }
     return false;
+}
+
+/**
+ * js复制
+ * 按钮对象上需要添加属性 data-clipboard-target="text"
+ * @param id　按钮对象
+ */
+function copyToClipboard(id){
+    var obj = document.getElementById(id);
+    var clip =  new ZeroClipboard(obj,{moviePath:'/assets/common/js/ZeroClipboard.swf'});
+    clip.setHandCursor(true);
+    clip.addEventListener('complete', function(client,text){
+        var oldHtml = obj.innerHTML;
+        obj.innerHTML = "复制成功";
+        setTimeout(function() {
+            obj.innerHTML = oldHtml;
+        }, 1500);
+    });
+}
+
+/**
+ * ajax分页公用方法
+ * @param listId 列表的id
+ * @param url 请求的url
+ * @param param 请求的参数
+ */
+function ajaxPage(listId, url, param) {
+    param = param.split("=");
+    var listObj = $("#" + listId);
+    listObj.data(param[0], param[1]);
+
+    $.ajaxCall(url, function(data){
+        listObj.html(data.html);
+    }, {data : listObj.data()});
 }
 
 

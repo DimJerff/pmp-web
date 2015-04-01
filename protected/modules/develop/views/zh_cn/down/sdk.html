@@ -1,0 +1,17 @@
+<div style="width: 762px;">
+    <div>下载SDK</div>
+    <div style="padding-left: 70px;">
+        <{if $adslot.os eq 1}>
+        <a class="down-sdk down-sdk-android" href="">下载android SDK</a>
+        <{/if}>
+        <{if $adslot.os eq 2}>
+        <a class="down-sdk down-sdk-ios" href="">下载ios SDK</a>
+        <{/if}>
+    </div>
+    <div>广告位ID</div>
+    <div style="padding-left: 70px;">
+        <input type="text" readonly value="<{$adslot.adslotIdStr}>" style="margin-top: 10px; width: 260px;" id="txt-copy" />
+        <button class="btn btn-primary" id="btn-copy" data-clipboard-target="txt-copy">点击复制</button>
+    </div>
+</div>
+<script>copyToClipboard("btn-copy");</script>

@@ -1,0 +1,34 @@
+<{include file="../_common/head.html"}>
+<body style="height: auto;">
+<!-- 头部导航 start -->
+<{include file="../_common/header.html"}>
+<!-- 头部导航 end -->
+<!-- 主体内容 start -->
+<div class="main-container clearfix">
+    <div class="main-content">
+        <form id="media_form" action="" method="POST" class="form-horizontal">
+            <fieldset>
+                <div class="fieldset-header">全部应用 > <span style="color: #619AB6">编辑应用</span></div>
+                <div class="content-header clearfix" style="height: 1px; border-bottom: 0px;">
+                    <h3 class="content-name left"></h3>
+                </div>
+                <input type="hidden" name="media[id]" value="<{$media.id}>">
+                <{* 加载共用HTML *}>
+                <{include file="./_addAndEditCommonHtml.html"}>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn btn-primary">保存</button>
+                        <button type="button" onclick="history.go(-1)" class="btn btn-cancel">取消</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<!-- 主体内容 end -->
+<!-- 页脚 -->
+<{include file="../_common/footer.html"}>
+<{* 加载共用JS *}>
+<{include file="./_addAndEditCommonJs.html"}>
+</body>
+</html>

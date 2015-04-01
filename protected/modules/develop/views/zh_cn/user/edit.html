@@ -1,0 +1,83 @@
+<{include file="../_common/head.html"}>
+<{include file="../_common/header.html"}>
+		<div class="main-container clearfix">
+          	
+          	<div class="main-content full">
+          		<div class="content-header clearfix">
+          			<h3 class="content-name left">帐户信息</h3>
+          		</div>
+          		<div class="content-body edit-account">
+          			    <div class="tabbable">
+							<{if !$errors.normal}><{include file="common/setting_navigator.html"}><{/if}>
+						    <div class="tab-content">
+						   		<{if $errors.normal}>
+						    	信息成功修改！5秒后跳回控制面板
+						    	<script>setTimeout(function(){location.href='<{url route="site/index"}>'}, 5000);</script>
+						    	<{else}>
+							    <div class="tab-pane active">
+							    	<form id="edit_form" method="POST" class="form-horizontal">
+				      			    	<div class="fieldset-header">
+				      			    		基本信息
+				      			    	</div>
+				      			    	 <div class="control-group">
+									    	<label class="control-label">用户名</label>
+										    <div class="controls">
+										    	<span><{$user.email|escape:'html'}></span>
+										    </div>
+									    </div>
+									    <div class="control-group">
+									    	<label class="control-label"><span class="required">*</span>姓</label>
+										    <div class="controls">
+										    	<input type="text" id="edit_firstname" name="edit[firstname]" placeholder="姓…" value="<{$user.firstname|escape:'html'}>" />
+										    </div>
+									    </div>
+									    <div class="control-group">
+									    	<label class="control-label"><span class="required">*</span>名</label>
+										    <div class="controls">
+										    	<input type="text" id="edit_lastname" name="edit[lastname]" placeholder="名…" value="<{$user.lastname|escape:'html'}>" >
+										    </div>
+									    </div>
+									   <div class="control-group">
+									    	<label class="control-label"><span class="required">*</span>移动电话</label>
+										    <div class="controls">
+										    	<input type="text" id="edit_telephone" name="edit[telephone]" placeholder="移动电话…" value="<{$user.telephone|escape:'html'}>" >
+										    </div>
+									    </div>
+									    <{if $checkAccess['#develop/user/edit_passwd']}>
+									    <div class="control-group">
+									    	<label class="control-label">登录密码</label>
+										    <div class="controls">
+										    	<a href="<{url route='user/edit_passwd'}>" class="btn">更改</a>
+										    </div>
+									    </div>
+									    <{/if}>
+									     <div class="control-group type">
+									    	<label class="control-label"><span class="required">*</span>语言设置</label>
+										    <div class="controls">
+										    	<select id="edit_language" name="edit[language]" class="input-xlarge">
+	                                                      <option <{if $user.language eq 1}>selected="selected"<{/if}> value="1">英语</option>
+	                                                      <option <{if $user.language eq 2}>selected="selected"<{/if}> value="2">中文</option>
+	                                              </select>
+										    </div>
+									    </div>
+									    <{if $checkAccess['save']}>
+									   <div class="control-group">
+											<div class="controls">
+												<button class="btn btn-primary" type="submit">保存</button>
+												<button class="btn btn-cancel" type="cancel" onclick="location.reload();return false">取消</button>
+											</div>
+										</div>
+									   <{/if}>
+								    </form>
+							    </div>
+							    <{/if}>
+						    </div>
+					    </div>
+          		</div>
+          	</div>
+		</div>
+
+		<div class="footer"><{include file="../site/common/copyright.html"}></div>
+		<{include file="../site/common/footer_js.html"}>
+	</body>
+</html>

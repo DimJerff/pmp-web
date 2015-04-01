@@ -284,4 +284,18 @@ class Util extends CComponent {
 		}
 		return $result;
 	}
+
+    /**
+     * 二维中过滤下标第一个字符为下划线的键值对
+     * @param $data 需要过滤的数组
+     * @return mixed
+     */
+    public static function filterUnderlineKey($data, $pos=0) {
+        foreach ($data as $k=>$v) {
+            if (strpos($k, '_') === $pos) {
+                unset($data[$k]);
+            }
+        }
+        return $data;
+    }
 }

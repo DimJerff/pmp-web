@@ -1,0 +1,108 @@
+<{include file="../_common/head.html"}>
+<body>
+<!-- 头部导航 start -->
+<{include file="../_common/header.html"}>
+<!-- 头部导航 end -->
+<!-- 主体内容 start -->
+<div class="main-container clearfix">
+    <div class="main-content">
+        <div class="content-body">
+            <!-- 广告位信息 start -->
+            <div class="clearfix company-info-container" style="height: 48px; border: 1px solid #E3E3E3; padding: 10px; border-radius: 4px;">
+                <div class="media-detail-img">
+                    <img src="<{$adslot.appIcon|attach_url}>" width="48" height="48">
+                </div>
+                <div class="media-detail-info">
+                    <div class="media-detail-info-name">
+                        <span class="media-name"><{$adslot.adslotName}></span>
+                        <span>
+                            <a target="_blank" style="display: inline-block;" href="/pc/campaign/edit/id/392.html"><i class="icon-edit-custom"></i></a>
+                        </span>
+                    </div>
+                    <div class="media-detail-info-lot">
+                        <a class="media-lot" href="<{url route='media/detail' id=$adslot['mediaId']}>" style="display: inline;"><{$adslot.appName}> </a>
+                        <span class="media-lot-num">[<{$adslot.osName}>]</span>
+                    </div>
+                </div>
+                <div class="right add-media">
+                    <a class="btn btn-primary-customize" href="javascript: ajaxSdk(<{$adslot.adslotId}>);">
+                        <i class="icon-globe icon-white"></i> 集成SDK
+                    </a>
+                </div>
+            </div>
+            <!-- 广告位信息 end -->
+            <div class="block-space"></div>
+            <!-- 表单时间选择 start -->
+            <{include file="../_common/doubleCalendarForm.html"}>
+            <!-- 表单时间选择 end -->
+            <div class="block-space"></div>
+            <!-- 数据图表 start -->
+            <div class="tab-content report media-chart1 lloading" style="padding-top: 30px;">
+                <div class="active" id="report_container" style="width: 100%; height: 100%"></div>
+            </div>
+            <!-- 数据图表 end -->
+            <!-- 交易区块 start -->
+            <div class="campaign-table" style="margin-top: 10px;">
+                <div class="campaign-table-header campaign-table-header-f">
+                    <div class="stat-type-btn">
+                        <span>交易</span>
+                    </div>
+                    <div class="stat-filter-btn contentOpt hide" style="display: block;">
+                        <a class="filter-down-a" href=""></a>
+                        <span style=" vertical-align: bottom; display: block; float: right; height: 46px; margin-right: 10px;">仅显示投放中</span>
+                    </div>
+                </div>
+                <div class="contentList hide" id="" style="display: block;"><table class="campaign-table-body table table-striped customrize">
+                    <colgroup>
+                        <col style="width:30px;text-align: right;">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=name'">交易名称</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=status'">类型</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=budget'" class="number_row">预算</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=cost'" class="number_row">价格</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=impressions'" class="number_row">开始时间</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=impressions'" class="number_row">结束时间</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=impressions'" class="number_row">展示数</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=clicks'" class="number_row">点击数</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=ctr'" class="number_row">点击率</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td colspan="10">列表为空</td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            <!-- 交易区块 end -->
+        </div>
+    </div>
+</div>
+<!-- 主体内容 end -->
+<!-- 页脚 -->
+<{include file="../_common/footer.html"}>
+</body>
+<script>
+    $(function() {
+        // 图表数据生成
+        var chartUrl = "/develop/ajaxReport/adslotChartData/time/<{$timeStr}>/adslotId/<{$adslot.adslotId}>";
+        $.ajaxCall(chartUrl, function(result) {
+            $("#report_container").chartPMP(result.chartData);
+        });
+
+    });
+
+    // 集成sdk
+    function ajaxSdk(adslotId) {
+        var url = "/develop/down/sdk/adslotId/" + adslotId;
+        $.ajaxCall(url, function(res) {
+            var box = $.modalBox(res.title, res.body, res.footer);
+            box.on('hidden', function () {})
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,188 @@
+<{include file="../_common/head.html"}>
+<body>
+<!-- 头部导航 start -->
+<{include file="../_common/header.html"}>
+<!-- 头部导航 end -->
+<!-- 主体内容 start -->
+<div class="main-container clearfix">
+    <div class="main-content">
+        <div class="content-body">
+            <!-- 应用信息和添加应用区块 start -->
+            <div class="clearfix company-info-container" style="height: 48px;">
+                <div class="media-detail-img">
+                    <img src="<{$media.appIcon|attach_url}>" width="48" height="48" />
+                </div>
+                <div class="media-detail-info">
+                    <div class="media-detail-info-name">
+                        <span class="media-name"><{$media.appName}></span>
+                        <span class="media-type">[<{$media.osName}>]</span>
+                        <span>
+                            <a target="_blank" style="display: inline-block;" href="/pc/campaign/edit/id/392.html"><i class="icon-edit-custom"></i></a>
+                        </span>
+                    </div>
+                    <div class="media-detail-info-lot">
+                        <span class="media-lot">广告位 </span>
+                        <span class="media-lot-num"><{$adslotCount}></span>
+                    </div>
+                </div>
+                <div class="right add-media">
+                    <a class="btn btn-primary-customize" href="<{url route='adslot/add' mediaId=$media.id}>">
+                        <i class="icon-plus icon-white"></i>新建广告位
+                    </a>
+                </div>
+            </div>
+            <div class="media-line"></div>
+            <!-- 应用信息和添加应用区块 end -->
+            <!-- 表单时间选择 start -->
+            <{include file="../_common/doubleCalendarForm.html"}>
+            <!-- 表单时间选择 end -->
+            <div class="block-space"></div>
+            <!-- 数据图表 start -->
+            <div class="tab-content report media-chart1 lloading" style="padding-top: 30px;">
+                <div class="active" id="report_container" style="width: 100%; height: 100%"></div>
+            </div>
+            <!-- 数据图表 end -->
+            <!-- 广告位区块 start -->
+            <div class="campaign-table">
+                <div class="campaign-table-header campaign-table-header-f">
+                    <div class="stat-type-btn">
+                        <span>广告位</span>
+                    </div>
+                    <div class="stat-filter-btn contentOpt" id="adslotOpt">
+                        <a class="filter-down-a" href=""></a>
+                        <div class="filter-select-dpi">
+                            <select name="adslot-dpi">
+                                <option value="0">全部</option>
+                                <option value="300x250">300X250</option>
+                                <option value="320x50">320X50</option>
+                                <option value="320x480">320X480</option>
+                                <option value="480x320">480X320</option>
+                                <option value="728x90">728X90</option>
+                                <option value="768x1024">768X1024</option>
+                                <option value="1024x768">1024X768</option>
+                                <option value="-1x-1">全屏</option>
+                                <option value="">自定义</option>
+                            </select>
+                        </div>
+                        <div style=" margin-right: 20px;" class="form-inline right diy-dpi hide">
+                            <input type="text" name="diy_width" class="input-small" />
+                            x
+                            <input type="text" name="diy_height" class="input-small" />
+                            <input type="button" class="btn btn-primary" value="确定" />
+                        </div>
+                    </div>
+                </div>
+                <!-- 广告位列表 start -->
+                <div class="contentList" id="adslotList" data-pagenum ="1" data-timestr="<{$timeStr}>" data-mediaid="<{$media.id}>" data-dpi="0"></div>
+                <!-- 广告位列表 end -->
+            </div>
+            <!-- 广告位区块 end -->
+            <!-- 交易区块 start -->
+            <div class="campaign-table" style="margin-top: 10px;">
+                <div class="campaign-table-header campaign-table-header-f">
+                    <div class="stat-type-btn">
+                        <span>交易</span>
+                    </div>
+                    <div class="stat-filter-btn contentOpt hide" style="display: block;">
+                        <a class="filter-down-a" href=""></a>
+                        <span style=" vertical-align: bottom; display: block; float: right; height: 46px; margin-right: 10px;">仅显示投放中</span>
+                    </div>
+                </div>
+                <div class="contentList hide" id="" style="display: block;"><table class="campaign-table-body table table-striped customrize">
+                    <colgroup>
+                        <col style="width:30px;text-align: right;">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=name'">交易名称</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=status'">类型</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=budget'" class="number_row">预算</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=cost'" class="number_row">价格</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=impressions'" class="number_row">开始时间</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=impressions'" class="number_row">结束时间</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=impressions'" class="number_row">展示数</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=clicks'" class="number_row">点击数</th>
+                        <th style="cursor:pointer;" onclick="location.href='?sort=ctr'" class="number_row">点击率</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td colspan="10">列表为空</td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            <!-- 交易区块 end -->
+        </div>
+    </div>
+</div>
+<!-- 主体内容 end -->
+<!-- 页脚 -->
+<{include file="../_common/footer.html"}>
+<script>
+    $(function() {
+        // 图表数据生成
+        var chartUrl = "/develop/ajaxReport/mediaChartData/time/<{$timeStr}>/mediaId/<{$media.id}>";
+        $.ajaxCall(chartUrl, function(result) {
+            $("#report_container").chartPMP(result.chartData);
+        });
+
+        // 初始化广告位
+        ajaxAdslotPage("pagenum=1");
+
+        // 广告位分辨率选择框改变事件
+        $("select[name='adslot-dpi']").change(function() {
+            if ($(this).val() == "") {
+
+                $(".diy-dpi").show();
+                //$.modalBox('自定义dpi查询');
+                return false;
+            }
+            ajaxAdslotPage("dpi=" + $(this).val());
+        });
+
+        // 自定义分辨率
+        $(".diy-dpi input[type='button']").click(function() {
+            var diy_width = $("input[name='diy_width']").val();
+            var diy_height = $("input[name='diy_height']").val();
+
+            if (!parseInt(diy_width)) {
+                $.alert("自定义宽度 不能为空且数字", null, 320);
+                return false;
+            }
+
+            if (!parseInt(diy_height)) {
+                $.alert("自定义高度 不能为空且数字", null, 320);
+                return false;
+            }
+
+            var dpi = diy_width + "x" + diy_height;
+            if (!$("select[name='adslot-dpi'][value='"+ dpi +"']").html()) {
+                $("select[name='adslot-dpi']").append('<option value="'+ dpi +'">'+ dpi +'</option>');
+            }
+            $("select[name='adslot-dpi']").val(dpi).change();
+            clearDiyDpi();
+        });
+    });
+
+    /**
+     * 清理自定义宽
+     */
+    function clearDiyDpi() {
+        $("input[name='diy_width']").val('');
+        $("input[name='diy_height']").val('');
+        $(".diy-dpi").hide();
+    }
+
+    /**
+     * 异步获取广告位列表
+     * @param param 提交的参数 格式范例:pagenum=1
+     */
+    function ajaxAdslotPage(param) {
+        ajaxPage("adslotList", '/develop/adslot/adslotList', param);
+    }
+</script>
+</body>
+</html>

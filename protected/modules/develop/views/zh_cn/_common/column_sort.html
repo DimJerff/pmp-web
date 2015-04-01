@@ -1,0 +1,16 @@
+<{* 表格单个排序th *}>
+<{if $smarty.get.sort eq '' || $smarty.get.sort eq 'id_ASC' || ($smarty.get.sort neq $sort|cat:'_DESC' && $smarty.get.sort neq $sort|cat:'_ASC')}>
+<th class="<{$class}>" style="cursor:pointer;" onclick="<{$ajaxFun}>('sort=<{$sort}>_DESC');">
+    <{$name}>
+</th>
+<{/if}>
+<{if $smarty.get.sort eq $sort|cat:'_DESC'}>
+<th class="<{$class}>" style="cursor:pointer;" onclick="<{$ajaxFun}>('sort=<{$sort}>_ASC');">
+    <{$name}><i class="icon-arrow-down icon-black"></i>
+</th>
+<{/if}>
+<{if $smarty.get.sort eq $sort|cat:'_ASC'}>
+<th class="<{$class}>" style="cursor:pointer;" onclick="<{$ajaxFun}>('sort=id_DESC');">
+    <{$name}><i class="icon-arrow-up icon-black"></i>
+</th>
+<{/if}>

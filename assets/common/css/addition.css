@@ -1,76 +1,350 @@
-.iqiyi{
-	background: url(../img/iqiyi.png) left no-repeat;
-	display: inline-block;
-	height: 40px;
-	width: 114px;
-	vertical-align: -10px;
+.iqiyi {
+    background: url(../img/iqiyi.png) left no-repeat;
+    display: inline-block;
+    height: 40px;
+    width: 114px;
+    vertical-align: -10px;
 }
-.pptv{
-	background: url(../img/pptv.png) left no-repeat;
-	display: inline-block;
-	height: 40px;
-	width: 114px;
-	vertical-align: -10px;
+
+.pptv {
+    background: url(../img/pptv.png) left no-repeat;
+    display: inline-block;
+    height: 40px;
+    width: 114px;
+    vertical-align: -10px;
 }
-.controls .inline-controls{
-	margin-top:5px;
-	display: inline-block;
+
+.controls .inline-controls {
+    margin-top: 5px;
+    display: inline-block;
 }
-.control-label .icon{
-	margin:0 5px;
+
+.control-label .icon {
+    margin: 0 5px;
 }
-.controls p.image img{
-	margin-top:20px;
+
+.controls p.image img {
+    margin-top: 20px;
 }
-.creative-native-app-image-list ul{
-	list-style: none;
-	margin:0;
+
+.creative-native-app-image-list ul {
+    list-style: none;
+    margin: 0;
 }
-.creative-native-app-image-list li{
-	float:left;
-	padding-right:10px;
+
+.creative-native-app-image-list li {
+    float: left;
+    padding-right: 10px;
 }
-.creative-native-app-image-list li img{
-	width:90px;
-	height:160px;
+
+.creative-native-app-image-list li img {
+    width: 90px;
+    height: 160px;
 }
-.adx-brand-logo{
+
+.adx-brand-logo {
     background: url(../common/img/brand_icon.png) 0px 100px no-repeat;
     vertical-align: -10px;
     display: inline-block;
-    width: 90px; height: 30px;
+    width: 90px;
+    height: 30px;
     line-height: 30px;
 }
-.adx-brand-logo-id-1{
+
+.adx-brand-logo-id-1 {
     background-position: 0px -340px;
 }
-.adx-brand-logo-id-3{
+
+.adx-brand-logo-id-3 {
     background-position: 0px -145px;
 }
-.adx-brand-logo-id-6{
+
+.adx-brand-logo-id-6 {
     background-position: 0px -224px;
 }
-.adx-brand-logo-id-9{
+
+.adx-brand-logo-id-9 {
     background-position: 0px -300px;
 }
-.adx-brand-logo-id-10{
+
+.adx-brand-logo-id-10 {
     background-position: 0px -512px;
 }
-.adx-brand-logo-id-11{
+
+.adx-brand-logo-id-11 {
     background-position: 0px -552px;
 }
-.adx-brand-logo-id-13{
+
+.adx-brand-logo-id-13 {
     background-position: 0px -592px;
 }
-.adx-brand-logo-id-14{
+
+.adx-brand-logo-id-14 {
     background-position: 0px -632px;
 }
-.adx-brand-logo-id-15{
+
+.adx-brand-logo-id-15 {
     background-position: 0px -170px;
 }
-.adx-brand-logo-id-17{
+
+.adx-brand-logo-id-17 {
     background-position: 0px -672px;
 }
-.adx-brand-logo-id-18{
+
+.adx-brand-logo-id-18 {
     background-position: 0px -712px;
 }
+
+/* ---PMP项目系统样式--- */
+/* 页面主体内容头信息盒子样式 */
+.content-body-head {
+    margin-top: 24px;
+    border: 1px solid #D6D6D6;
+    padding: 20px 20px 10px 20px;
+    border-radius: 4px;
+}
+
+.company-info-f {
+    padding-right: 10px;
+}
+
+.company-info-detail>a {
+    color: #999999;
+}
+
+.company-info-detail>a>span {
+    color: #0068CB;
+}
+
+.info-box-f {
+    margin-left: 0px;
+}
+
+.block-space {
+    width: 100%;
+    height: 10px;
+    clear: both;
+}
+
+.campaign-table-header-f {
+    height: 46px;
+    overflow: hidden;
+    line-height: 46px;
+}
+/* 应用和广告位列表按钮盒子 */
+.stat-type-btn {
+    float: left;
+    width: 300px;
+    height: 46px;
+    background: url("../img/icon-n.png") 0px 10px no-repeat;
+    margin-left: 20px;
+    padding-left: 30px;
+}
+
+.stat-type-btn span {
+    color: #0199CA;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.stat-filter-btn {
+    float: right;
+    height: 46px;
+    line-height: 46px;
+    overflow: hidden
+}
+
+.type-btn {
+    color: #9A9A9A;
+}
+
+.type-btn:hover {
+    color: #0088cc;
+}
+
+.type-btn-click {
+    color: #0088cc;
+}
+
+.filter-down-a {
+    display: block;
+    width: 46px;
+    height: 46px;
+    float: right;
+    background: url("../img/icon-n.png") 0px -60px no-repeat
+}
+
+.filter-select-os, .filter-select-dpi {
+    float: right;
+    width: 100px;
+    height: 46px;
+    line-height: 46px;
+    margin-right: 20px;
+    line-height: 46px;
+    margin-right: 20px;
+    padding-left: 30px;
+}
+
+.filter-select-os {
+    background: url("../img/icon-n.png") 0px -116px no-repeat;
+}
+
+.filter-select-dpi {
+    background: url("../img/icon-n.png") 0px -166px no-repeat;
+}
+
+.filter-select-os select, .filter-select-dpi select {
+    width: 100px;
+    height: 46px;
+}
+
+table.customrize thead th {
+    height: 20px;
+    line-height: 20px;
+    background-color: #F2F7FB;
+    color: #303437;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+table.customrize thead th:hover {
+    background-color: #F2F7FB;
+}
+
+.amount-tr > td {
+    background-color: #E3F1FA !important;
+}
+
+.in-adv-a {
+    display: inline-block;
+    background: url("../img/icon-n.png") 0px -220px no-repeat;
+    padding-left: 20px;
+}
+
+#media_appCategory select {
+    margin-right: 10px;
+}
+/* 应用详情页 */
+.media-detail-img {
+    width: 48px;
+    height: 48px;
+    float: left;
+}
+
+.media-detail-info {
+    height: 48px;
+    float: left;
+    margin-left: 20px;
+}
+
+.media-detail-info-name {
+    height: 30px;
+    line-height: 30px;
+}
+
+.media-detail-info-lot {
+    height: 18px;
+    line-height: 18px;
+}
+
+.media-name {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.media-type {
+    font-size: 14px;
+    color: #9A9A9A;
+    margin-left: 14px;
+}
+
+.media-lot {
+    font-size: 14px;
+    color: #9A9A9A;
+}
+
+.media-lot-num {
+    font-size: 14px;
+    color: #3268CC;
+}
+
+.add-media {
+    height: 38px;
+    padding-top: 10px;
+}
+
+.media-line {
+    width: 100%;
+    height: 19px;
+    border-bottom: 1px solid #D6D6D6;
+    margin-bottom: 10px;
+}
+
+.media-chart1 {
+    width: 100%;
+    height: 280px;
+    border: 1px solid #D6D6D6;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+/* 集成sdk */
+.down-sdk {
+    display: inline-block;
+    width: 111px;
+    height: 93px;
+    text-indent: -999em;
+    margin-right: 20px;
+}
+
+.down-sdk-ios {
+    background: url("../img/down-sdk.png") 0px 0px no-repeat;
+}
+
+.down-sdk-android {
+    background: url("../img/down-sdk.png") 0px -120px no-repeat;
+}
+
+.span-arrow-btn {
+    display: inline-block;
+    background: url("../img/campaign-list-icon.png") no-repeat scroll 1px -18px rgba(0, 0, 0, 0);
+    cursor: pointer;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 0 0 5px;
+    width: 15px;
+}
+
+.close-list li {
+    height: 24px;
+    line-height: 24px;
+}
+
+.close-list input[type=checkbox] {
+    margin-top: 0px;
+    margin-right: 5px;
+}
+
+.li-children {
+    margin-left: 25px;
+}
+
+.span-placeholder {
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 0 0 5px;
+    width: 15px;
+}
+
+.closed-list li {
+    background-color: #fbfbfb;
+    border: 1px solid #ccc;
+    margin: 2px 0;
+    overflow: hidden;
+    padding: 0 5px;
+}
+
+.lloading {
+    background: url("../img/lloading.gif") 50% 50% no-repeat;
+}
+

@@ -1,0 +1,65 @@
+<script>
+$(function() {
+    // 设备类型点击事件
+    $("input[name='adslot[deviceType]']").click(function() {
+        // 获取当前被点击的对象信息
+        var typeEnName = $(this).data('enname');
+        // 显示对象的尺寸
+        $(".select-dpi").hide();
+        $("#select-dpi-" + typeEnName).show().find("option:first").prop("selected", 'selected');
+        // 处理自定义的框
+        $("#diyDpi").hide();
+    }).eq(<{if $adslot}><{$adslot.deviceType - 1}><{else}>0<{/if}>).click();
+
+    // 尺寸下拉框改变事件
+    $(".select-dpi").change(function() {
+        // 获取当前值处理自定义的情况
+        var val = $(this).val();
+        if (val == '') {
+            $("#diyDpi").show();
+        } else {
+            $("#diyDpi").hide().find('input').val('');
+        }
+    });
+
+    // 频次限制点击事件
+    $("input[name='adslot[_frequencyCapUnitCapAmount]']").click(function() {
+        // 获取当前值处理是否为无限制的情况
+        var value = $(this).val();
+        if (value == '') {
+            $(".radio-frequency input, .radio-frequency select").prop("disabled", false);
+        } else {
+            $(".radio-frequency input, .radio-frequency select").prop("disabled", true);
+        }
+    }).eq(<{if $adslot && $adslot.frequencyCapUnit gt 0}>1<{else}>0<{/if}>).click();
+
+    // 表单异步提交
+    <{if $adslot}>
+    $("#adslot_form").ajaxFormCall({
+        url : '/develop/adslot/postAdslot',
+        tips :'广告位编辑成功，5秒钟后页面将自动跳转',
+        href :"<{url route='media/detail' id=$adslot.mediaId}>"
+    });
+    <{else}>
+    $("#adslot_form").ajaxFormCall({
+        url : '/develop/adslot/postAdslot',
+        successFunc: function (data) {
+            $.ajaxCall(data.url, function(res) {
+                var box = $.modalBox(res.title, res.body, res.footer);
+                box.on('hidden', function () {
+                    $.tips('3秒钟后,页面将自动跳转');
+                    setTimeout(function() {
+                        window.location.href = "<{url route='media/detail' id=$media.id}>";
+                    }, 3000);
+                })
+            });
+        }
+    });
+    <{/if}>
+
+    <{* 仅编辑页面运行 *}>
+    <{if $adslot}>
+    $("select[name='adslot[_widthHeight<{$adslot.deviceType}>]']").val('<{$adslot._widthHeight}>').change();
+    <{/if}>
+});
+</script>

@@ -277,7 +277,7 @@
 
 		/* 加载公司列表 */
 		$.ajax({
-			url: '/pc/user/switch',
+			url: '/develop/user/switch',
 			dataType: 'json',
 			success: function(data){
 				if($.isArray(data)) {
@@ -311,7 +311,7 @@
 			}
 		});
 		$('#switch_company').change(function(){
-			location.href = '/pc/user/switch?companyId='+$(this).val();
+			location.href = '/develop/user/switch?companyId='+$(this).val();
 		});
 	});
 
@@ -1094,8 +1094,13 @@ function copyToClipboard(id){
  * @param param 请求的参数
  */
 function ajaxPage(listId, url, param) {
-    param = param.split("=");
     var listObj = $("#" + listId);
+
+    if (param == undefined || !param) {
+        param = "pagenum=" + listObj.data("pagenum");
+    }
+    param = param.split("=");
+
     listObj.data(param[0], param[1]);
 
     $.ajaxCall(url, function(data){

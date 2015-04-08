@@ -110,11 +110,15 @@ class DbActiveRecord extends CActiveRecord {
     }
 
     // from
-    public function _from($tableName='') {
+    public function _from($tableName='', $alias=false) {
         if (empty($tableName)) {
             $this->_buildSql['FROM'] = "FROM " . $this->tableName();
         } else {
-            $this->_buildSql['FROM'] = "FROM " . $tableName;
+            if ($alias) {
+                $this->_buildSql['FROM'] = "FROM " . $this->tableName(). " " . $tableName;
+            } else {
+                $this->_buildSql['FROM'] = "FROM " . $tableName;
+            }
         }
 
         return $this;

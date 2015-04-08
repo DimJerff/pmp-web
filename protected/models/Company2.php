@@ -56,7 +56,10 @@ class Company2 extends Db2ActiveRecord
         return parent::model($className);
     }
 
-    // 获取所有正常状态的公司
+    /**
+     * 获取所有正常状态的公司
+     * @return mixed
+     */
     public function getCompanys() {
         $sql = "";
         $sql .= "SELECT ";
@@ -66,6 +69,20 @@ class Company2 extends Db2ActiveRecord
         $sql .= "`status` = 1";
 
         return $this->_query($sql);
+    }
+
+    /**
+     * 通过公司id集合获取公司名称
+     * @param $idArr 公司id集合
+     * @return mixed
+     */
+    public function getCompanyNames($idArr) {
+        $field = "companyName";
+        $where = array(
+            "id IN (". implode(', ', $idArr).")",
+        );
+
+        return $this->_select()->_field($field)->_from()->_where($where)->_query();
     }
 
 }

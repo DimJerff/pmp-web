@@ -40,7 +40,7 @@ class AdslotController extends Controller {
 
     // 添加广告位页面
     public function actionAdd($mediaId) {
-
+        $this->checkAccess();
         // 从配置文件中获取设定的设备分辨率
         $deviceDpi = Yii::app()->params['deviceDpi'];
 
@@ -56,6 +56,7 @@ class AdslotController extends Controller {
 
     // 广告编辑页面
     public function actionEdit($id) {
+        $this->checkAccess();
         // 从配置文件中获取设定的设备分辨率
         $deviceDpi = Yii::app()->params['deviceDpi'];
 
@@ -77,10 +78,117 @@ class AdslotController extends Controller {
     }
 
     // 获取当前公司广告位的数目
-    public function actionAdslotCount($companyId) {
+    public function actionAdslotCount() {
+        // 获取当前用户的默认公司id
+        $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
+
         // 广告位数据
         $count = MediaAdslot::model()->getCountByCid($companyId);
         echo "document.write(". $count . ");";
+    }
+
+    // 所有广告位的消耗报表
+    public function actionExportAll($timestr, $mediaid) {
+        // 获取当前用户的默认公司id
+        $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
+        $records = MediaAdslot::model()->getAdslotList($companyId, explode("_", $timestr), $mediaid);
+        $totalRecord = array(
+            '0'           => '',
+            'cost'        => 0,
+            'bidRequest'  => 0,
+            'impressions' => 0,
+            'clicks'      => 0,
+            'fillingr'    => 0,
+            'ctr'         => 0,
+            'ecpm'        => 0,
+            'ecpc'        => 0,
+            'totalName'   => '共计',
+        );
+
+        foreach($records as $k=>$v) {
+            $totalRecord['cost'] += $v['cost'];
+            $totalRecord['bidRequest'] += $v['bidRequest'];
+            $totalRecord['impressions'] += $v['impressions'];
+            $totalRecord['clicks'] += $v['clicks'];
+            $records[$k]['ctr'] = $records[$k]['ctr']/100;
+            if ($records[$k]['width'] == "-1") {
+                $records[$k]['dpi'] = '全屏';
+            }
+        }
+
+        if ($totalRecord['bidRequest']) {
+            $totalRecord['fillingr'] = round($totalRecord['impressions']/$totalRecord['bidRequest'] * 100, 2);
+        }
+        if ($totalRecord['impressions']) {
+            $totalRecord['ctr'] = round($totalRecord['clicks']/$totalRecord['impressions'], 4);
+        }
+        if ($totalRecord['impressions']) {
+            $totalRecord['ecpm'] = $totalRecord['cost']/$totalRecord['impressions']/1000;
+        }
+        if ($totalRecord['clicks']) {
+            $totalRecord['ecpc'] = $totalRecord['cost']/$totalRecord['clicks']/1000000;
+        }
+
+        $timeArr = explode("_", $timestr);
+
+        $title = "广告位报表" . date('Y-m-d', $timeArr[0]) . "-" . date('Y-m-d', $timeArr[1]);
+        $titleNames = array(
+            "广告位名称",
+            "尺寸",
+            "收入",
+            "请求数",
+            "展示数",
+            "填充率",
+            "点击数",
+            "点击率",
+            "eCPM",
+            "eCPC",
+        );
+        $recordsNames = array(
+            'adslotName'  => 'string',
+            'dpi'         => 'string',
+            'cost'        => 'money',
+            'bidRequest'  => 'number',
+            'impressions' => 'number',
+            'fillingr'    => 'percent',
+            'clicks'      => 'number',
+            'ctr'         => 'percent',
+            'ecpm'        => 'money',
+            'ecpc'        => 'money',
+        );
+        $totalRecordNames = array(
+            'totalName'   => 'string',
+            '0'           => 'string',
+            'cost'        => 'money',
+            'bidRequest'  => 'number',
+            'impressions' => 'number',
+            'fillingr'    => 'percent',
+            'clicks'      => 'number',
+            'ctr'         => 'percent',
+            'ecpm'        => 'money',
+            'ecpc'        => 'money',
+        );
+        // 实例化excel类对象
+        $report = new ExcelExtend;
+        $objPHPExcel = new PHPExcel();
+        // 设置excel的属性
+        $objPHPExcel->getProperties()->setCreator("limei.com"); // 创建人
+        $objPHPExcel->getProperties()->setLastModifiedBy("limei.com"); // 最后修改人
+        $objPHPExcel->getProperties()->setTitle($title); // 标题
+        // 设置当前的sheet
+        $objPHPExcel->setActiveSheetIndex(0);
+        // 设置sheet的名称
+        $activeSheet = $objPHPExcel->getActiveSheet()->setTitle($title);
+        // 初始化当前处理的sheet
+        $report->initCurrentSheet($activeSheet);
+        // 处理标题
+        $report->setHeadSection($titleNames);
+        // 处理具体数据
+        $report->setBodySection($records, $recordsNames);
+        // 处理统计
+        $report->setFootSection($totalRecord, $totalRecordNames);
+        // 下载
+        $report->download($objPHPExcel, $title);
     }
 
 
@@ -138,12 +246,13 @@ class AdslotController extends Controller {
         // 获取应用表模型
         $adslotModel = MediaAdslot::model();
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
-        $lists = $adslotModel->getMediaPageList($companyId, $ostype, $dpi, explode("_", $timestr), $order, $mediaid);
+        list($records, $pagingData) = $adslotModel->getMediaPageList($companyId, $ostype, $dpi, explode("_", $timestr), $order, $mediaid);
 
         // 模板分配显示
         $html = $this->smartyRender(array(
-            'records' => $lists['list'],
-            'pagingData' => $lists['page'],
+            'records' => $records,
+            'pagingData' => $pagingData,
+            'amount'     => Util::listAmount($records),
             'ajaxFun' => 'ajaxAdslotPage'
 
         ), null, true);
@@ -151,6 +260,35 @@ class AdslotController extends Controller {
         $this->rspJSON($data);
     }
 
+    // 改变广告位状态
+    public function actionChange_status($id, $status) {
+        $model = MediaAdslot::model()->findByPk($id);
+        $model->status = $status;
+
+        if ($model->save()) {
+            $this->rspJSON();
+        } else {
+            $this->rspErrorJSON(304, "状态修改失败");
+        }
+    }
+
+    // 异步获取广告位名称
+    public function actionAdslotNameSearch($name) {
+        $names = array();
+
+        // 实例化交易表模型
+        $model = MediaAdslot::model();
+
+        // 查询交易名称
+        $result = $model->getAdslotNameLike($name);
+        if (!empty($result)) {
+            foreach($result as $v) {
+                $names[] = $v['adslotName'];
+            }
+        }
+
+        $this->rspJSON($names);
+    }
 
     /******************************************************************************************************************
      *

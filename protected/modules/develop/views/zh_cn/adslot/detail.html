@@ -52,31 +52,7 @@
                         <span style=" vertical-align: bottom; display: block; float: right; height: 46px; margin-right: 10px;">仅显示投放中</span>
                     </div>
                 </div>
-                <div class="contentList hide" id="" style="display: block;"><table class="campaign-table-body table table-striped customrize">
-                    <colgroup>
-                        <col style="width:30px;text-align: right;">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th>&nbsp;</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=name'">交易名称</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=status'">类型</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=budget'" class="number_row">预算</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=cost'" class="number_row">价格</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=impressions'" class="number_row">开始时间</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=impressions'" class="number_row">结束时间</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=impressions'" class="number_row">展示数</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=clicks'" class="number_row">点击数</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=ctr'" class="number_row">点击率</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td colspan="10">列表为空</td>
-                    </tr>
-                    </tbody>
-                </table>
-                </div>
+                <div class="contentList" id="dealReList" data-pagenum ="1" data-timestr="<{$timeStr}>" data-mediaid="<{$adslot.mediaId}>" data-adslotid="<{$adslot.adslotId}>" >
             </div>
             <!-- 交易区块 end -->
         </div>
@@ -94,15 +70,28 @@
             $("#report_container").chartPMP(result.chartData);
         });
 
+        // 初始化交易关系列表
+        ajaxDealRePage();
     });
 
-    // 集成sdk
+    /**
+     * 集成sdk
+     * @param adslotId 广告id
+     */
     function ajaxSdk(adslotId) {
         var url = "/develop/down/sdk/adslotId/" + adslotId;
         $.ajaxCall(url, function(res) {
             var box = $.modalBox(res.title, res.body, res.footer);
             box.on('hidden', function () {})
         });
+    }
+
+    /**
+     * 异步获取交易关系列表
+     * @param param 提交的参数 格式范例:pagenum=1
+     */
+    function ajaxDealRePage(param) {
+        ajaxPage("dealReList", '/develop/deal/dealReList', param);
     }
 </script>
 </html>

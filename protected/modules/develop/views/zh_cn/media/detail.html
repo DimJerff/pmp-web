@@ -49,7 +49,7 @@
                         <span>广告位</span>
                     </div>
                     <div class="stat-filter-btn contentOpt" id="adslotOpt">
-                        <a class="filter-down-a" href=""></a>
+                        <a class="filter-down-a" href="<{url route='adslot/exportAll' timestr=$timeStr mediaid=$media.id}>"></a>
                         <div class="filter-select-dpi">
                             <select name="adslot-dpi">
                                 <option value="0">全部</option>
@@ -84,35 +84,11 @@
                         <span>交易</span>
                     </div>
                     <div class="stat-filter-btn contentOpt hide" style="display: block;">
-                        <a class="filter-down-a" href=""></a>
+                        <a class="filter-down-a" href="<{url route='deal/exportMedia' timestr=$timeStr mediaid=$media.id}>"></a>
                         <span style=" vertical-align: bottom; display: block; float: right; height: 46px; margin-right: 10px;">仅显示投放中</span>
                     </div>
                 </div>
-                <div class="contentList hide" id="" style="display: block;"><table class="campaign-table-body table table-striped customrize">
-                    <colgroup>
-                        <col style="width:30px;text-align: right;">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th>&nbsp;</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=name'">交易名称</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=status'">类型</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=budget'" class="number_row">预算</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=cost'" class="number_row">价格</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=impressions'" class="number_row">开始时间</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=impressions'" class="number_row">结束时间</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=impressions'" class="number_row">展示数</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=clicks'" class="number_row">点击数</th>
-                        <th style="cursor:pointer;" onclick="location.href='?sort=ctr'" class="number_row">点击率</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td colspan="10">列表为空</td>
-                    </tr>
-                    </tbody>
-                </table>
-                </div>
+                <div class="contentList" id="dealReList" data-pagenum ="1" data-timestr="<{$timeStr}>" data-mediaid="<{$media.id}>"></div>
             </div>
             <!-- 交易区块 end -->
         </div>
@@ -130,7 +106,10 @@
         });
 
         // 初始化广告位
-        ajaxAdslotPage("pagenum=1");
+        ajaxAdslotPage();
+
+        // 初始化交易关系列表
+        ajaxDealRePage();
 
         // 广告位分辨率选择框改变事件
         $("select[name='adslot-dpi']").change(function() {
@@ -182,6 +161,14 @@
      */
     function ajaxAdslotPage(param) {
         ajaxPage("adslotList", '/develop/adslot/adslotList', param);
+    }
+
+    /**
+     * 异步获取交易关系列表
+     * @param param 提交的参数 格式范例:pagenum=1
+     */
+    function ajaxDealRePage(param) {
+        ajaxPage("dealReList", '/develop/deal/dealReList', param);
     }
 </script>
 </body>

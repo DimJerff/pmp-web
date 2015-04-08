@@ -174,6 +174,14 @@
     background: url("../img/icon-n.png") 0px -60px no-repeat
 }
 
+.filter-search-a {
+    display: block;
+    width: 46px;
+    height: 46px;
+    float: right;
+    background: url("../img/icon-n.png") 0px -249px no-repeat
+}
+
 .filter-select-os, .filter-select-dpi {
     float: right;
     width: 100px;
@@ -346,5 +354,44 @@ table.customrize thead th:hover {
 
 .lloading {
     background: url("../img/lloading.gif") 50% 50% no-repeat;
+}
+
+.deal-info {
+    border-right: 1px solid #cbcbcb;
+    padding-left: 80px;
+    padding-right: 50px;
+    background: url(../img/dashboard-icon.png) 20px -832px no-repeat;
+}
+
+.deal-detail-table {}
+.deal-detail-table table {width: 80%; margin-left: 30px; border: 0px;}
+.deal-detail-table table tr th:nth-child(1) { text-align: right; color: #5494AF; width: 100px;}
+.deal-detail-table table tr td:nth-child(1) { text-align: right;}
+.deal-detail-table table tr td:nth-child(2) { text-align: left;}
+.deal-popover {
+    background-clip: padding-box;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    max-width: 700px;
+    padding: 10px;
+    text-align: left;
+    white-space: normal;
+    max-height: 400px;
+    overflow: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1010;
+    opacity: 0;
+    transition: all 0.1s ease;
+    line-height: 24px;
+}
+
+.deal-popover-hover{
+    opacity: 1;
+    transform:translateX(-50px);
+    transition: all 0.3s ease-out;
 }
 

@@ -298,4 +298,42 @@ class Util extends CComponent {
         }
         return $data;
     }
+
+    // 处理力列表数据总计
+    public static function listAmount($records) {
+        // 处理统计数据
+        $amount = array();
+        if ($records) {
+            $amount['adslotCount'] = 0;
+            $amount['cost'] = 0;
+            $amount['bidRequest'] = 0;
+            $amount['impressions'] = 0;
+            $amount['clicks'] = 0;
+
+            $amount['fillingr'] = 0;
+            $amount['ctr'] = 0;
+            $amount['ecpm'] = 0;
+            $amount['ecpc'] = 0;
+            foreach ($records as $v) {
+                $amount['adslotCount'] += $v['adslotCount'];
+                $amount['cost']        += $v['cost'];
+                $amount['bidRequest']  += $v['bidRequest'];
+                $amount['impressions']  += $v['impressions'];
+                $amount['clicks']  += $v['clicks'];
+            }
+            if ($amount['bidRequest']) {
+                $amount['fillingr'] =  round($amount['impressions']/$amount['bidRequest'] * 100, 2);
+            }
+            if ($amount['impressions']) {
+                $amount['ctr'] =  round($amount['clicks']/$amount['impressions'] * 100, 2);
+            }
+            if ($amount['impressions']) {
+                $amount['ecpm'] =  $amount['cost']/$amount['impressions'] / 1000;
+            }
+            if ($amount['clicks']) {
+                $amount['ecpc'] =  $amount['cost']/$amount['clicks'] / 1000000;
+            }
+        }
+        return $amount;
+    }
 }

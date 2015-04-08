@@ -60,16 +60,38 @@ class Campaign2 extends Db2ActiveRecord
 		return parent::model($className);
 	}
 
-    // 通过公司id集合获取广告系列
+    /**
+     * 通过公司id集合获取广告系列
+     * @param $companyIdArr 公司id集合
+     * @return mixed
+     */
     public function getCampaignByCids($companyIdArr) {
         $sql = "";
         $sql .= "SELECT ";
         $sql .= "id * -1 AS id, `name`, companyId AS pid ";
         $sql .= "FROM {{campaign}} ";
         $sql .= "WHERE ";
-        $sql .= "`status` = 1 AND companyId IN ("+ implode(", ", $companyIdArr) +")";
+        $sql .= "`status` = IN(1, 2) AND companyId IN ("+ implode(", ", $companyIdArr) +")";
 
         return $this->_query($sql);
+    }
+
+    // 通过广告系列id获取全名
+    public function getCampaignFullName($idArr) {
+        $field = array(
+            "a.`name` AS campaignName",
+            "o.companyName",
+            "concat(companyName,' > ', a.`name`) AS campaignFullName",
+        );
+        $from = "a";
+        $join = array(
+            "{{company}} o ON o.id = a.companyId",
+        );
+        $where = array(
+            "a.id IN (". implode(', ', $idArr) .")",
+        );
+
+        return $this->_select()->_field($field)->_from($from, true)->_join($join)->_where($where)->_query();
     }
 
 }

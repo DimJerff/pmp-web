@@ -157,15 +157,9 @@ class Media extends DbActiveRecord
 		return true;
 	}
 
-    /**
-     * 获取统计应用的列表
-     * @param $companyId 公司id
-     * @param int $os 操作系统id
-     * @param array $dateTimeArr 起始时间
-     * @param string $order 排序
-     * @return array
-     */
-    public function getMediaPageList($companyId, $os=0, $dateTimeArr=array(), $order = '') {
+    // 统计应用的列表sql
+    public function getMediaPageListSql($companyId, $os=0, $dateTimeArr=array(), $order = '') {
+        $select = "SQL_CALC_FOUND_ROWS";
         $field = array(
             "m.id",
             "m.companyId",
@@ -175,6 +169,7 @@ class Media extends DbActiveRecord
             "m.developId",
             "m.modificationTime",
             "m.creationTime",
+            "m.`status`",
             "o.osName",
             "SUM(cost) AS cost",
             "SUM(bidRequest) AS bidRequest",
@@ -186,37 +181,49 @@ class Media extends DbActiveRecord
             "IF(SUM(clicks), SUM(cost)/SUM(clicks)/1000000, 0) AS ecpc",
             "(SELECT COUNT(*) FROM c_media_adslot a WHERE a.mediaId = m.id) AS adslotCount"
         );
-
+        $from = "m";
         $where = array(
-            "m.`status` = 1",
+            "m.`status` IN (1, 2)",
             "m.companyId = {$companyId}",
         );
 
         if(!empty($os)) {
             $where[] =  "m.os = {$os}";
         }
+        $join = array(
+            "{{base_os}} o ON m.os = o.id",
+            "{{report_media_daily}} rm ON (m.id = rm.mediaId AND rm.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})",
+        );
+        $group = "m.id";
 
-        $sql  = 'SELECT SQL_CALC_FOUND_ROWS ';
-        $sql .= implode(", ", $field). " ";
-        $sql .= 'FROM ';
-        $sql .= '{{media}} m ';
-        $sql .= 'LEFT JOIN {{base_os}} o ON m.os = o.id ';
-        $sql .= "LEFT JOIN {{report_media_daily}} rm ON (m.id = rm.mediaId AND rm.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]}) ";
-        $sql .= "WHERE ";
-        $sql .= implode(" AND ", $where) ." ";
-        $sql .= 'GROUP BY m.id ';
-        if (!empty($order)) {
-            $sql .= "ORDER BY {$order}";
-        }
+        return $this->_select($select)->_field($field)->_from($from, true)->_join($join)->_where($where)->_group($group)->_order($order)->_getBuildSql();
+    }
+
+    /**
+     * 获取统计应用的列表
+     * @param $companyId 公司id
+     * @param int $os 操作系统id
+     * @param array $dateTimeArr 起始时间
+     * @param string $order 排序
+     * @return array
+     */
+    public function getMediaPageList($companyId, $os=0, $dateTimeArr=array(), $order = '') {
+        // 获取sql
+        $sql = $this->getMediaPageListSql($companyId, $os, $dateTimeArr, $order);
 
         $paging = Paging::instance();
         $paging->setPageSize(5);
         $paging->setPageNumKey('pagenum');
         $list = $paging->query($sql);
-        return array(
-            'list' => $list,
-            'page' => $paging->data(),
-        );
+        return array($list, $paging->data());
+    }
+
+    // 统计应用的列表所以信息数据
+    public function getMediaList($companyId, $dateTimeArr=array()) {
+        // 获取sql
+        $sql = $this->getMediaPageListSql($companyId, 0, $dateTimeArr, NULL);
+
+        return $this->_query($sql);
     }
 
 

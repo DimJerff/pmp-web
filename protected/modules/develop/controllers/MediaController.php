@@ -21,6 +21,7 @@ class MediaController extends Controller {
      * @param $id 应用id
      */
     public function actionDetail($id, $time='') {
+        $this->checkAccess();
         // 对时间进行判断处理
         if (empty($time)) {
             $time = date('Y/m/d', strtotime('-7 days')) . '-' . date('Y/m/d');
@@ -50,6 +51,7 @@ class MediaController extends Controller {
      * 添加应用页面
      */
     public function actionAdd() {
+        $this->checkAccess();
         // 获取全部类别树
         $categoryTree = BaseMediaCategory::model()->getAllCateToTree();
 
@@ -64,6 +66,7 @@ class MediaController extends Controller {
      * @param $id 应用id
      */
     public function actionEdit($id) {
+        $this->checkAccess();
         // 获取当前编辑的应用信息
         $mediaModel = Media::model();
         $media = $mediaModel->findByPk($id);
@@ -92,12 +95,116 @@ class MediaController extends Controller {
 
     /**
      * 获取单个公司的应用数目
-     * @param $companyId 公司id
      */
-    public function actionMediaCount($companyId) {
+    public function actionMediaCount() {
+        // 获取当前用户的默认公司id
+        $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
+
         $count = Media::model()->count("companyId=:companyId",array(":companyId"=>$companyId));
         $count = $count ? $count : 0;
         echo "document.write(". $count . ");";
+    }
+
+    // 报表下载
+    public function actionExportAll($timestr) {
+        // 获取当前用户的默认公司id
+        $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
+        $records = Media::model()->getMediaList($companyId, explode("_", $timestr));
+        $totalRecord = array(
+            'adslotCount' => 0,
+            'cost'        => 0,
+            'bidRequest'  => 0,
+            'impressions' => 0,
+            'clicks'      => 0,
+            'fillingr'    => 0,
+            'ctr'         => 0,
+            'ecpm'        => 0,
+            'ecpc'        => 0,
+            'totalName'   => '共计',
+        );
+
+        foreach($records as $k=>$v) {
+            $totalRecord['adslotCount'] += $v['adslotCount'];
+            $totalRecord['cost'] += $v['cost'];
+            $totalRecord['bidRequest'] += $v['bidRequest'];
+            $totalRecord['impressions'] += $v['impressions'];
+            $totalRecord['clicks'] += $v['clicks'];
+            $records[$k]['ctr'] = $records[$k]['ctr']/100;
+        }
+
+        if ($totalRecord['bidRequest']) {
+            $totalRecord['fillingr'] = round($totalRecord['impressions']/$totalRecord['bidRequest'] * 100, 2);
+        }
+        if ($totalRecord['impressions']) {
+            $totalRecord['ctr'] = round($totalRecord['clicks']/$totalRecord['impressions'], 4);
+        }
+        if ($totalRecord['impressions']) {
+            $totalRecord['ecpm'] = $totalRecord['cost']/$totalRecord['impressions']/1000;
+        }
+        if ($totalRecord['clicks']) {
+            $totalRecord['ecpc'] = $totalRecord['cost']/$totalRecord['clicks']/1000000;
+        }
+
+        $timeArr = explode("_", $timestr);
+
+        $title = "应用报表" . date('Y-m-d', $timeArr[0]) . "-" . date('Y-m-d', $timeArr[1]);
+        $titleNames = array(
+            "应用名称",
+            "广告位",
+            "收入",
+            "请求数",
+            "展示数",
+            "填充率",
+            "点击数",
+            "点击率",
+            "eCPM",
+            "eCPC",
+        );
+        $recordsNames = array(
+            'appName'     => 'string',
+            'adslotCount' => 'number',
+            'cost'        => 'money',
+            'bidRequest'  => 'number',
+            'impressions' => 'number',
+            'fillingr'    => 'percent',
+            'clicks'      => 'number',
+            'ctr'         => 'percent',
+            'ecpm'        => 'money',
+            'ecpc'        => 'money',
+        );
+        $totalRecordNames = array(
+            'totalName'   => 'string',
+            'adslotCount' => 'number',
+            'cost'        => 'money',
+            'bidRequest'  => 'number',
+            'impressions' => 'number',
+            'fillingr'    => 'percent',
+            'clicks'      => 'number',
+            'ctr'         => 'percent',
+            'ecpm'        => 'money',
+            'ecpc'        => 'money',
+        );
+        // 实例化excel类对象
+        $report = new ExcelExtend;
+        $objPHPExcel = new PHPExcel();
+        // 设置excel的属性
+        $objPHPExcel->getProperties()->setCreator("limei.com"); // 创建人
+        $objPHPExcel->getProperties()->setLastModifiedBy("limei.com"); // 最后修改人
+        $objPHPExcel->getProperties()->setTitle($title); // 标题
+        // 设置当前的sheet
+        $objPHPExcel->setActiveSheetIndex(0);
+        // 设置sheet的名称
+        $activeSheet = $objPHPExcel->getActiveSheet()->setTitle($title);
+        // 初始化当前处理的sheet
+        $report->initCurrentSheet($activeSheet);
+        // 处理标题
+        $report->setHeadSection($titleNames);
+        // 处理具体数据
+        $report->setBodySection($records, $recordsNames);
+        // 处理统计
+        $report->setFootSection($totalRecord, $totalRecordNames);
+        // 下载
+        $report->download($objPHPExcel, $title);
     }
 
 
@@ -150,13 +257,14 @@ class MediaController extends Controller {
         }
 
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
-        $lists = $mediaModel->getMediaPageList($companyId, $ostype, explode("_", $timestr), $order);
+        list($records, $pagingData) = $mediaModel->getMediaPageList($companyId, $ostype, explode("_", $timestr), $order);
 
         // 模板分配显示
         $html = $this->smartyRender(array(
-            'records' => $lists['list'],
-            'pagingData' => $lists['page'],
-            'ajaxFun' => 'ajaxAppPage'
+            'records'    => $records,
+            'pagingData' => $pagingData,
+            'amount'     => Util::listAmount($records),
+            'ajaxFun'    => 'ajaxAppPage'
         ), null, true);
         $data = array('html' => $html);
         $this->rspJSON($data);
@@ -181,7 +289,18 @@ class MediaController extends Controller {
         $list = Data::order($list, 'id', 'pid');
 
         $this->rspJSON($list);
+    }
 
+    // 改变广告位状态
+    public function actionChange_status($id, $status) {
+        $model = Media::model()->findByPk($id);
+        $model->status = $status;
+
+        if ($model->save()) {
+            $this->rspJSON();
+        } else {
+            $this->rspErrorJSON(304, "状态修改失败");
+        }
     }
 
 

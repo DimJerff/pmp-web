@@ -18,10 +18,17 @@
     </tr>
     </thead>
     <tbody>
+        <{if $records}>
         <{foreach from=$records item=v}>
         <tr>
             <td>
-                <a confirmlang="base.confirmPause" href=""><i class="icon-stop"></i></a>
+                <{if $v.status eq 1}>
+                <a href="<{url route='media/change_status' id=$v.id status=2}>" confirmLang="base.confirmPause"><i class="icon-stop"></i></a>
+                <{elseif $v.status eq 2}>
+                <a href="<{url route='media/change_status' id=$v.id status=1}>" confirmLang="base.confirmStart"><i class="icon-on"></i></a>
+                <{elseif $v.status eq 3}>
+                <i class="icon-pause-2 icon-white"></i>
+                <{/if}>
             </td>
             <td style="text-align:left;">
                 <img width="34" height="34" src="<{$v.appIcon|attach_url}>" />
@@ -31,16 +38,34 @@
                 </a>
             </td>
             <td class="status_row"><{$v.adslotCount}></td>
-            <td class="number_row">￥<{$v.cost}></td>
-            <td class="number_row"><{$v.bidRequest}></td>
-            <td class="number_row"><{$v.impressions}></td>
+            <td class="number_row">￥<{if $v.cost}><{$v.cost}><{else}>0<{/if}></td>
+            <td class="number_row"><{if $v.bidRequest}><{$v.bidRequest}><{else}>0<{/if}></td>
+            <td class="number_row"><{if $v.impressions}><{$v.impressions}><{else}>0<{/if}></td>
             <td class="number_row"><{$v.fillingr}>%</td>
-            <td class="number_row"><{$v.clicks}></td>
+            <td class="number_row"><{if $v.clicks}><{$v.clicks}><{else}>0<{/if}></td>
             <td class="number_row"><{$v.ctr}>%</td>
             <td class="number_row"><{$v.ecpm}></td>
             <td class="number_row"><{$v.ecpc}></td>
         </tr>
         <{/foreach}>
+        <tr class="amount-tr">
+            <td>&nbsp;</td>
+            <td style="text-align:left;">总计</td>
+            <td class="status_row"><{$amount.adslotCount}></td>
+            <td class="number_row">￥<{$amount.cost}></td>
+            <td class="number_row"><{$amount.bidRequest}></td>
+            <td class="number_row"><{$amount.impressions}></td>
+            <td class="number_row"><{$amount.fillingr}>%</td>
+            <td class="number_row"><{$amount.clicks}></td>
+            <td class="number_row"><{$amount.ctr}>%</td>
+            <td class="number_row"><{$amount.ecpm}></td>
+            <td class="number_row"><{$amount.ecpc}></td>
+        </tr>
+        <{else}>
+        <tr>
+            <td colspan="11">列表为空</td>
+        </tr>
+        <{/if}>
     </tbody>
 </table>
 <{include file="../_common/ajaxPaging.html"}>
@@ -50,5 +75,16 @@
         $(this).find('i.icon-edit-custom,i.icon-eye-open').parent().css({visibility: 'visible'});
     }, function(){
         $(this).find('i.icon-edit-custom,i.icon-eye-open').parent().css({visibility: 'hidden'});
+    });
+
+    // 启动和暂停按钮
+    $('i.icon-stop, i.icon-on').closest('a').click(function(){
+        var object = $(this);
+        $.confirm('{'+object.attr('confirmLang')+'}', function(){
+            $.ajaxCall(object.attr('href'), function() {
+                <{$ajaxFun}>();
+            })
+        }, null, 200);
+        return false;
     });
 </script>

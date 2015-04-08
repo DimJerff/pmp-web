@@ -1,0 +1,69 @@
+<table class="campaign-table-body table table-striped customrize">
+    <thead>
+        <tr>
+            <{include file="../_common/column_sort.html" name="交易名称" sort="dealName"}>
+            <{include file="../_common/column_sort.html" name="类型" sort="dealType"}>
+            <{include file="../_common/column_sort.html" name="结算方式" sort="firstname" class="number_row"}>
+            <{include file="../_common/column_sort.html" name="开始日期" sort="startDate"}>
+            <{include file="../_common/column_sort.html" name="结束日期" sort="endDate"}>
+            <{include file="../_common/column_sort.html" name="收入" sort="cost" class="number_row"}>
+            <{include file="../_common/column_sort.html" name="展示数" sort="impressions" class="number_row"}>
+            <{include file="../_common/column_sort.html" name="点击数" sort="clicks" class="number_row"}>
+            <{include file="../_common/column_sort.html" name="点击率" sort="ctr" class="number_row"}>
+        </tr>
+    </thead>
+    <tbody>
+        <{if $records}>
+        <{foreach from=$records item=v}>
+        <tr>
+            <td>
+                <a href="<{url route='deal/detail' dealId=$v.dealId}>" title="<{$v.dealName}>"><{$v.dealName}></a>
+            </td>
+            <td><{if $v.dealType eq 0}>公开<{else if $v.dealType eq 1}>私有<{/if}></td>
+            <td class="number_row">
+                <{if $v.payType eq 101}>
+                <{$v.mediaSharingRate}>%
+                <{else if $v.payType eq 1}>
+                <{$v.mediaPrice}><br />CPM
+                <{else if $v.payType eq 2}>
+                <{$v.mediaPrice}><br />CPC
+                <{else if $v.payType eq 3}>
+                <{$v.mediaPrice}><br />CPD
+                <{/if}>
+            </td>
+            <td><{$v.startDate|date_format:'%Y/%m/%d'}></td>
+            <td><{$v.endDate|date_format:'%Y/%m/%d'}></td>
+            <td class="number_row">￥<{if $v.cost}><{$v.cost}><{else}>0<{/if}></td>
+            <td class="number_row"><{if $v.impressions}><{$v.impressions}><{else}>0<{/if}></td>
+            <td class="number_row"><{if $v.clicks}><{$v.clicks}><{else}>0<{/if}></td>
+            <td class="number_row"><{if $v.ctr}><{$v.ctr}><{else}>0<{/if}>%</td>
+        </tr>
+        <{/foreach}>
+        <tr class="amount-tr">
+            <td>&nbsp;</td>
+            <td style="text-align:left;">总计</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td class="number_row">￥<{$amount.cost}></td>
+            <td class="number_row"><{$amount.impressions}></td>
+            <td class="number_row"><{$amount.clicks}></td>
+            <td class="number_row"><{$amount.ctr}>%</td>
+        </tr>
+        <{else}>
+        <tr>
+            <td colspan="10">列表为空</td>
+        </tr>
+        <{/if}>
+    </tbody>
+</table>
+<{include file="../_common/ajaxPaging.html"}>
+<script>
+    // 触发编辑按钮事件
+    $('i.icon-edit-custom,i.icon-eye-open').closest('td').hover(function(){
+        $(this).find('i.icon-edit-custom,i.icon-eye-open').parent().css({visibility: 'visible'});
+    }, function(){
+        $(this).find('i.icon-edit-custom,i.icon-eye-open').parent().css({visibility: 'hidden'});
+    });
+
+</script>

@@ -12,18 +12,18 @@
                 <div class="company-info left">
                     <h4><{$company.companyName}></h4>
                     <div class="company-info-detail">
-                        <a href="/pc/user/edit.html">应用 <span> <script src="<{url route='media/mediaCount' companyId=$company.id}>"></script></span></a>
-                        <a href="/pc/message/index.html">广告位 <span> <script src="<{url route='adslot/adslotCount' companyId=$company.id}>"></script></span></a>
+                        <a href="/pc/user/edit.html">应用 <span> <script src="<{url route='media/mediaCount'}>"></script></span></a>
+                        <a href="/pc/message/index.html">广告位 <span> <script src="<{url route='adslot/adslotCount'}>"></script></span></a>
                     </div>
                 </div>
                 <div class="company-account info-box left">
                     <div class="info expense">
                         <h4>今日收入</h4>
-                        ¥<span><script src="<{url route='site/todayCost' companyId=$company.id}>"></script></span>
+                        ¥<span><script src="<{url route='site/todayCost'}>"></script></span>
                     </div>
                     <div class="info balance">
                         <h4>累计收入</h4>
-                        ¥<span><script src="<{url route='site/allCost' companyId=$company.id}>"></script></span>
+                        ¥<span><script src="<{url route='site/allCost'}>"></script></span>
                     </div>
                 </div>
                 <a class="btn add-adgroup btn-primary-customize right" href="<{url route='media/add'}>" style="margin-top: 10px;">
@@ -51,7 +51,7 @@
                         <a class="btn btn-link type-btn" href="javascript:void (0);" data-type="adslot">广告位</a>
                     </div>
                     <div class="stat-filter-btn contentOpt hide" id="adslotOpt">
-                        <a class="filter-down-a" href=""></a>
+                        <a class="filter-down-a" href="<{url route='adslot/exportAll' timestr=$timeStr}>"></a>
                         <div class="filter-select-os">
                             <select name="adslot-os">
                                 <option value="0">全部</option>
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                     <div class="stat-filter-btn contentOpt hide" id="appOpt">
-                        <a class="filter-down-a" href=""></a>
+                        <a class="filter-down-a" href="<{url route='media/exportAll' timestr=$timeStr}>"></a>
                         <div class="filter-select-os">
                             <select name="app-os">
                                 <option value="0">全部</option>
@@ -134,9 +134,9 @@
             $("#" + type + "List").show();
             $("#" + type + "Opt").show();
             if (type == "app") {
-                ajaxAppPage("pagenum=1");
+                ajaxAppPage();
             } else if (type == "adslot") {
-                ajaxAdslotPage("pagenum=1");
+                ajaxAdslotPage();
             }
         }).eq(0).click();
 
@@ -192,13 +192,7 @@
      * @param 提交的参数 格式范例:pagenum=1
      */
     function ajaxAppPage(param) {
-        var url = '/develop/media/appList';
-        param = param.split("=");
-        $("#appList").data(param[0], param[1]);
-
-        $.ajaxCall(url, function(data){
-            $("#appList").html(data.html);
-        }, {data : $("#appList").data()});
+        ajaxPage("appList", '/develop/media/appList', param);
     }
 
     /**
@@ -215,13 +209,7 @@
      * @param param 提交的参数 格式范例:pagenum=1
      */
     function ajaxAdslotPage(param) {
-        var url = '/develop/adslot/adslotList';
-        param = param.split("=");
-        $("#adslotList").data(param[0], param[1]);
-
-        $.ajaxCall(url, function(data){
-            $("#adslotList").html(data.html);
-        }, {data : $("#adslotList").data()});
+        ajaxPage("adslotList", '/develop/adslot/adslotList', param);
     }
 </script>
 </body>

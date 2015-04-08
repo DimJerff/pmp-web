@@ -45,9 +45,11 @@ class SiteController extends Controller
 
     /**
      * 获取当前当天的公司交易消耗
-     * @param $companyId 公司id
      */
-    public function actionTodayCost($companyId) {
+    public function actionTodayCost() {
+        // 获取当前用户的默认公司id
+        $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
+
         // 今日消耗
         $todayCost = ReportMediaDaily::model()->getTodayCost($companyId);
         echo "document.write('". number_format($todayCost) . "');";
@@ -55,9 +57,11 @@ class SiteController extends Controller
 
     /**
      * 获取当前累计公司交易消耗
-     * @param $companyId 公司id
      */
-    public function actionAllCost($companyId) {
+    public function actionAllCost() {
+        // 获取当前用户的默认公司id
+        $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
+
         // 累计消耗
         $allCost = ReportMediaDaily::model()->getAllCost($companyId);
         echo "document.write('". number_format($allCost) . "');";

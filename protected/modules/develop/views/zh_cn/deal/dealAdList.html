@@ -1,13 +1,10 @@
 <table class="campaign-table-body table table-striped customrize">
-    <colgroup>
-        <col style="width:30px;text-align: right;">
-    </colgroup>
     <thead>
     <tr>
         <th>&nbsp;</th>
-        <{include file="../_common/column_sort.html" name="广告位名称" sort="adslotName"}>
-        <{include file="../_common/column_sort.html" name="尺寸" sort="width"}>
-        <{include file="../_common/column_sort.html" name="收入" sort="cost" class="number_row"}>
+        <{include file="../_common/column_sort.html" name="广告位名称" sort="appName"}>
+        <{include file="../_common/column_sort.html" name="应用名称" sort="adslotName"}>
+        <{include file="../_common/column_sort.html" name="消耗" sort="cost" class="number_row"}>
         <{include file="../_common/column_sort.html" name="请求数" sort="bidRequest" class="number_row"}>
         <{include file="../_common/column_sort.html" name="展示数" sort="impressions" class="number_row"}>
         <{include file="../_common/column_sort.html" name="填充率" sort="fillingr" class="number_row"}>
@@ -23,27 +20,16 @@
     <tr>
         <td>
             <{if $v.status eq 1}>
-            <a href="<{url route='adslot/change_status' id=$v.id status=2}>" confirmLang="base.confirmPause"><i class="icon-stop"></i></a>
+            <a href="<{url route='deal/change_status' id=$v.dealId status=2}>" confirmLang="base.confirmPause"><i class="icon-stop"></i></a>
             <{elseif $v.status eq 2}>
-            <a href="<{url route='adslot/change_status' id=$v.id status=1}>" confirmLang="base.confirmStart"><i class="icon-on"></i></a>
+            <a href="<{url route='deal/change_status' id=$v.dealId status=1}>" confirmLang="base.confirmStart"><i class="icon-on"></i></a>
             <{elseif $v.status eq 3}>
             <i class="icon-pause-2 icon-white"></i>
             <{/if}>
         </td>
-        <td style="text-align:left;">
-            <a href="<{url route='adslot/detail' adslotId=$v.id}>"><{$v.adslotName}></a>
-            <a style="visibility: hidden;" href="<{url route='adslot/edit' id=$v.id}>">
-                <i class="icon-edit-custom"></i>
-            </a>
-        </td>
-        <td class="status_row">
-            <{if $v.width gt 0}>
-            <span><{$v.width}>x<{$v.height}></span>
-            <{else}>
-            <span>全屏</span>
-            <{/if}>
-        </td>
-        <td class="number_row">￥<{if $v.cost}><{$v.cost}><{else}>0<{/if}></td>
+        <td><{if $v.adslotName}><{$v.adslotName}><{else}>所有广告位<{/if}></td>
+        <td><{$v.appName}></td>
+        <td class="number_row">¥<{if $v.cost}><{$v.cost}><{else}>0<{/if}></td>
         <td class="number_row"><{if $v.bidRequest}><{$v.bidRequest}><{else}>0<{/if}></td>
         <td class="number_row"><{if $v.impressions}><{$v.impressions}><{else}>0<{/if}></td>
         <td class="number_row"><{$v.fillingr}>%</td>

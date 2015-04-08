@@ -214,7 +214,7 @@ class UserController extends Controller
 	
 	/* 编辑用户信息 */
 	public function actionEdit() {
-		//$this->checkAccess();
+		$this->checkAccess();
 		$user = Yii::app()->user;
 		$userState = $user->getRecord();
 
@@ -369,7 +369,10 @@ class UserController extends Controller
      * 获取开发者数目
      * @param $companyId 公司id
      */
-    public function actionUserCount($companyId) {
+    public function actionUserCount() {
+        // 获取当前用户的默认公司id
+        $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
+
         $count = User::model()->count("defaultCompanyID=:companyId",array(":companyId"=>$companyId));
         $count = $count ? $count : 0;
         echo "document.write(". $count . ");";

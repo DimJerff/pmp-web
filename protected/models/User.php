@@ -54,7 +54,7 @@ class User extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'role' => array(self::BELONGS_TO, 'AuthRole', 'roleID',),
-			'companyList' => array(self::MANY_MANY, 'Company', 'b_relation_userCompany(userId, companyId)'),
+			'companyList' => array(self::MANY_MANY, 'Company', 'c_relation_userCompany(userId, companyId)'),
 			'defaultCompany' => array(self::BELONGS_TO, 'Company', 'defaultCompanyID',),
 		);
 	}

@@ -1,0 +1,203 @@
+<{include file="../_common/head.html"}>
+<body>
+<!-- 头部导航 start -->
+<{include file="../_common/header.html"}>
+<!-- 头部导航 end -->
+<!-- 主体内容 start -->
+<div class="main-container clearfix">
+    <div class="main-content">
+        <div class="content-body">
+            <div class="clearfix company-info-container content-body-head">
+                <div class="deal-info left">
+                    <h4><{$deal.dealName}></h4>
+                    <div class="company-info-detail">
+                        <a href="/pc/user/edit.html">开发者 <span><{$deal.userInfo.firstname}> <{$deal.userInfo.lastname}></span></a>
+                    </div>
+                </div>
+                <div class="company-account info-box left">
+                    <div class="info expense">
+                        <h4>今日收入</h4>
+                        ¥<span><script src="<{url route='site/todayCost'}>"></script></span>
+                    </div>
+                    <div class="info balance">
+                        <h4>累计收入</h4>
+                        ¥<span><script src="<{url route='site/allCost'}>"></script></span>
+                    </div>
+                </div>
+                <a class="btn add-adgroup btn-primary-customize right" href="<{url route='edit' id=$deal.id}>" style="margin-top: 10px;">
+                    <i class="icon-plus icon-white"></i>编辑交易
+                </a>
+            </div>
+            <div class="block-space"></div>
+            <!-- 交易详情信息 start -->
+            <div class="deal-detail-table">
+                <table class="table" style="">
+                    <thead>
+                        <tr>
+                            <th style="">交易详情:</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>交易类型</td>
+                            <td><{if $deal.dealType eq 0}>公开竞价<{else if $deal.dealType eq 1}>私有竞价<{/if}></td>
+                        </tr>
+                        <tr>
+                            <td>结算方式</td>
+                            <td>
+                                <{if $deal.payType gt 100}>
+                                媒体收入占售出额比例 <{$deal.mediaSharingRate}>%
+                                <{else}>
+                                协议支付价格 <{$deal.mediaPrice}>元 <{if $deal.payType eq 1}>每千次点击<{/if}><{if $deal.payType eq 2}>每次点击<{/if}><{if $deal.payType eq 3}>每天<{/if}>
+                                <{/if}>
+                            </td>
+                        </tr>
+                        <{if $deal.dealType eq 1}>
+                        <tr>
+                            <td>公司/广告系列</td>
+                            <td>
+                                <{section  loop=$allNames name=n start=0 max=3}>
+                                <span style="display: inline-block;"><{$allNames[n]}></span>
+                                <{if !$smarty.section.n.last}>
+                                <span style="display: inline-block; width: 20px;">, </span>
+                                <{/if}>
+                                <{/section}>
+                                <{if $smarty.section.n.total gt 2}>
+                                <span class="dot-more" style="cursor: pointer; display: inline-block; border: 1px solid rgba(0, 0, 0, 0.2); color: rgba(0, 0, 0, 0.2); border-radius: 3px; padding: 0 4px;">...</span>
+                                <{/if}>
+                            </td>
+                        </tr>
+                        <{/if}>
+                        <tr>
+                            <td>开始日期</td>
+                            <td><{$deal.startDate|date_format:'%Y/%m/%d'}></td>
+                        </tr>
+                        <tr>
+                            <td>结束日期</td>
+                            <td><{$deal.endDate|date_format:'%Y/%m/%d'}></td>
+                        </tr>
+                        <tr>
+                            <td>售出低价</td>
+                            <td><{$deal.bidfloor}>元</td>
+                        </tr>
+                        <tr>
+                            <td>最后更新时间</td>
+                            <td><{$deal.modificationTime|date_format:'%Y/%m/%d'}></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="deal-popover">
+                <{section  loop=$allNames name=n start=3}>
+                <span style="display: inline-block;"><{$allNames[n]}></span>
+                <{if !$smarty.section.n.last}>
+                <span style="display: inline-block; width: 20px;">, </span>
+                <{/if}>
+                <{/section}>
+            </p>
+
+            <!-- 交易详情信息 end -->
+
+            <div class="block-space"></div>
+            <!-- 表单时间选择 start -->
+            <{include file="../_common/doubleCalendarForm.html"}>
+            <!-- 表单时间选择 end -->
+            <div class="block-space"></div>
+            <!-- 交易区块 start -->
+            <div class="campaign-table">
+                <div class="campaign-table-header campaign-table-header-f">
+                    <div class="stat-type-btn">
+                        <span>交易</span>
+                    </div>
+                    <div class="stat-filter-btn contentOpt hide" style="display: block;">
+                        <a class="filter-down-a" href="<{url route='deal/exportDeal' dealid=$deal.id timestr=$timeStr}>"></a>
+                        <!--<a class="filter-search-a" id="search-a" href="javascript: void(0);" style="margin-right: 10px;" data-searid="dealList"></a>
+                        <ul class="dropdown-menu" id="search-box">
+                            <li class="show-name"><input type="text" name="searchtxt" placeholder="搜索..."></li>
+                        </ul>
+                        <script>
+                            $(function() {
+                                $("#search-a").click(function() {
+                                    var searchId = $(this).data("searid");
+                                    $("#search-box").show().position({
+                                        of: $( "#search-a" ),
+                                        my: "right top",
+                                        at: "right bottom"
+                                    }).find(":text").focus().blur(function() {
+                                        setTimeout(function() {
+                                            $("#search-box").hide().find(".show-name").nextAll().remove();
+                                        }, 400);
+                                    }).keyup(function() {
+                                        var url = "/develop/adslot/adslotNameSearch";
+                                        url += "/name/" + $("input[name='searchtxt']").val();
+                                        $.ajaxCall(url, function(result) {
+                                            $("#search-box .show-name").nextAll().remove();
+                                            for (var i in result) {
+                                                var clickFun = "javascript:$.dealSearch('"+ result[i] +"');";
+                                                $("#search-box").append('<li><a href="'+clickFun+'">'+ result[i] +'</a></li>');
+                                            }
+                                        })
+                                    });
+                                    // 点击选中函数
+                                    $.dealSearch = function (dealname) {
+                                        $("#"+searchId).data('dealname', dealname);
+                                        var ajaxfun = $("#"+searchId).attr("ajaxfun");
+                                        $("#search-box").find(":text").val(dealname);
+                                        window[ajaxfun]();
+                                    }
+                                });
+                            });
+                        </script>-->
+                        <span style=" vertical-align: bottom; display: block; float: right; height: 46px; margin-right: 10px;">仅显示投放中</span>
+                    </div>
+                </div>
+                <div class="contentList" id="dealList" ajaxfun="ajaxDealAdPage" data-pagenum ="1" data-timestr="<{$timeStr}>" data-dealid="<{$deal.id}>" ></div>
+            </div>
+            <!-- 交易区块 end -->
+
+        </div>
+    </div>
+</div>
+<!-- 主体内容 end -->
+<!-- 页脚 -->
+<{include file="../_common/footer.html"}>
+</body>
+<script>
+    $(function() {
+        ajaxDealAdPage();
+
+        $(".deal-popover" ).position({
+            of: $( ".dot-more" ),
+            my: "left+50 center",
+            at: "right center"
+        });
+
+        var pTime = null;
+        $(".dot-more").hover(function() {
+            clearTimeout(pTime);
+            $(".deal-popover" ).addClass("deal-popover-hover");
+        }, function() {
+            pTime = setTimeout(function() {
+                $(".deal-popover" ).removeClass("deal-popover-hover");
+            }, 300);
+
+        });
+
+        $(".deal-popover").hover(function(){
+            clearTimeout(pTime);
+        }, function() {
+            pTime = setTimeout(function() {
+                $(".deal-popover" ).removeClass("deal-popover-hover");
+            }, 300);
+        });
+
+    });
+
+    // 异步获取交易列表的数据
+    function ajaxDealAdPage(param) {
+        ajaxPage("dealList", '/develop/deal/dealAdList', param);
+    }
+</script>
+</html>

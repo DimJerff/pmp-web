@@ -4,6 +4,7 @@ share/upload/*
 assets/*
 !assets/pc
 !assets/common
+!assets/bj
 
 protected/runtime/*
 protected/modules/*/views/*/*/tpl_c/*.php

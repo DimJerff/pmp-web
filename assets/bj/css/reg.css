@@ -1,0 +1,127 @@
+@charset "UTF-8";
+
+.reg_adn{}
+.reg_adn form{display:block;}
+.reg_adn h1{font-size:36px;color:#72848d;height:60px;line-height:60px;background:url(../images/reg/adn_0.png) 0 center no-repeat;padding-left:60px;}
+.reg_text{margin-top:15px;line-height:40px;border:1px solid #cccccc;width:340px;overflow:hidden;*zoom:1;}
+.reg_text:after{content:' ';display:block;height:0;clear:both;overflow:hidden;visibility:hidden;}
+.reg_text label{width:40px;float:left;height:40px;overflow:hidden;background-image:url(../images/reg/reg_icon.png);background-repeat:no-repeat;}
+.reg_text input{width:280px;height:40px;margin:0;padding:0;float:left;outline:0 none;border:0 none;font-size:14px;padding:0 10px;overflow:hidden;}
+.reg_email label{background-position:0 0;}
+.reg_password label{background-position:-40px 0;}
+.reg_repassword label{background-position:-80px 0;}
+.reg_name label{background-position:-120px 0;}
+.reg_tel label{background-position:-160px 0;}
+.reg_qq label{background-position:0 -40px;}
+.reg_vcode label{background-position:-40px -40px;}
+.reg_vcode input{width:160px;}
+.reg_vcode img{float:left;width:100px;height:40px;padding:0 10px;background-color:#f2f2f2;}
+.reg_error{border-color:#f00;}
+.reg_adn_type{padding-top:50px;width:100%;overflow:hidden;}
+.reg_adn_type label{width:150px;height:40px;overflow:hidden;border:1px solid #ccc;cursor:pointer;line-height:40px;font-size:14px;background:url(../../common/img/reg/adn_btn.png) 40px 0 no-repeat;text-indent:70px;}
+.reg_adn_type label:hover{border-color:#9c3;}
+.reg_adn_type label.active{background-position:40px -40px;}
+.reg_adn_type input{display:none;}
+.reg_adn_btn{}
+.reg_adn_btn a{display:block;width:100%;height:52px;overflow:hidden;line-height:52px;text-align:center;color:#fff;background-color:#99cc33;letter-spacing:2px;outline:0 none;cursor:pointer;font-size:18px;border:0 none;}
+.reg_adn_btn a:hover{text-decoration:none;opacity:0.8;filter:alpha(opacity=80);}
+.reg_adn_rules{margin-top:50px;font-size:12px;position:relative;width:380px;left:-20px;position:relative;}
+.reg_adn_rules a,.reg_adn_login a{color:#0066cc;}
+.reg_adn_login{width:460px;overflow:hidden;margin:50px auto 0;height:40px;line-height:40px;text-align:center;border:1px solid #ccc;background-color:#f3f3f3;}
+.reg_adn_error{height:50px;line-height:50px;color:#f00;}
+.reg_dsp h1{font-size:36px;color:#72848d;height:60px;line-height:60px;background:url(../images/reg/dsp_0.png) 10px center no-repeat;padding-left:60px;}
+.reg_company label{background-position:-80px -40px;}
+.reg_address label{background-position:-160px -80px;}
+.reg_url label{background-position:-120px -40px;}
+.reg_license{border-color:#fff;}
+.reg_license label{background-position:-160px -40px;}
+.reg_license .l_0{display:block;background:#00ccff;margin-left:5px;width:295px;cursor:pointer;color:#fff;text-align:center;font-size:14px;}
+.reg_license p{width:340px;overflow:hidden;}
+.reg_license img{width:320px;height:200px;border:1px solid #ccc;padding:9px;border-radius:5px;display:block;margin-top:5px;display:none;}
+.reg_id{border-color:#fff;}
+.reg_id label{background-position:0 -80px;}
+.reg_id .l_0,.reg_id .l_1{display:block;background:#00ccff;margin-left:5px;width:145px;cursor:pointer;color:#fff;text-align:center;font-size:14px;}
+.reg_id p{width:340px;overflow:hidden;}
+.reg_id img{width:150px;height:100px;border:1px solid #ccc;padding:4px;border-radius:5px;margin-top:5px;display:none;}
+.reg_id .l_0{float:left;}
+.reg_id .l_1{float:right;}
+.reg_text select{display:inline-block;margin-bottom:0;vertical-align:middle;width:300px;padding:10px 8px;background-color:#FFFFFF;border:0 none;height:39px;line-height:39px;font-size:14px;outline:0 none;}
+.reg_county label{background-image: url(../img/guojia.jpg)}
+.reg_currency label{background-position:-80px -80px;}
+.reg_timezone label{background-position:-120px -80px;}
+.reg_license input,.reg_id input {position:absolute;left:-999em;}
+.ret_dsp_admin {margin-top:30px;padding-top:10px;border-top:1px dashed #ccc;}
+.ret_dsp_admin .reg_adn_login {width:340px;margin:0;margin-top:20px;}
+.ret_dsp_admin h1 {background-image:url(../../common/img/reg/dsp_1.png);}
+.ret_dsp_admin .reg_adn_btn {padding-top:20px;}
+.ret_dsp_admin .reg_adn_btn a {margin-top:20px;}
+.ret_dsp_admin .reg_adn_btn .a_0 {background-color:#ebebeb;color:#999999;}
+.login h1{font-size:36px;color:#72848d;height:60px;line-height:60px;background:url(../images/reg/login.png) 0 center no-repeat;padding-left:60px;}
+.login .v_0 {margin-top:10px;text-align:right;}
+.login .v_0 a {color:#0099cc;}
+.login .reg_adn_btn {margin-top:10px;}
+.login .reg_adn_btn a {background-color:#0098e4;}
+.reg_reg {background-color:#e8f3f7;border-color:#d6e7ef;}
+
+.reg_help {margin-top:50px;}
+.reg_help .v_0 {text-align:center;}
+.reg_help h2 {display:inline-block;font-size:30px;padding-left:50px;background:url(../images/reg/login_0.png) 0 0 no-repeat;height:42px;line-height:42px;}
+.reg_help .v_1 {text-align:center;margin-top:40px;}
+.reg_help .v_1 span,.reg_help .v_1 em {display:inline-block;width:165px;height:25px;line-height:26px;margin:0 20px;color:#fff;font-size:14px;text-indent:40px;text-align:left;}
+.reg_help .v_1 span {background:url(../images/reg/login_1.png) 0 0 no-repeat;}
+.reg_help .v_1 em {background:url(../images/reg/login_2.png) 0 0 no-repeat;}
+
+.loginTxt, .regTxt {float: left;color:#028BD5;font-weight: bold;}
+.loginTxt{margin: 26px 0 0 10px}
+.regTxt{margin: 21px 0 0 10px}
+.error {color:#f00;}
+
+/* fix bootstrap */
+.reg_dsp label{margin-bottom:0px;cursor:default;}
+.reg_dsp .reg_license .l_0{line-height:40px;}
+.reg_dsp .reg_id .l_0,.reg_dsp .reg_id .l_1{line-height:40px;}
+.reg_dsp textarea:focus,
+.reg_dsp input[type="text"]:focus,
+.reg_dsp input[type="password"]:focus,
+.reg_dsp input[type="datetime"]:focus,
+.reg_dsp input[type="datetime-local"]:focus,
+.reg_dsp input[type="date"]:focus,
+.reg_dsp input[type="month"]:focus,
+.reg_dsp input[type="time"]:focus,
+.reg_dsp input[type="week"]:focus,
+.reg_dsp input[type="number"]:focus,
+.reg_dsp input[type="email"]:focus,
+.reg_dsp input[type="url"]:focus,
+.reg_dsp input[type="search"]:focus,
+.reg_dsp input[type="tel"]:focus,
+.reg_dsp input[type="color"]:focus,
+.reg_dsp .uneditable-input:focus {
+border:none;
+-webkit-box-shadow: none;
+-moz-box-shadow: none;
+box-shadow: none;
+}
+.reg_dsp textarea:hover,
+.reg_dsp input[type="text"]:hover,
+.reg_dsp input[type="password"]:hover,
+.reg_dsp input[type="datetime"]:hover,
+.reg_dsp input[type="datetime-local"]:hover,
+.reg_dsp input[type="date"]:hover,
+.reg_dsp input[type="month"]:hover,
+.reg_dsp input[type="time"]:hover,
+.reg_dsp input[type="week"]:hover,
+.reg_dsp input[type="number"]:hover,
+.reg_dsp input[type="email"]:hover,
+.reg_dsp input[type="url"]:hover,
+.reg_dsp input[type="search"]:hover,
+.reg_dsp input[type="tel"]:hover,
+.reg_dsp input[type="color"]:hover,
+.reg_dsp .uneditable-input:hover {
+border:none;
+-webkit-box-shadow: none;
+-moz-box-shadow: none;
+box-shadow: none;
+}
+.reg_adn_login a{display:inline;}
+.mini_footer a{display:inline;}
+body{height:auto;}

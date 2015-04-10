@@ -239,10 +239,10 @@ class AdslotController extends Controller {
      */
     public function actionAdslotList($ostype=0, $timestr='', $sort='', $dpi='', $mediaid=0) {
         // 提交的参数处理
+        $order = '';
         if (!empty($sort)) {
             $order = str_replace('_', ' ', $sort);
         }
-
         // 获取应用表模型
         $adslotModel = MediaAdslot::model();
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;

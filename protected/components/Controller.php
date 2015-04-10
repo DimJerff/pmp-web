@@ -155,6 +155,7 @@ class Controller extends CController
 			'cookies' => $cookies,
 			'controllerId' => $this->id,
             'basePath' => Yii::app()->basePath,
+			'domainModel' => '',
 		));
 
 		return $smarty->renderFile(Null, $path, $params, $isReturn);

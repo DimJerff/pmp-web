@@ -34,42 +34,6 @@
                 <li><a id="logout_btn" href="<{url route='user/logout'}>" onclick="$.confirm('确定退出系统？', function(){location.href=$('#logout_btn').attr('href')}, null, 300);return false;"><i class="icon-off"></i>退出系统</a></li>
             </ul>
         </div>
-        <div class="mail clearfix left">
-            <a class="dropdown-toggle text-hidden" data-toggle="dropdown" href=""></a>
-            <i class="num"><{if $unReadMessageCount > 9}>9+<{else}><{$unReadMessageCount}><{/if}></i>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                <{if $unReadMessageCount > 0}>
-                <{foreach from=$unReadMessage item=item}>
-                <li class="clearfix">
-			    	<span class="mail-type">
-					<{if $item.settingId eq 1}>
-           			审
-           			<{elseif $item.settingId eq 2}>
-           			余
-           			<{elseif $item.settingId eq 3}>
-           			耗
-           			<{elseif $item.settingId eq 4}>
-           			充
-           			<{elseif $item.settingId eq 5}>
-           			现
-           			<{elseif $item.settingId eq 6}>
-           			醒
-           			<{else}>
-           			未
-           			<{/if}>
-			         </span><span><{$item.content}></span>
-                </li>
-                <{/foreach}>
-                <li class="more last clearfix">
-                    <a href="<{url route='message/index'}>">查看全部</a>
-                </li>
-                <{else}>
-                <li class="none-content last clearfix">
-                    已全部处理完<br/>点此<a href="<{url route='message/index'}>">查看消息中心</a>
-                </li>
-                <{/if}>
-            </ul>
-        </div>
     </div>
     <{/if}>
 </div>

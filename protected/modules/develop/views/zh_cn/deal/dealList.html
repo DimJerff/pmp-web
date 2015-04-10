@@ -4,18 +4,20 @@
     </colgroup>
     <thead>
     <tr>
-        <th>&nbsp;</th>
+        <th colspan="2">&nbsp;</th>
         <{include file="../_common/column_sort.html" name="交易名称" sort="dealName"}>
         <{include file="../_common/column_sort.html" name="类型" sort="dealType"}>
         <{include file="../_common/column_sort.html" name="结算方式" sort="firstname" class="number_row"}>
         <{include file="../_common/column_sort.html" name="开放者名称" sort="bidRequest" class="number_row"}>
         <{include file="../_common/column_sort.html" name="消耗" sort="cost" class="number_row"}>
+        <th>&nbsp;</th>
     </tr>
     </thead>
     <tbody>
     <{if $records}>
     <{foreach from=$records item=v}>
     <tr>
+        <td>&nbsp;</td>
         <td>
             <{if $v.status eq 1}>
             <a href="<{url route='deal/change_status' id=$v.id status=2}>" confirmLang="base.confirmPause"><i class="icon-stop"></i></a>
@@ -45,19 +47,21 @@
         </td>
         <td class="number_row"><{$v.developName}></td>
         <td class="number_row">￥<{if $v.cost}><{$v.cost}><{else}>0<{/if}></td>
+        <td>&nbsp;</td>
     </tr>
     <{/foreach}>
     <tr class="amount-tr">
-        <td>&nbsp;</td>
+        <td colspan="2">&nbsp;</td>
         <td style="text-align:left;">总计</td>
         <td class="status_row">&nbsp;</td>
         <td class="status_row">&nbsp;</td>
         <td class="status_row">&nbsp;</td>
         <td class="number_row">￥<{$amount.cost}></td>
+        <td>&nbsp;</td>
     </tr>
     <{else}>
     <tr>
-        <td colspan="11">列表为空</td>
+        <td colspan="13">列表为空</td>
     </tr>
     <{/if}>
     </tbody>

@@ -1,6 +1,7 @@
 <table class="campaign-table-body table table-striped customrize">
     <thead>
         <tr>
+            <th>&nbsp;</th>
             <{include file="../_common/column_sort.html" name="交易名称" sort="dealName"}>
             <{include file="../_common/column_sort.html" name="类型" sort="dealType"}>
             <{include file="../_common/column_sort.html" name="结算方式" sort="firstname" class="number_row"}>
@@ -10,12 +11,14 @@
             <{include file="../_common/column_sort.html" name="展示数" sort="impressions" class="number_row"}>
             <{include file="../_common/column_sort.html" name="点击数" sort="clicks" class="number_row"}>
             <{include file="../_common/column_sort.html" name="点击率" sort="ctr" class="number_row"}>
+            <th>&nbsp;</th>
         </tr>
     </thead>
     <tbody>
         <{if $records}>
         <{foreach from=$records item=v}>
         <tr>
+            <td>&nbsp;</td>
             <td>
                 <a href="<{url route='deal/detail' dealId=$v.dealId}>" title="<{$v.dealName}>"><{$v.dealName}></a>
             </td>
@@ -37,10 +40,11 @@
             <td class="number_row"><{if $v.impressions}><{$v.impressions}><{else}>0<{/if}></td>
             <td class="number_row"><{if $v.clicks}><{$v.clicks}><{else}>0<{/if}></td>
             <td class="number_row"><{if $v.ctr}><{$v.ctr}><{else}>0<{/if}>%</td>
+            <td>&nbsp;</td>
         </tr>
         <{/foreach}>
         <tr class="amount-tr">
-            <td>&nbsp;</td>
+            <td colspan="2">&nbsp;</td>
             <td style="text-align:left;">总计</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -49,10 +53,11 @@
             <td class="number_row"><{$amount.impressions}></td>
             <td class="number_row"><{$amount.clicks}></td>
             <td class="number_row"><{$amount.ctr}>%</td>
+            <td>&nbsp;</td>
         </tr>
         <{else}>
         <tr>
-            <td colspan="10">列表为空</td>
+            <td colspan="12">列表为空</td>
         </tr>
         <{/if}>
     </tbody>

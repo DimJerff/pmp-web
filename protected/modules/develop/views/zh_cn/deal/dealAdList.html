@@ -1,7 +1,7 @@
 <table class="campaign-table-body table table-striped customrize">
     <thead>
     <tr>
-        <th>&nbsp;</th>
+        <th colspan="2">&nbsp;</th>
         <{include file="../_common/column_sort.html" name="广告位名称" sort="appName"}>
         <{include file="../_common/column_sort.html" name="应用名称" sort="adslotName"}>
         <{include file="../_common/column_sort.html" name="消耗" sort="cost" class="number_row"}>
@@ -12,12 +12,14 @@
         <{include file="../_common/column_sort.html" name="点击率" sort="ctr" class="number_row"}>
         <{include file="../_common/column_sort.html" name="eCPM" sort="ecpm" class="number_row"}>
         <{include file="../_common/column_sort.html" name="eCPC" sort="ecpc" class="number_row"}>
+        <th>&nbsp;</th>
     </tr>
     </thead>
     <tbody>
     <{if $records}>
     <{foreach from=$records item=v}>
     <tr>
+        <td>&nbsp;</td>
         <td>
             <{if $v.status eq 1}>
             <a href="<{url route='deal/change_status' id=$v.dealId status=2}>" confirmLang="base.confirmPause"><i class="icon-stop"></i></a>
@@ -37,10 +39,11 @@
         <td class="number_row"><{$v.ctr}>%</td>
         <td class="number_row"><{$v.ecpm}></td>
         <td class="number_row"><{$v.ecpc}></td>
+        <td>&nbsp;</td>
     </tr>
     <{/foreach}>
     <tr class="amount-tr">
-        <td>&nbsp;</td>
+        <td colspan="2">&nbsp;</td>
         <td style="text-align:left;">总计</td>
         <td class="status_row">&nbsp;</td>
         <td class="number_row">￥<{$amount.cost}></td>
@@ -51,10 +54,11 @@
         <td class="number_row"><{$amount.ctr}>%</td>
         <td class="number_row"><{$amount.ecpm}></td>
         <td class="number_row"><{$amount.ecpc}></td>
+        <td>&nbsp;</td>
     </tr>
     <{else}>
     <tr>
-        <td colspan="11">列表为空</td>
+        <td colspan="13">列表为空</td>
     </tr>
     <{/if}>
     </tbody>

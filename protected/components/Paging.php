@@ -79,7 +79,7 @@ class Paging extends CComponent
                 $params['pageSize'] = Yii::app()->request->cookies['defps']->value;
             }
             /* 没值则获取get参数 */
-            if(!isset($params['pageSize']))
+            if(!isset($params['pageSize']) && isset($methodData[$this->defPageSizeKey]))
                 $params['pageSize'] = $methodData[$this->defPageSizeKey];
             /* 都没值，则获取默认值 */
             if(!isset($params['pageSize']))
@@ -104,7 +104,7 @@ class Paging extends CComponent
                 $params['command'] .= " LIMIT {$offset},".$this->pageSize;
                 $params['command'] = Yii::app()->db->createCommand($params['command']);
             }
-            if(!$params['countCommand'])
+            if(!isset($params['countCommand']))
                 $params['countCommand'] = 'SELECT FOUND_ROWS()';
             if(is_string($params['countCommand']))
                 $params['countCommand'] = Yii::app()->db->createCommand($params['countCommand']);

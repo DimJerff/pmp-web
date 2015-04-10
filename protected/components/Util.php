@@ -315,7 +315,7 @@ class Util extends CComponent {
             $amount['ecpm'] = 0;
             $amount['ecpc'] = 0;
             foreach ($records as $v) {
-                $amount['adslotCount'] += $v['adslotCount'];
+                $amount['adslotCount'] += empty($v['adslotCount']) ? 0 : $v['adslotCount'];
                 $amount['cost']        += $v['cost'];
                 $amount['bidRequest']  += $v['bidRequest'];
                 $amount['impressions']  += $v['impressions'];

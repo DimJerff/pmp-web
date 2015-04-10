@@ -540,10 +540,10 @@ class DealController extends Controller {
      */
     public function actionDealList($timestr='', $sort='', $dealname='', $mediaid=0, $adslotid=0) {
         // 提交的参数处理
+        $order = '';
         if (!empty($sort)) {
             $order = str_replace('_', ' ', $sort);
         }
-
         // 获取应用表模型
         $dealModel = Deal::model();
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;

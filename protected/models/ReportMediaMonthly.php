@@ -14,7 +14,7 @@
  * @property string $cost
  * @property string $dateTime
  */
-class ReportMediaMonthly extends CActiveRecord
+class ReportMediaMonthly extends DbActiveRecord
 {
 	/**
 	 * @return string the associated database table name

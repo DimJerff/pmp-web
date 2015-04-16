@@ -45,8 +45,8 @@
     <label class="control-label"><span class="required">*</span>开发者</label>
     <div class="controls">
         <select name="deal[developId]" id="deal_developId">
-            <{foreach from=$develops item=v}>
-            <option value="<{$v.id}>"  <{if $deal}><{if $deal.developId eq $v.id}>selected="selected"<{/if}><{/if}> ><{$v.firstname}> <{$v.lastname}></option>
+            <{foreach from=$companys item=v}>
+            <option value="<{$v.id}>"  <{if $deal}><{if $deal.developId eq $v.id}>selected="selected"<{/if}><{/if}> ><{$v.companyName}></option>
             <{/foreach}>
         </select>
         <label for="deal_developId" class="error"></label>

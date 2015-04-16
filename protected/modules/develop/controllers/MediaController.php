@@ -291,6 +291,27 @@ class MediaController extends Controller {
         $this->rspJSON($list);
     }
 
+    // 通过提交的开发者id获取开发者应用
+    public function actionGetMediaByCompanyId($companyId) {
+        $mediaModel = Media::model();
+        $list = $mediaModel->getMediaDealByCid($companyId);
+        if (empty($list)) {
+            $this->rspJSON($list);die;
+        }
+
+        $mediaIds = array();
+        foreach ($list as $k=>$v) {
+            $mediaIds[] = $v['id'];
+        }
+
+        $adslotModel = MediaAdslot::model();
+        $list2 = $adslotModel->getAdslotByMids($mediaIds);
+        $list = array_merge($list, $list2);
+        $list = Data::order($list, 'id', 'pid');
+
+        $this->rspJSON($list);
+    }
+
     // 改变广告位状态
     public function actionChange_status($id, $status) {
         $model = Media::model()->findByPk($id);

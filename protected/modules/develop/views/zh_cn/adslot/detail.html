@@ -75,18 +75,6 @@
     });
 
     /**
-     * 集成sdk
-     * @param adslotId 广告id
-     */
-    function ajaxSdk(adslotId) {
-        var url = "/develop/down/sdk/adslotId/" + adslotId;
-        $.ajaxCall(url, function(res) {
-            var box = $.modalBox(res.title, res.body, res.footer);
-            box.on('hidden', function () {})
-        });
-    }
-
-    /**
      * 异步获取交易关系列表
      * @param param 提交的参数 格式范例:pagenum=1
      */

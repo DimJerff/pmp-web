@@ -277,5 +277,16 @@ class Media extends DbActiveRecord
         return $this->_query($sql);
     }
 
+    public function getMediaDealByCid($companyId) {
+        $sql = "";
+        $sql .= "SELECT ";
+        $sql .= "id, appName AS name, 0 as pid ";
+        $sql .= "FROM {{media}} ";
+        $sql .= "WHERE ";
+        $sql .= "companyId = {$companyId} AND `status` = 1";
+
+        return $this->_query($sql);
+    }
+
 
 }

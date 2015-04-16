@@ -80,6 +80,7 @@
 		'shareTitle': '您可将当前报表进行分享',
 
 		'switchCompany': '切换公司',
+		'switchDeveloper': '切换开发者',
 		'operationType': '操作类型',
 		'time': '时间',
 		'billingStatus': '交易状态',

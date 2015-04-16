@@ -232,7 +232,7 @@ class Deal extends DbActiveRecord
     }
 
     // 获取交易列表sql
-    public function getDealListSql($companyId, $dateTimeArr, $order='', $mediaid=0, $adslotid=0, $dealname='') {
+    public function getDealListSql($companyId, $dateTimeArr, $order='', $mediaid=0, $adslotid=0, $dealname='', $throw=0) {
         $select = "SQL_CALC_FOUND_ROWS";
         $field = array(
             "d.*",
@@ -253,6 +253,9 @@ class Deal extends DbActiveRecord
         $where = array(
             "d.companyId = {$companyId}",
         );
+        if ($throw) {
+            $where[] = "d.status = 1";
+        }
         if (!empty($dealname)) {
             $where[] = "dealName LIKE '%". $dealname ."%'";
         }
@@ -266,8 +269,8 @@ class Deal extends DbActiveRecord
     }
 
     // 获取交易分页列表
-    public function getDealPageList($companyId, $dateTimeArr, $order='', $mediaid=0, $adslotid=0, $dealname='') {
-        $sql = $this->getDealListSql($companyId, $dateTimeArr, $order, $mediaid, $adslotid, $dealname);
+    public function getDealPageList($companyId, $dateTimeArr, $order='', $mediaid=0, $adslotid=0, $dealname='', $throw=0) {
+        $sql = $this->getDealListSql($companyId, $dateTimeArr, $order, $mediaid, $adslotid, $dealname, $throw);
 
         // 分页处理
         $paging = Paging::instance();

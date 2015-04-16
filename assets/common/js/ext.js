@@ -251,14 +251,14 @@
 	$('#switchCompany').click(function(){
 		var body = '<form class="form-horizontal" method="get" action="">' +
 			'<div class="control-group">' +
-			'	<label class="control-label">{base.switchCompany}</label>' +
+			'	<label class="control-label">{base.switchDeveloper}</label>' +
 			'    <div class="controls">' +
 			'    	<select id="switch_company" name="companyId">' +
 			'		</select>' +
 			'    </div>' +
 			'</div>' +
 			'</form>';
-		var box = $.modalBox('{base.switchCompany}', body, '');
+		var box = $.modalBox('{base.switchDeveloper}', body, '');
 		var okCallback = function(){
 			$('#switch_company').change();
 		}
@@ -1106,6 +1106,18 @@ function ajaxPage(listId, url, param) {
     $.ajaxCall(url, function(data){
         listObj.html(data.html);
     }, {data : listObj.data()});
+}
+
+/**
+ * 集成sdk
+ * @param adslotId 广告id
+ */
+function ajaxSdk(adslotId) {
+    var url = "/develop/down/sdk/adslotId/" + adslotId;
+    $.ajaxCall(url, function(res) {
+        var box = $.modalBox(res.title, res.body, res.footer);
+        box.on('hidden', function () {})
+    });
 }
 
 

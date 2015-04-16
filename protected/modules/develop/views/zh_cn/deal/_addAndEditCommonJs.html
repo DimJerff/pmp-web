@@ -35,7 +35,7 @@
      */
     $("#deal_medias_adslots").click(function() {
         var developId = $("select[name='deal[developId]']").val();
-        var url = '/develop/media/getMediaByDevelopId/developId/' + developId;
+        var url = '/develop/media/getMediaByCompanyId/companyId/' + developId;
         $.ajaxCall(url, function(result) {
             if (!result.length) {
                 $.alert("当前开发者 无应用/广告位", null, 400);

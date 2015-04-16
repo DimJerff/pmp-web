@@ -70,10 +70,16 @@ class DealController extends Controller {
         // 实例化开发者用户对象
         $userModel = User::model();
         $develops = $userModel->findAll();
+        $companyModel = Company::model();
+        $criteria = new CDbCriteria;
+        $criteria->condition='status=:status';
+        $criteria->params=array(':status'=>1);
+        $companys = $companyModel->findAll($criteria);
 
         // 模板分配显示
         $this->smartyRender(array(
             'develops' => $develops,
+            'companys' => $companys,
             'companyCampaignList' => CJSON::encode($companyCampaignList),
         ));
     }
@@ -538,7 +544,7 @@ class DealController extends Controller {
      * @param int $mediaid
      * @param int $adslotid
      */
-    public function actionDealList($timestr='', $sort='', $dealname='', $mediaid=0, $adslotid=0) {
+    public function actionDealList($timestr='', $sort='', $dealname='', $mediaid=0, $adslotid=0, $throw=0) {
         // 提交的参数处理
         $order = '';
         if (!empty($sort)) {
@@ -548,7 +554,7 @@ class DealController extends Controller {
         $dealModel = Deal::model();
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
         list($records, $pagingData) = $dealModel
-            ->getDealPageList($companyId, explode("_", $timestr), $order, $mediaid, $adslotid, $dealname);
+            ->getDealPageList($companyId, explode("_", $timestr), $order, $mediaid, $adslotid, $dealname, $throw);
 
         // 模板分配显示
         $html = $this->smartyRender(array(

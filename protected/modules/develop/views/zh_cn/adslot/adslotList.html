@@ -15,6 +15,7 @@
         <{include file="../_common/column_sort.html" name="点击率" sort="ctr" class="number_row"}>
         <{include file="../_common/column_sort.html" name="eCPM" sort="ecpm" class="number_row"}>
         <{include file="../_common/column_sort.html" name="eCPC" sort="ecpc" class="number_row"}>
+        <th>代码</th>
         <th>&nbsp;</th>
     </tr>
     </thead>
@@ -53,6 +54,7 @@
         <td class="number_row"><{$v.ctr}>%</td>
         <td class="number_row"><{$v.ecpm}></td>
         <td class="number_row"><{$v.ecpc}></td>
+        <td><a href="javascript: ajaxSdk(<{$v.id}>);"><i class="icon-list-alt"></i></a></td>
         <td>&nbsp;</td>
     </tr>
     <{/foreach}>
@@ -69,10 +71,11 @@
         <td class="number_row"><{$amount.ecpm}></td>
         <td class="number_row"><{$amount.ecpc}></td>
         <td>&nbsp;</td>
+        <td>&nbsp;</td>
     </tr>
     <{else}>
     <tr>
-        <td colspan="13">列表为空</td>
+        <td colspan="14">列表为空</td>
     </tr>
     <{/if}>
     </tbody>

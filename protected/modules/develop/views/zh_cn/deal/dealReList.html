@@ -27,11 +27,11 @@
                 <{if $v.payType eq 101}>
                 <{$v.mediaSharingRate}>%
                 <{else if $v.payType eq 1}>
-                <{$v.mediaPrice}><br />CPM
+                ￥<{$v.mediaPrice|number_format:2}><br />CPM
                 <{else if $v.payType eq 2}>
-                <{$v.mediaPrice}><br />CPC
+                ￥<{$v.mediaPrice|number_format:2}><br />CPC
                 <{else if $v.payType eq 3}>
-                <{$v.mediaPrice}><br />CPD
+                ￥<{$v.mediaPrice|number_format:2}><br />CPD
                 <{/if}>
             </td>
             <td><{$v.startDate|date_format:'%Y/%m/%d'}></td>

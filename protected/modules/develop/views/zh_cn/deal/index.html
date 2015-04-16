@@ -80,10 +80,10 @@
                                 });
                             });
                         </script>
-                        <span style=" vertical-align: bottom; display: block; float: right; height: 46px; margin-right: 10px;">仅显示投放中</span>
+                        <span style=" vertical-align: bottom; display: block; float: right; height: 46px; margin-right: 10px;"><input type="checkbox" name="throwType" value="1" style="margin-top: 0px;" onclick="if($(this).prop('checked')) {ajaxDealPage('throw=1');} else {ajaxDealPage('throw=0');}" />仅显示投放中</span>
                     </div>
                 </div>
-                <div class="contentList" id="dealList" ajaxfun="ajaxDealPage" data-pagenum ="1" data-timestr="<{$timeStr}>" data-dealname=""></div>
+                <div class="contentList" id="dealList" ajaxfun="ajaxDealPage" data-pagenum ="1" data-timestr="<{$timeStr}>" data-dealname="" data-throw="0"></div>
             </div>
             <!-- 交易区块 end -->
         </div>
@@ -96,9 +96,6 @@
 <script>
     $(function() {
         ajaxDealPage("pagenum=1");
-
-
-
 
     });
 

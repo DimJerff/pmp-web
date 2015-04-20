@@ -106,10 +106,10 @@ class MediaController extends Controller {
     }
 
     // 报表下载
-    public function actionExportAll($timestr) {
+    public function actionExportAll($timestr, $os=0) {
         // 获取当前用户的默认公司id
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
-        $records = Media::model()->getMediaList($companyId, explode("_", $timestr));
+        $records = Media::model()->getMediaList($companyId, explode("_", $timestr), $os);
         $totalRecord = array(
             'adslotCount' => 0,
             'cost'        => 0,

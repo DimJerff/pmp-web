@@ -272,8 +272,8 @@ class MediaAdslot extends DbActiveRecord
     }
 
     // 获取所有广告位数据
-    public function  getAdslotList($companyId, $dateTimeArr, $mediaId=0) {
-        $sql = $this->getAdslotListSql($companyId, 0, '', $dateTimeArr, NULL,  $mediaId);
+    public function  getAdslotList($companyId, $dateTimeArr, $mediaId=0, $os=0, $dpi='') {
+        $sql = $this->getAdslotListSql($companyId, $os, $dpi, $dateTimeArr, NULL,  $mediaId);
         return $this->_query($sql);
     }
 

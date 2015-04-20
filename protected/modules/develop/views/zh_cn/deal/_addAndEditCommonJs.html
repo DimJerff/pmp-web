@@ -2,17 +2,16 @@
     // 公司和广告系列列表数据
     var companyCampaignList = <{$companyCampaignList}>;
 
-    $(function() {
-        /**
-         * 交易类型单选点击事件
-         */
-        $("input[name='deal[dealType]']").click(function() {
-            if (parseInt($(this).val())) { // 私有
-                $("#deal_companies_campaigns").parents(".control-group").show();
-            } else { // 公开
-                $("#deal_companies_campaigns").parents(".control-group").hide();
-            }
-        }).eq(<{if $deal}><{$deal.dealType}><{else}>0<{/if}>).click();
+    /**
+     * 交易类型单选点击事件
+     */
+    $("input[name='deal[dealType]']").click(function() {
+        if (parseInt($(this).val())) { // 私有
+            $("#deal_companies_campaigns").parents(".control-group").show();
+        } else { // 公开
+            $("#deal_companies_campaigns").parents(".control-group").hide();
+        }
+    }).eq(<{if $deal}><{$deal.dealType}><{else}>0<{/if}>).click();
 
     /**
      * 结算方式单选点击事件
@@ -94,7 +93,7 @@
      */
     $('#deal_form').ajaxFormCall({
         url : '/develop/deal/postData',
-        tips:'新增交易成功，5秒钟后将自动跳转',
+        tips:'<{if $deal}>编辑<{else}>新增<{/if}>交易成功，5秒钟后将自动跳转',
         href:"<{url route='deal/index'}>"
     });
 

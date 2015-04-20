@@ -49,7 +49,7 @@
                         <span>广告位</span>
                     </div>
                     <div class="stat-filter-btn contentOpt" id="adslotOpt">
-                        <a class="filter-down-a" href="<{url route='adslot/exportAll' timestr=$timeStr mediaid=$media.id}>"></a>
+                        <a class="filter-down-a" id="down-adslot-export" href="<{url route='adslot/exportAll' timestr=$timeStr mediaid=$media.id}>"></a>
                         <div class="filter-select-dpi">
                             <select name="adslot-dpi">
                                 <option value="0">全部</option>
@@ -143,6 +143,14 @@
             }
             $("select[name='adslot-dpi']").val(dpi).change();
             clearDiyDpi();
+        });
+
+        // 广告位报表下载
+        $("#down-adslot-export").click(function() {
+            var href = $(this).attr("href");
+            href += "?dpi=" + $("select[name='adslot-dpi']").val();
+            window.open(href);
+            return false;
         });
     });
 

@@ -219,9 +219,9 @@ class Media extends DbActiveRecord
     }
 
     // 统计应用的列表所以信息数据
-    public function getMediaList($companyId, $dateTimeArr=array()) {
+    public function getMediaList($companyId, $dateTimeArr=array(), $os=0) {
         // 获取sql
-        $sql = $this->getMediaPageListSql($companyId, 0, $dateTimeArr, NULL);
+        $sql = $this->getMediaPageListSql($companyId, $os, $dateTimeArr, NULL);
 
         return $this->_query($sql);
     }

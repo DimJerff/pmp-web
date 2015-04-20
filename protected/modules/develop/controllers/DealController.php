@@ -111,6 +111,11 @@ class DealController extends Controller {
         // 实例化开发者用户对象
         $userModel = User::model();
         $develops = $userModel->findAll();
+        $companyModel = Company::model();
+        $criteria = new CDbCriteria;
+        $criteria->condition='status=:status';
+        $criteria->params=array(':status'=>1);
+        $companys = $companyModel->findAll($criteria);
 
         // 获取交易信息
         $deal = Deal::model()->findByPk($id);
@@ -123,6 +128,7 @@ class DealController extends Controller {
             'develops' => $develops,
             'companyCampaignList' => CJSON::encode($companyCampaignList),
             'deal' => $deal,
+            'companys' => $companys,
             'dealAttach' => $dealAttach,
         ));
     }

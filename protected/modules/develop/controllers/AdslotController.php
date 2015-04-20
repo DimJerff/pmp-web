@@ -88,10 +88,10 @@ class AdslotController extends Controller {
     }
 
     // 所有广告位的消耗报表
-    public function actionExportAll($timestr, $mediaid=0) {
+    public function actionExportAll($timestr, $mediaid=0, $os=0, $dpi=0) {
         // 获取当前用户的默认公司id
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
-        $records = MediaAdslot::model()->getAdslotList($companyId, explode("_", $timestr), $mediaid);
+        $records = MediaAdslot::model()->getAdslotList($companyId, explode("_", $timestr), $mediaid, $os, $dpi);
         $totalRecord = array(
             '0'           => '',
             'cost'        => 0,

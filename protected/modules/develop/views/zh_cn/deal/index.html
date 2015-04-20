@@ -64,6 +64,11 @@
                                         url += "/name/" + $("input[name='searchtxt']").val();
                                         $.ajaxCall(url, function(result) {
                                             $("#search-box .show-name").nextAll().remove();
+                                            // 选择所有查询结果
+                                            if (result[0]) {
+                                                var clickFun = "javascript:$.dealSearch('"+ $("input[name='searchtxt']").val() +"');";
+                                                $("#search-box").append('<li><a href="'+clickFun+'">选择所有搜索结果</a></li>');
+                                            }
                                             for (var i in result) {
                                                 var clickFun = "javascript:$.dealSearch('"+ result[i] +"');";
                                                 $("#search-box").append('<li><a href="'+clickFun+'">'+ result[i] +'</a></li>');

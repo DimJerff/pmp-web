@@ -88,7 +88,7 @@ class FormModel extends CFormModel {
 	 * 获取上传文件错误信息，只返回第一条错误信息
 	 * @return array|string
 	 */
-	public function getError(){
+	public function showError(){
 		$errors = parent::getErrors('instance');
 		if(empty($errors)) return array(0, 'ok');
 		if($this->instance_error) return $this->instance_error[0];

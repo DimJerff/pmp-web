@@ -23,6 +23,7 @@ $(function () {
             }
         }
     });
+    <{if $media.id}>buildSelect(<{$media.os}>);<{/if}>
 
     // 平台类型单选按钮点击事件
     $("input[name='media[os]']").click(function() {

@@ -6,8 +6,16 @@
     </div>
 </div>
 <div class="control-group">
+    <{if $media.id}>
     <label class="control-label">平台类型</label>
-    <div class="controls" id="" value="1">
+    <div class="controls" value="1">
+        <label class="radio inline">
+            <{if $media.os eq 1}>Android<{else if $media.os eq 2}>iOS<{/if}>
+        </label>
+    </div>
+    <{else}>
+    <label class="control-label">平台类型</label>
+    <div class="controls" value="1">
         <label class="radio inline">
             <input type="radio" name="media[os]" value="1"> Android
         </label>
@@ -15,6 +23,7 @@
             <input type="radio" name="media[os]" value="2"> iOS
         </label>
     </div>
+    <{/if}>
 </div>
 <div class="control-group" data-image-choosed="1">
     <label class="control-label"><span class="required">*</span>图标</label>

@@ -133,7 +133,7 @@ class MediaAdslotDeal extends DbActiveRecord
     }
 
     // 通过应用id或者广告位id获取交易对应的交易信息sql
-    protected function getDealByMidOrAidSql($dateTimeArr, $companyId, $mediaId, $adslotId=0, $order=NULL) {
+    protected function getDealByMidOrAidSql($dateTimeArr, $companyId, $mediaId, $adslotId=0, $order=NULL, $throw=0) {
         $select = "SQL_CALC_FOUND_ROWS";
         $field = array(
             "mad.dealId",
@@ -159,8 +159,10 @@ class MediaAdslotDeal extends DbActiveRecord
         );
         $where = array(
             "d.companyId = {$companyId}",
-            "d.`status` = 1",
         );
+        if ($throw) {
+            $where[] = "d.status = 1";
+        }
         if (empty($adslotId)) {
             $where[] = "mediaId = {$mediaId}";
         } else {
@@ -183,9 +185,9 @@ class MediaAdslotDeal extends DbActiveRecord
      * @param null $order 排序
      * @return array
      */
-    public function getDealByMidOrAid($dateTimeArr, $companyId, $mediaId, $adslotId=0, $order=NULL) {
+    public function getDealByMidOrAid($dateTimeArr, $companyId, $mediaId, $adslotId=0, $order=NULL, $throw=0) {
         // 获取sql
-        $sql = $this->getDealByMidOrAidSql($dateTimeArr, $companyId, $mediaId, $adslotId, $order);
+        $sql = $this->getDealByMidOrAidSql($dateTimeArr, $companyId, $mediaId, $adslotId, $order, $throw);
 
         // 分页处理
         $paging = Paging::instance();

@@ -395,3 +395,9 @@ table.customrize thead th:hover {
     transition: all 0.3s ease-out;
 }
 
+/* 进入广告位的图标 */
+.adslot-in-icon {
+    background: url("../img/icon-n.png") no-repeat 0px -220px ;
+    padding-left: 20px;
+}
+

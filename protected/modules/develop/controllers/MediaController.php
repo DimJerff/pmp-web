@@ -340,6 +340,7 @@ class MediaController extends Controller {
 
         // 实例化应用图片上传类
         $model = new MediaFile();
+
         // 获取图片上传实例对象
         $model->instance = CUploadedFile::getInstanceByName('file');
         // 添加附件入附件库信息
@@ -354,7 +355,7 @@ class MediaController extends Controller {
             $result['thumbUrlPath'] = $model->thumbUrlPath;
             $this->rspJSON($result);
         }else{
-            $this->rspErrorJSON(403, $model->getError());
+            $this->rspErrorJSON(403, $model->showError());
         }
     }
 }

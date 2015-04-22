@@ -144,6 +144,7 @@ class MediaAdslotDeal extends DbActiveRecord
             "d.startDate",
             "d.endDate",
             "d.mediaSharingRate",
+            "d.status",
             "SUM(bidRequest) AS bidRequest",
             "SUM(impressions) AS impressions",
             "SUM(clicks) AS clicks",

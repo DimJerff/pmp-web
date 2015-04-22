@@ -19,18 +19,19 @@
 <div class="control-group">
     <label class="control-label"><span class="required">*</span>结算方式</label>
     <div class="controls">
+        <{if !$deal}>
         <label class="radio inline">
             <input type="radio" name="deal[_mediaPrice_mediaSharingRate]" value="0">
             <span>协议支付价格</span>
             <input type="text" name="deal[mediaPrice]" value="<{if $deal}><{if $deal.payType < 100}><{$deal.mediaPrice}><{/if}><{/if}>"  placeholder="金额..." style="width: 60px;" />
             <span>元</span>
-                            <span class="radio-frequency">
-                                <select name="deal[payType]" style="width: 100px;">
-                                    <option value="3" <{if $deal}><{if $deal.payType eq 3}>selected="selected"<{/if}><{/if}> >每天</option>
-                                    <option value="2" <{if $deal}><{if $deal.payType eq 2}>selected="selected"<{/if}><{/if}> >每次点击</option>
-                                    <option value="1" <{if $deal}><{if $deal.payType eq 1}>selected="selected"<{/if}><{/if}> >每千次展示</option>
-                                </select>
-                            </span>
+            <span class="radio-frequency">
+                <select name="deal[payType]" style="width: 100px;">
+                    <option value="3" <{if $deal}><{if $deal.payType eq 3}>selected="selected"<{/if}><{/if}> >每天</option>
+                    <option value="2" <{if $deal}><{if $deal.payType eq 2}>selected="selected"<{/if}><{/if}> >每次点击</option>
+                    <option value="1" <{if $deal}><{if $deal.payType eq 1}>selected="selected"<{/if}><{/if}> >每千次展示</option>
+                </select>
+            </span>
         </label>
         <br />
         <label class="radio inline">
@@ -39,6 +40,35 @@
             <input type="text" name="deal[mediaSharingRate]" value="<{if $deal}><{if $deal.payType > 100}><{$deal.mediaSharingRate}><{/if}><{/if}>" style="width: 60px;"  />
             <span>%</span>
         </label>
+        <{else}>
+        <{if $deal.payType lt 100}>
+        <label class="radio inline" style="padding-left: 0px;">
+            <input type="hidden" name="deal[_mediaPrice_mediaSharingRate]" value="0">
+            <span>协议支付价格</span>
+            <input type="text" name="deal[mediaPrice]" value="<{$deal.mediaPrice}>"  placeholder="金额..." style="width: 60px;" />
+            <span>元</span>
+            <input type="hidden" name="deal[payType]" value="<{$deal.payType}>" />
+            <span>/
+            <{if $deal.payType eq 3}>
+                每天
+            <{/if}>
+            <{if $deal.payType eq 2}>
+                每次点击
+            <{/if}>
+            <{if $deal.payType eq 1}>
+                每千次展示
+            <{/if}>
+            </span>
+        </label>
+        <{else}>
+        <label class="radio inline" style="padding-left: 0px;">
+            <input type="hidden" name="deal[_mediaPrice_mediaSharingRate]" value="101" />
+            <span>媒体收入占售出额比例</span>
+            <input type="text" name="deal[mediaSharingRate]" value="<{$deal.mediaSharingRate}>" style="width: 60px;"  />
+            <span>%</span>
+        </label>
+        <{/if}>
+        <{/if}>
     </div>
 </div>
 <div class="control-group">

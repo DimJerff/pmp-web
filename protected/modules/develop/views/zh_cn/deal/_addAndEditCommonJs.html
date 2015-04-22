@@ -157,6 +157,19 @@
         });
 
         /**
+         * 清空按钮
+         */
+        $("#emptyListBtn").click(function() {
+            // 取消右侧所有选中的checkbox
+            $("#chooseList input:checked").each(function() {
+                $(this).prop("checked", false);
+            });
+
+            // 更新右侧HTML列表
+            upChoosedList();
+        });
+
+        /**
          * 更新已经选择的广告列表
          */
         function upChoosedList() {

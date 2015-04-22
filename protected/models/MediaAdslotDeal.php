@@ -132,7 +132,16 @@ class MediaAdslotDeal extends DbActiveRecord
         return Yii::app()->db->createCommand($sql)->execute();
     }
 
-    // 通过应用id或者广告位id获取交易对应的交易信息sql
+    /**
+     * 通过应用id或者广告位id获取交易对应的交易信息sql
+     * @param $dateTimeArr
+     * @param $companyId
+     * @param $mediaId
+     * @param int $adslotId
+     * @param null $order
+     * @param int $throw
+     * @return bool|string
+     */
     protected function getDealByMidOrAidSql($dateTimeArr, $companyId, $mediaId, $adslotId=0, $order=NULL, $throw=0) {
         $select = "SQL_CALC_FOUND_ROWS";
         $field = array(
@@ -199,7 +208,13 @@ class MediaAdslotDeal extends DbActiveRecord
         return array($list, $paging->data());
     }
 
-    // 通过应用id或者广告位id获取交易对应的交易信息列表
+    /**
+     * 通过应用id或者广告位id获取交易对应的交易信息列表
+     * @param $dateTimeArr
+     * @param $companyId
+     * @param $mediaId
+     * @return mixed
+     */
     public function getDealListByMidOrAid($dateTimeArr, $companyId, $mediaId) {
         // 获取sql
         $sql = $this->getDealByMidOrAidSql($dateTimeArr, $companyId, $mediaId, 0, NULL);
@@ -207,7 +222,14 @@ class MediaAdslotDeal extends DbActiveRecord
         return $this->_query($sql);
     }
 
-    // 通过交易id获取交易应用的交易信息Sql
+    /**
+     * 通过交易id获取交易应用的交易信息Sql
+     * @param $dateTimeArr
+     * @param $companyId
+     * @param $dealId
+     * @param null $order
+     * @return bool|string
+     */
     protected function getDealByDealIdSql($dateTimeArr, $companyId, $dealId, $order=NULL) {
         $select = "SQL_CALC_FOUND_ROWS";
         $field = array(
@@ -254,7 +276,14 @@ class MediaAdslotDeal extends DbActiveRecord
         return $this->_select($select)->_field($field)->_from($from, true)->_join($join)->_where($where)->_group($group)->_order($order)->_getBuildSql();
     }
 
-    // 通过交易id获取交易对应的交易信息
+    /**
+     * 通过交易id获取交易对应的交易信息
+     * @param $dateTimeArr
+     * @param $companyId
+     * @param $dealId
+     * @param null $order
+     * @return array
+     */
     public function getDealByDealId($dateTimeArr, $companyId, $dealId, $order=NULL) {
         // 获取sql
         $sql = $this->getDealByDealIdSql($dateTimeArr, $companyId, $dealId, $order);
@@ -267,11 +296,86 @@ class MediaAdslotDeal extends DbActiveRecord
         return array($list, $paging->data());
     }
 
-    // 通过交易id获取交易对应的交易信息的列表
+    /**
+     * 通过交易id获取交易对应的交易信息的列表
+     * @param $dateTimeArr
+     * @param $companyId
+     * @param $dealId
+     * @return mixed
+     */
     public function getDealListByDealId($dateTimeArr, $companyId, $dealId) {
         // 获取sql
         $sql = $this->getDealByDealIdSql($dateTimeArr, $companyId, $dealId, NULL);
 
         return $this->_query($sql);
+    }
+
+    /**
+     * 通过交易id获取其下的所有广告位消耗数据SQL
+     * @param $dateTimeArr 时间区间
+     * @param $companyId 公司id
+     * @param $dealId 交易id
+     * @param null $order 排序
+     * @return bool|string
+     */
+    public function getAdslotDataByDealIdSql($dateTimeArr, $companyId, $dealId, $order=NULL, $adslotName='', $throw=0) {
+        $select = "SQL_CALC_FOUND_ROWS";
+        $field = array(
+            "mad.*",
+            "m.appName",
+            "ma.adslotName",
+            "ma.status",
+            "SUM(bidRequest) AS bidRequest",
+            "SUM(impressions) AS impressions",
+            "SUM(clicks) AS clicks",
+            "IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
+            "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
+            "SUM(cost) AS cost",
+            "IF(SUM(impressions), SUM(cost)/SUM(impressions)/1000, 0) AS ecpm",
+            "IF(SUM(clicks), SUM(cost)/SUM(clicks)/1000000, 0) AS ecpc",
+        );
+        $from = "mad";
+        $join = array(
+            "{{media}} m ON mad.mediaId = m.id",
+            "{{media_adslot}} ma on mad.adslotId = ma.id",
+            "{{deal}} d on mad.dealId = d.id",
+            "{{report_deal_daily}} rd on rd.dealId = mad.dealId  AND rd.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]} AND ((mad.adslotId > 0 AND rd.adslotId = mad.adslotId) OR (mad.adslotId = 0 AND rd.mediaId = mad.mediaId))",
+        );
+        $where = array(
+            "d.companyId = {$companyId}",
+            "mad.dealId = {$dealId}",
+        );
+        if ($throw) {
+            $where[] = "((mad.adslotId > 0 AND ma.`status` = 1) OR (mad.adslotId = 0 AND m.`status` = 1))";
+        }
+        if (!empty($adslotName)) {
+            $where[] = "adslotName LIKE '%". $adslotName ."%'";
+        }
+        $group = "mad.adslotId, mad.mediaId";
+        if (empty($order)) {
+            $order = NULL;
+        }
+
+        return $this->_select($select)->_field($field)->_from($from, true)->_join($join)->_where($where)->_group($group)->_order($order)->_getBuildSql();
+    }
+
+    /**
+     * 通过交易id获取其下的所有广告位消耗数据
+     * @param $dateTimeArr 时间区间
+     * @param $companyId 公司id
+     * @param $dealId 交易id
+     * @param null $order 排序
+     * @return array
+     */
+    public function getAdslotDataByDealId($dateTimeArr, $companyId, $dealId, $order=NULL, $adslotName='', $throw=0) {
+        // 获取sql
+        $sql = $this->getAdslotDataByDealIdSql($dateTimeArr, $companyId, $dealId, $order, $adslotName, $throw);
+        fpc($sql);
+        // 分页处理
+        $paging = Paging::instance();
+        $paging->setPageSize(5);
+        $paging->setPageNumKey('pagenum');
+        $list = $paging->query($sql);
+        return array($list, $paging->data());
     }
 }

@@ -99,7 +99,10 @@
             <!-- 交易详情信息 end -->
             <div class="block-space"></div>
             <!-- 表单时间选择 start -->
-            <{include file="../../../../develop/views/zh_cn/_common/doubleCalendarForm.html"}>
+            <div id="searchTimeBox">
+                <{include file="../../../../develop/views/zh_cn/_common/doubleCalendarForm.html"}>
+            </div>
+
             <!-- 表单时间选择 end -->
             <div class="block-space"></div>
             <!-- 交易区块 start -->
@@ -107,10 +110,12 @@
                 <div class="campaign-table-header campaign-table-header-f">
                     <div class="stat-type-btn">
                         <span>广告位</span>
+                        <span style="margin-left: 5px; font-size: 12px; color: #6E6E6E; font-weight: 100;"><input type="checkbox" name="throwType" value="1" style="margin-top: 0px;" onclick="if($(this).prop('checked')) {ajaxDealAdPage('throw=1');} else {ajaxDealAdPage('throw=0');}" />仅显示投放中</span>
                     </div>
+
                     <div class="stat-filter-btn contentOpt hide" style="display: block;">
                         <a class="filter-down-a" href="<{url route='deal/exportDeal' dealid=$deal.id timestr=$timeStr}>"></a>
-                        <!--<a class="filter-search-a" id="search-a" href="javascript: void(0);" style="margin-right: 10px;" data-searid="dealList"></a>
+                        <a class="filter-search-a" id="search-a" href="javascript: void(0);" style="margin-right: 10px;" data-searid="dealList"></a>
                         <ul class="dropdown-menu" id="search-box">
                             <li class="show-name"><input type="text" name="searchtxt" placeholder="搜索..."></li>
                         </ul>
@@ -127,10 +132,15 @@
                                             $("#search-box").hide().find(".show-name").nextAll().remove();
                                         }, 400);
                                     }).keyup(function() {
-                                        var url = "/develop/adslot/adslotNameSearch";
+                                        var url = "/develop/adslot/adslotNameSearch/dealid/<{$deal.id}>";
                                         url += "/name/" + $("input[name='searchtxt']").val();
                                         $.ajaxCall(url, function(result) {
                                             $("#search-box .show-name").nextAll().remove();
+                                            // 选择所有查询结果
+                                            if (result[0]) {
+                                                var clickFun = "javascript:$.dealSearch('"+ $("input[name='searchtxt']").val() +"');";
+                                                $("#search-box").append('<li><a href="'+clickFun+'">选择所有搜索结果</a></li>');
+                                            }
                                             for (var i in result) {
                                                 var clickFun = "javascript:$.dealSearch('"+ result[i] +"');";
                                                 $("#search-box").append('<li><a href="'+clickFun+'">'+ result[i] +'</a></li>');
@@ -138,22 +148,21 @@
                                         })
                                     });
                                     // 点击选中函数
-                                    $.dealSearch = function (dealname) {
-                                        $("#"+searchId).data('dealname', dealname);
+                                    $.dealSearch = function (adslotname) {
+                                        $("#"+searchId).data('adslotname', adslotname);
                                         var ajaxfun = $("#"+searchId).attr("ajaxfun");
-                                        $("#search-box").find(":text").val(dealname);
+                                        console.log(ajaxfun);
+                                        $("#search-box").find(":text").val(adslotname);
                                         window[ajaxfun]();
                                     }
                                 });
                             });
-                        </script>-->
-                        <span style=" vertical-align: bottom; display: block; float: right; height: 46px; margin-right: 10px;">仅显示投放中</span>
+                        </script>
                     </div>
                 </div>
                 <div class="contentList" id="dealList" ajaxfun="ajaxDealAdPage" data-pagenum ="1" data-timestr="<{$timeStr}>" data-dealid="<{$deal.id}>" ></div>
             </div>
             <!-- 交易区块 end -->
-
         </div>
     </div>
 </div>
@@ -163,6 +172,12 @@
 </body>
 <script>
     $(function() {
+        $("#searchTimeBox").position({
+            of: $( "#search-a" ),
+            my: "right-10 center",
+            at: "left center"
+        });
+
         ajaxDealAdPage();
 
         $(".deal-popover" ).position({

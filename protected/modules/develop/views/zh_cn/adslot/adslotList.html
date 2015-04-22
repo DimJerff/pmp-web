@@ -46,7 +46,7 @@
             <span>全屏</span>
             <{/if}>
         </td>
-        <td class="number_row">￥<{if $v.cost}><{$v.cost}><{else}>0<{/if}></td>
+        <td class="number_row">￥<{if $v.cost}><{$v.cost|number_format:2}><{else}>0<{/if}></td>
         <td class="number_row"><{if $v.bidRequest}><{$v.bidRequest}><{else}>0<{/if}></td>
         <td class="number_row"><{if $v.impressions}><{$v.impressions}><{else}>0<{/if}></td>
         <td class="number_row"><{$v.fillingr}>%</td>
@@ -62,7 +62,7 @@
         <td colspan="2">&nbsp;</td>
         <td style="text-align:left;">总计</td>
         <td class="status_row">&nbsp;</td>
-        <td class="number_row">￥<{$amount.cost}></td>
+        <td class="number_row">￥<{$amount.cost|number_format:2}></td>
         <td class="number_row"><{$amount.bidRequest}></td>
         <td class="number_row"><{$amount.impressions}></td>
         <td class="number_row"><{$amount.fillingr}>%</td>

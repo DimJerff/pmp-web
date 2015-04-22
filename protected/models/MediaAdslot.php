@@ -389,7 +389,7 @@ class MediaAdslot extends DbActiveRecord
     }
 
     // 模糊查询广告位名称
-    public function getAdslotNameLike($adslotNameLike) {
+    public function getAdslotNameLike($adslotNameLike, $dealid) {
         $adslotNameLike = trim($adslotNameLike);
         if (empty($adslotNameLike)) {
             return array();
@@ -397,11 +397,17 @@ class MediaAdslot extends DbActiveRecord
         $field = array(
             "adslotName"
         );
+        $from = "ma";
         $where =array();
         $where[] = "adslotName LIKE '%". $adslotNameLike ."%'";
         $where[] = "status IN (1, 2)";
+        $join = "";
+        if ($dealid) {
+            $join = "{{media_adslot_deal}} mad ON mad.adslotId = ma.id";
+            $where[] = "mad.dealId = {$dealid}";
+        }
 
-        return $this->_select()->_field($field)->_from()->_where($where)->_query();
+        return $this->_select()->_field($field)->_from($from, true)->_join($join)->_where($where)->_query();
     }
 
 }

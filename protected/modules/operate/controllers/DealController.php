@@ -618,7 +618,7 @@ class DealController extends Controller {
      * @param string $sort
      * @param string $adslotname
      */
-    public function actionDealAdList($dealid, $timestr, $sort='', $adslotname='') {
+    public function actionDealAdList($dealid, $timestr, $sort='', $adslotname='', $throw=0) {
         // 对提交过来的参数进行处理
         if (!empty($sort)) {
             $order = str_replace('_', ' ', $sort);
@@ -631,7 +631,7 @@ class DealController extends Controller {
         $model = MediaAdslotDeal::model();
 
         // 获取关系列表数据
-        list($records, $pagingData) = $model->getDealByDealId(explode("_", $timestr), $companyId, $dealid, $order);
+        list($records, $pagingData) = $model->getAdslotDataByDealId(explode("_", $timestr), $companyId, $dealid, $order, $adslotname, $throw);
 
         // 模板分配显示
         $html = $this->smartyRender(array(

@@ -273,14 +273,14 @@ class AdslotController extends Controller {
     }
 
     // 异步获取广告位名称
-    public function actionAdslotNameSearch($name) {
+    public function actionAdslotNameSearch($name, $dealid=0) {
         $names = array();
 
         // 实例化交易表模型
         $model = MediaAdslot::model();
 
         // 查询交易名称
-        $result = $model->getAdslotNameLike($name);
+        $result = $model->getAdslotNameLike($name, $dealid);
         if (!empty($result)) {
             foreach($result as $v) {
                 $names[] = $v['adslotName'];

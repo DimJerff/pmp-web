@@ -20,7 +20,11 @@
         <tr>
             <td>&nbsp;</td>
             <td>
+                <{if $v.status eq 1}>
                 <a href="<{url route='deal/detail' dealId=$v.dealId}>" title="<{$v.dealName}>"><{$v.dealName}></a>
+                <{else if $v.status eq 2}>
+                <a href="<{url route='deal/detail' dealId=$v.dealId}>" title="<{$v.dealName}>" style="color: #808080;"><{$v.dealName}></a>
+                <{/if}>
             </td>
             <td><{if $v.dealType eq 0}>公开<{else if $v.dealType eq 1}>私有<{/if}></td>
             <td class="number_row">

@@ -15,9 +15,9 @@
         <{if $controllerId eq 'reportShare'}>
         <li class="report"><a href="#" class="selected">统计报表</a></li>
         <{else}>
-        <li class="index"><a href="<{url route='site/index'}>"<{if $controllerid eq 'site' || $controllerid eq 'media' || $controllerid eq 'adslot'}> class="selected"<{/if}>>资源管理</a></li>
-        <li class="ads-throw"><a href="<{url route='deal/index'}>"<{if $controllerid eq 'deal'}> class="selected"<{/if}>>交易管理</a></li>
-        <li class="report"><a href="<{url route='report/index'}>"<{if $controllerid eq 'report'}> class="selected"<{/if}>>统计报表</a></li>
+        <li class="index"><a href="<{url route='/develop/site/index'}>"<{if $controllerid eq 'site' || $controllerid eq 'media' || $controllerid eq 'adslot'}> class="selected"<{/if}>>资源管理</a></li>
+        <li class="ads-throw"><a href="<{url route='/operate/deal/index'}>"<{if $controllerid eq 'deal'}> class="selected"<{/if}>>交易管理</a></li>
+        <li class="report"><a href="<{url route='/develop/report/index'}>"<{if $controllerid eq 'report'}> class="selected"<{/if}>>统计报表</a></li>
         <{/if}>
     </ul>
     <{if $controllerId neq 'reportShare'}>

@@ -5,11 +5,11 @@
     <thead>
     <tr>
         <th colspan="2">&nbsp;</th>
-        <{include file="../_common/column_sort.html" name="交易名称" sort="dealName"}>
-        <{include file="../_common/column_sort.html" name="类型" sort="dealType"}>
-        <{include file="../_common/column_sort.html" name="结算方式" sort="firstname" class="number_row"}>
-        <{include file="../_common/column_sort.html" name="开放者名称" sort="bidRequest" class="number_row"}>
-        <{include file="../_common/column_sort.html" name="消耗" sort="cost" class="number_row"}>
+        <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="交易名称" sort="dealName"}>
+        <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="类型" sort="dealType"}>
+        <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="结算方式" sort="firstname" class="number_row"}>
+        <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="开放者名称" sort="bidRequest" class="number_row"}>
+        <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="消耗" sort="cost" class="number_row"}>
         <th>&nbsp;</th>
     </tr>
     </thead>
@@ -66,7 +66,7 @@
     <{/if}>
     </tbody>
 </table>
-<{include file="../_common/ajaxPaging.html"}>
+<{include file="../../../../develop/views/zh_cn/_common/ajaxPaging.html"}>
 <script>
     // 触发编辑按钮事件
     $('i.icon-edit-custom,i.icon-eye-open').closest('td').hover(function(){

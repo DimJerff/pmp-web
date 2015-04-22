@@ -1,7 +1,7 @@
-<{include file="../_common/head.html"}>
+<{include file="../../../../develop/views/zh_cn/_common/head.html"}>
 <body>
 <!-- 头部导航 start -->
-<{include file="../_common/header.html"}>
+<{include file="../../../../develop/views/zh_cn/_common/header.html"}>
 <!-- 头部导航 end -->
 <!-- 主体内容 start -->
 <div class="main-container clearfix">
@@ -11,19 +11,19 @@
                 <div class="company-info left">
                     <h4><{$company.companyName}></h4>
                     <div class="company-info-detail">
-                        <a href="javascript:void (0);">开发者 <span> <script src="<{url route='user/userCount'}>"></script></span></a>
-                        <a href="<{url route='site/index'}>">应用 <span> <script src="<{url route='media/mediaCount'}>"></script></span></a>
-                        <a href="javascript:void (0);">交易 <span> <script src="<{url route='deal/dealCount'}>"></script></span></a>
+                        <a href="javascript:void (0);">开发者 <span> <script src="<{url route='/develop/user/userCount'}>"></script></span></a>
+                        <a href="<{url route='site/index'}>">应用 <span> <script src="<{url route='/develop/media/mediaCount'}>"></script></span></a>
+                        <a href="javascript:void (0);">交易 <span> <script src="<{url route='/operate/deal/dealCount'}>"></script></span></a>
                     </div>
                 </div>
                 <div class="company-account info-box left">
                     <div class="info expense">
                         <h4>今日收入</h4>
-                        ¥<span><script src="<{url route='site/todayCost'}>"></script></span>
+                        ¥<span><script src="<{url route='/develop/site/todayCost'}>"></script></span>
                     </div>
                     <div class="info balance">
                         <h4>累计收入</h4>
-                        ¥<span><script src="<{url route='site/allCost'}>"></script></span>
+                        ¥<span><script src="<{url route='/develop/site/allCost'}>"></script></span>
                     </div>
                 </div>
                 <a class="btn add-adgroup btn-primary-customize right" href="<{url route='add'}>" style="margin-top: 10px;">
@@ -32,7 +32,7 @@
             </div>
             <div class="block-space"></div>
             <!-- 表单时间选择 start -->
-            <{include file="../_common/doubleCalendarForm.html"}>
+            <{include file="../../../../develop/views/zh_cn/_common/doubleCalendarForm.html"}>
             <!-- 表单时间选择 end -->
             <div class="block-space"></div>
             <!-- 交易区块 start -->
@@ -60,7 +60,7 @@
                                             $("#search-box").hide().find(".show-name").nextAll().remove();
                                         }, 400);
                                     }).keyup(function() {
-                                        var url = "/develop/deal/dealNameSearch";
+                                        var url = "/operate/deal/dealNameSearch";
                                         url += "/name/" + $("input[name='searchtxt']").val();
                                         $.ajaxCall(url, function(result) {
                                             $("#search-box .show-name").nextAll().remove();
@@ -96,7 +96,7 @@
 </div>
 <!-- 主体内容 end -->
 <!-- 页脚 -->
-<{include file="../_common/footer.html"}>
+<{include file="../../../../develop/views/zh_cn/_common/footer.html"}>
 </body>
 <script>
     $(function() {
@@ -106,7 +106,7 @@
 
     // 异步获取交易列表的数据
     function ajaxDealPage(param) {
-        ajaxPage("dealList", '/develop/deal/dealList', param);
+        ajaxPage("dealList", '/operate/deal/dealList', param);
     }
 
 

@@ -1,18 +1,17 @@
-<{include file="../_common/head.html"}>
+<{include file="../../../../develop/views/zh_cn/_common/head.html"}>
 <body>
 <!-- 头部导航 start -->
-<{include file="../_common/header.html"}>
+<{include file="../../../../develop/views/zh_cn/_common/header.html"}>
 <!-- 头部导航 end -->
 <!-- 主体内容 start -->
 <div class="main-container clearfix">
     <div class="main-content">
         <form id="deal_form" action="" method="POST" class="form-horizontal">
             <fieldset>
-                <div class="fieldset-header"><a href="<{url route='deal/index'}>" style="display: inline;"> 全部交易</a> &gt; <span style="color: #619AB6">编辑交易</span></div>
+                <div class="fieldset-header"><a href="<{url route='deal/index'}>" style="display: inline;"> 全部交易</a> &gt; <span style="color: #619AB6">新建交易</span></div>
                 <div class="content-header clearfix" style="height: 1px; border-bottom: 0px;">
                     <h3 class="content-name left"></h3>
                 </div>
-                <input type="hidden" name="deal[id]" value="<{$deal.id}>" />
                 <{include file="./_addAndEditCommonHtml.html"}>
                 <div class="control-group">
                     <div class="controls">
@@ -27,7 +26,7 @@
 <{include file="./_addAndEditCommonTpl.html"}>
 <!-- 主体内容 end -->
 <!-- 页脚 -->
-<{include file="../_common/footer.html"}>
+<{include file="../../../../develop/views/zh_cn/_common/footer.html"}>
 <{include file="./_addAndEditCommonJs.html"}>
 </body>
 </html>

@@ -180,11 +180,14 @@
 
         ajaxDealAdPage();
 
-        $(".deal-popover" ).position({
-            of: $( ".dot-more" ),
-            my: "left+50 center",
-            at: "right center"
-        });
+        if ($( ".dot-more").length) {
+            $(".deal-popover" ).position({
+                of: $( ".dot-more" ),
+                my: "left+50 center",
+                at: "right center"
+            });
+
+        }
 
         var pTime = null;
         $(".dot-more").hover(function() {

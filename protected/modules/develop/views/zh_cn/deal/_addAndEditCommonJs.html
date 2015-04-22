@@ -17,8 +17,18 @@
      * 结算方式单选点击事件
      */
     $("input[name='deal[_mediaPrice_mediaSharingRate]']").click(function() {
-        $(this).parent().siblings().find("input:text, select").prop('disabled', true);
-        $(this).siblings().prop('disabled', false);
+        switch (parseInt($(this).val())) {
+            case 0:
+                $("input[name='deal[mediaPrice]']").prop('disabled', false);
+                $("select[name='deal[payType]']").prop('disabled', false);
+                $("input[name='deal[mediaSharingRate]']").prop('disabled', true);
+                break;
+            case 101:
+                $("input[name='deal[mediaPrice]']").prop('disabled', true);
+                $("select[name='deal[payType]']").prop('disabled', true);
+                $("input[name='deal[mediaSharingRate]']").prop('disabled', false);
+                break;
+        }
     }).eq(<{if $deal}><{if $deal.payType > 100}>1<{else}>0<{/if}><{else}>0<{/if}>).click();
 
     /**

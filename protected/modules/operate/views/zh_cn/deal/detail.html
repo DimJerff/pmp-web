@@ -172,14 +172,17 @@
 </body>
 <script>
     $(function() {
+        // 日期选择框元素定位
         $("#searchTimeBox").position({
             of: $( "#search-a" ),
             my: "right-10 center",
             at: "left center"
         });
 
+        // 初始化获取交易列表
         ajaxDealAdPage();
 
+        // 公司/广告系列更多按钮元素定位及显示隐藏
         if ($( ".dot-more").length > 0) {
             $(".deal-popover" ).position({
                 of: $( ".dot-more" ),
@@ -188,7 +191,6 @@
             });
 
         }
-
         var pTime = null;
         $(".dot-more").hover(function() {
             clearTimeout(pTime);
@@ -199,7 +201,6 @@
             }, 300);
 
         });
-
         $(".deal-popover").hover(function(){
             clearTimeout(pTime);
         }, function() {
@@ -208,9 +209,12 @@
             }, 300);
         });
 
-    });
+    });// onLoad End
 
-    // 异步获取交易列表的数据
+    /**
+     * 异步获取交易列表的数据
+     * @param param 改变请求列表的参数
+     */
     function ajaxDealAdPage(param) {
         ajaxPage("dealList", '/operate/deal/dealAdList', param);
     }

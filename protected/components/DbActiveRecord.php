@@ -8,6 +8,34 @@
 class DbActiveRecord extends CActiveRecord {
     // 临时拼接sql
     protected $_buildSql = array();
+    // 记录sql
+    protected $_logSql = false;
+
+    /**
+     * 设置记录sql
+     * @return $this
+     */
+    public function _setLogSql() {
+        $this->_logSql = true;
+        return $this;
+    }
+
+    /**
+     * 记录sql
+     * @param string $sql
+     * @return bool
+     */
+    protected function _logSql($sql='') {
+        if (!empty($sql)) {
+            fpc($sql);
+            return true;
+        }
+
+        if ($this->_logSql && function_exists('fpc')) {
+            $this->_logSql = false;
+            fpc($this->_getBuildSql());
+        }
+    }
 
     /**
      * 通过sql查询一条数据
@@ -16,6 +44,8 @@ class DbActiveRecord extends CActiveRecord {
      * @return mixed
      */
     public function _find($sql='') {
+        $this->_logSql($sql);
+
         if (empty($sql)) {
             if (!empty($this->_buildSql)) {
                 $sql = implode(" ", $this->_buildSql);
@@ -35,6 +65,8 @@ class DbActiveRecord extends CActiveRecord {
      * @return mixed
      */
     public function _query($sql='') {
+        $this->_logSql($sql);
+
         if (empty($sql)) {
             if (!empty($this->_buildSql)) {
                 $sql = implode(" ", $this->_buildSql);
@@ -55,6 +87,8 @@ class DbActiveRecord extends CActiveRecord {
      * @return mixed
      */
     public function _count($sql='') {
+        $this->_logSql($sql);
+
         if (empty($sql)) {
             if (!empty($this->_buildSql)) {
                 $sql = implode(" ", $this->_buildSql);

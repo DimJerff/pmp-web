@@ -107,7 +107,7 @@ class AjaxReportController extends Controller
             'fillingr' => array(),
             'ctr' => array(),
         );
-        for ($startTime = $timeArr[0]; $startTime <= $timeArr[1]; $startTime += 86400) {
+        for ($startTime = $timeArr[0]; $startTime <= $timeArr[1];) {
             switch ($timeType) {
                 case 1:
                     $chartData['categories'][] = date('Y/m', $startTime);
@@ -132,6 +132,18 @@ class AjaxReportController extends Controller
                 $chartData['clicks'][] = 0;
                 $chartData['fillingr'][] = 0;
                 $chartData['ctr'][] = 0;
+            }
+
+            switch ($timeType) {
+                case 1:
+                    $startTime = strtotime(date('Y-m-01', $startTime) ." +1 month");
+                    break;
+                case 2:
+                    $startTime += 86400;
+                    break;
+                case 3:
+                    $startTime += 3600;
+                    break;
             }
         }
 

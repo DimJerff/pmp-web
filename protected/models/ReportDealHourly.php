@@ -1,12 +1,14 @@
 <?php
 
 /**
+ * 交易消耗时报表
+ * This is the model class for table "{{report_deal_hourly}}".
  *
- * This is the model class for table "{{report_adslot_daily}}".
- *
- * The followings are the available columns in table '{{report_adslot_daily}}':
+ * The followings are the available columns in table '{{report_deal_hourly}}':
  * @property integer $id
- * @property integer $adslotId
+ * @property string $dealId
+ * @property string $mediaId
+ * @property string $adslotId
  * @property integer $companyId
  * @property string $bidRequest
  * @property integer $impressions
@@ -14,14 +16,14 @@
  * @property string $cost
  * @property string $dateTime
  */
-class ReportAdslotDaily extends DbActiveRecord
+class ReportDealHourly extends DbActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{report_adslot_daily}}';
+		return '{{report_deal_hourly}}';
 	}
 
 	/**
@@ -32,13 +34,12 @@ class ReportAdslotDaily extends DbActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('dateTime', 'required'),
-			array('adslotId, companyId, impressions, clicks', 'numerical', 'integerOnly'=>true),
-			array('bidRequest', 'length', 'max'=>11),
+			array('companyId, impressions, clicks', 'numerical', 'integerOnly'=>true),
+			array('dealId, mediaId, adslotId, bidRequest', 'length', 'max'=>11),
 			array('cost, dateTime', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, adslotId, companyId, bidRequest, impressions, clicks, cost, dateTime', 'safe', 'on'=>'search'),
+			array('id, dealId, mediaId, adslotId, companyId, bidRequest, impressions, clicks, cost, dateTime', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,13 +61,15 @@ class ReportAdslotDaily extends DbActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'adslotId' => '广告id',
+			'dealId' => '交易id',
+			'mediaId' => '应用ID',
+			'adslotId' => '广告位ID',
 			'companyId' => '公司id',
 			'bidRequest' => '请求数',
 			'impressions' => '展示数',
 			'clicks' => '点击数',
 			'cost' => '消耗',
-			'dateTime' => 'Date Time',
+			'dateTime' => '创建时间',
 		);
 	}
 
@@ -89,7 +92,9 @@ class ReportAdslotDaily extends DbActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('adslotId',$this->adslotId);
+		$criteria->compare('dealId',$this->dealId,true);
+		$criteria->compare('mediaId',$this->mediaId,true);
+		$criteria->compare('adslotId',$this->adslotId,true);
 		$criteria->compare('companyId',$this->companyId);
 		$criteria->compare('bidRequest',$this->bidRequest,true);
 		$criteria->compare('impressions',$this->impressions);
@@ -106,7 +111,7 @@ class ReportAdslotDaily extends DbActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ReportAdslotDaily the static model class
+	 * @return ReportDealHourly the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -114,12 +119,41 @@ class ReportAdslotDaily extends DbActiveRecord
 	}
 
     /**
-     * 根据时间范围和公司id获取报表数据
+     * 根据时间范围和公司id获取应用报表数据
      * @param $companyId 公司id
      * @param $dateTimeArr 起始时间数组
      * @return mixed
      */
-    public function getReportByCidAndTime($companyId, $dateTimeArr, $adslotId=0) {
+    public function getReportByCidAndTimeOfMid($companyId, $dateTimeArr, $mediaId) {
+        $field = array(
+            "SUM(bidRequest) AS bidRequest",
+            "SUM(impressions) AS impressions",
+            "SUM(clicks) AS clicks",
+            "IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
+            "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
+            "SUM(cost) AS cost",
+            "dateTime",
+        );
+        $where = array(
+            "companyId = {$companyId}",
+            "dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]}",
+        );
+        if (!empty($mediaId)) {
+            $where[] = "mediaId = {$mediaId}";
+        }
+        $group = "dateTime";
+        $order = "dateTime";
+
+        return $this->_select()->_field($field)->_from()->_where($where)->_group($group)->_order($order)->_query();
+    }
+
+    /**
+     * 根据时间范围和公司id获取广告位报表数据
+     * @param $companyId 公司id
+     * @param $dateTimeArr 起始时间数组
+     * @return mixed
+     */
+    public function getReportByCidAndTimeOfAid($companyId, $dateTimeArr, $adslotId=0) {
         $field =array(
             "SUM(bidRequest) AS bidRequest",
             "SUM(impressions) AS impressions",
@@ -137,9 +171,7 @@ class ReportAdslotDaily extends DbActiveRecord
         if (!empty($mediaId)) {
             $where[] = "adslotId = {$adslotId}";
         }
-
         $group = "dateTime";
-
         $order = "dateTime";
 
         return $this->_select()->_field($field)->_from()->_where($where)->_group($group)->_order($order)->_query();

@@ -59,10 +59,16 @@ class AjaxReportController extends Controller
 
         // 实例化报表数据获取数据
         //$reportName = "ReportMediaHourly";
-        $reportName = $modelPart . $timeType;
+        $reportName = 'ReportDeal' . $timeType;
         $reportModel = $reportName::model();
-
-        $dbChartData = $reportModel->getReportByCidAndTime($defaultCompanyId, $timeArr, $id);
+        switch ($modelPart) {
+            case "ReportMedia":
+                $dbChartData = $reportModel->getReportByCidAndTimeOfMid($defaultCompanyId, $timeArr, $id);
+                break;
+            case "ReportAdslot":
+                $dbChartData = $reportModel->getReportByCidAndTimeOfAid($defaultCompanyId, $timeArr, $id);
+                break;
+        }
         // 对从数据库取出来的数据进行整理成图标所需数据
         $chartData = $this->_dbData2ChartData($dbChartData, $timeArr);
 

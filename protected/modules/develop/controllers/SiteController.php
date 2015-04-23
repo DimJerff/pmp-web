@@ -51,7 +51,7 @@ class SiteController extends Controller
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
 
         // 今日消耗
-        $todayCost = ReportMediaDaily::model()->getTodayCost($companyId);
+        $todayCost = ReportDealDaily::model()->getTodayCost($companyId);
         echo "document.write('". number_format($todayCost) . "');";
     }
 
@@ -63,7 +63,7 @@ class SiteController extends Controller
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
 
         // 累计消耗
-        $allCost = ReportMediaDaily::model()->getAllCost($companyId);
+        $allCost = ReportDealDaily::model()->getAllCost($companyId);
         echo "document.write('". number_format($allCost) . "');";
     }
 }

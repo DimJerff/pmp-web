@@ -193,7 +193,7 @@ class Media extends DbActiveRecord
         $join = array(
             "{{base_os}} o ON m.os = o.id",
             //"{{report_media_daily}} rm ON (m.id = rm.mediaId AND rm.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})",
-            "{{report_deal_daily}} rm ON (m.id = rm.mediaId AND rm.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})",
+            "{{report_deal_daily}} rm ON (m.id = rm.mediaId AND rm.companyId = {$companyId} AND rm.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})",
         );
         $group = "m.id";
 

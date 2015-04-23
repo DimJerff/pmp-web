@@ -16,7 +16,8 @@
                 <{include file="./_addAndEditCommonHtml.html"}>
                 <div class="control-group">
                     <div class="controls">
-                        <button type="submit" class="btn btn-warning">为应用添加广告位</button>
+                        <input type="hidden" id="addadslot" name="media[addadslot]" value="" />
+                        <button type="submit" class="btn btn-warning" onclick="$('#addadslot').val(1);">为应用添加广告位</button>
                         <button type="submit" class="btn btn-primary">保存</button>
                         <button type="button" onclick="history.go(-1)" class="btn btn-cancel">取消</button>
                     </div>

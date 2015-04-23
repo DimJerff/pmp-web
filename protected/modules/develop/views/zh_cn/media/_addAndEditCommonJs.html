@@ -45,7 +45,7 @@ $(function () {
     $('#media_form').ajaxFormCall({
         url : '/develop/media/postMedia',
         tips:'应用<{if $media}>编辑<{else}>创建<{/if}>成功，5秒钟后页面将自动跳转',
-        href:"<{url route='site/index'}>"
+        href:"<{url route='media/addSuccessPage'}>"
     });
 
     /**

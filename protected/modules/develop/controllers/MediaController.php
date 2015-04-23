@@ -61,6 +61,18 @@ class MediaController extends Controller {
         ));
     }
 
+    // 添加应用成功后判定跳转的页面
+    public function actionAddSuccessPage() {
+        $cookie = Yii::app()->request->getCookies();
+        $id = $cookie['newMediaId']->value;
+        if ($id) {
+            unset($cookie['newMediaId']);
+            $this->redirect(array('adslot/add','mediaId'=>$id));
+        } else {
+            $this->redirect(array('site/index'));
+        }
+    }
+
     /**
      * 应用编辑页面
      * @param $id 应用id
@@ -229,6 +241,13 @@ class MediaController extends Controller {
             $mediaModel->companyId = Yii::app()->user->getRecord()->defaultCompanyID;
             if ($mediaModel->validate()) {
                 $mediaModel->save();
+                if ($_POST['media']['addadslot']) {
+                    $id=$mediaModel->primaryKey;
+                    $cookie = new CHttpCookie('newMediaId',$id);
+                    $cookie->expire = time()+180;
+                    Yii::app()->request->cookies['newMediaId']=$cookie;
+                }
+
             } else {
                 $errors = $mediaModel->getErrors();
 

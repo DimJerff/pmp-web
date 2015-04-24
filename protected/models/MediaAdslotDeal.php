@@ -318,16 +318,22 @@ class MediaAdslotDeal extends DbActiveRecord
      * @return bool|string
      */
     public function getAdslotDataByDealIdSql($dateTimeArr, $companyId, $dealId, $order=NULL, $adslotName='', $throw=0) {
+        // 判断开始时间和结束时间差是否为一日
+        $reportTableName = "{{report_deal_daily}}";
+        if (($dateTimeArr[1] - $dateTimeArr[0]) <= 86400) {
+            $reportTableName = "{{report_deal_hourly}}";
+        }
+
         $select = "SQL_CALC_FOUND_ROWS";
         $field = array(
             "mad.*",
             "m.appName",
             "ma.adslotName",
             "ma.status",
-            "SUM(bidResponse) AS bidResponse",
+            //"SUM(bidResponse) AS bidResponse",
             "SUM(impressions) AS impressions",
             "SUM(clicks) AS clicks",
-            "IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
+            //"IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
             "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
             "SUM(cost) AS cost",
             "IF(SUM(impressions), SUM(cost)/SUM(impressions)/1000, 0) AS ecpm",
@@ -338,7 +344,7 @@ class MediaAdslotDeal extends DbActiveRecord
             "{{media}} m ON mad.mediaId = m.id",
             "{{media_adslot}} ma on mad.adslotId = ma.id",
             "{{deal}} d on mad.dealId = d.id",
-            "{{report_deal_daily}} rd on rd.dealId = mad.dealId  AND rd.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]} AND ((mad.adslotId > 0 AND rd.adslotId = mad.adslotId) OR (mad.adslotId = 0 AND rd.mediaId = mad.mediaId))",
+            "{$reportTableName} rd on rd.dealId = mad.dealId  AND rd.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]} AND ((mad.adslotId > 0 AND rd.adslotId = mad.adslotId) OR (mad.adslotId = 0 AND rd.mediaId = mad.mediaId))",
         );
         $where = array(
             "d.companyId = {$companyId}",

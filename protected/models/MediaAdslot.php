@@ -206,6 +206,12 @@ class MediaAdslot extends DbActiveRecord
 
     // 获取广告列表sql
     public function getAdslotListSql($companyId, $os=0, $dpi='', $dateTimeArr=array(), $order='',  $mediaId=0) {
+        // 判断开始时间和结束时间差是否为一日
+        $reportTableName = "{{report_adslot_daily}}";
+        if (($dateTimeArr[1] - $dateTimeArr[0]) <= 86400) {
+            $reportTableName = "{{report_adslot_hourly}}";
+        }
+
         $select = "SQL_CALC_FOUND_ROWS";
         $field = array(
             "a.id",
@@ -229,7 +235,7 @@ class MediaAdslot extends DbActiveRecord
         $from = "{{media_adslot}} a";
         $join = array(
             "{{media}} m ON m.id = a.mediaId",
-            "{{report_adslot_daily}} ra ON (ra.adslotId = a.id AND ra.companyId = {$companyId} AND ra.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})",
+            "{$reportTableName} ra ON (ra.adslotId = a.id AND ra.companyId = {$companyId} AND ra.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})",
         );
 
         $where = array();

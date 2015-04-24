@@ -59,7 +59,7 @@ class AjaxReportController extends Controller
 
         // 实例化报表数据获取数据
         //$reportName = "ReportMediaHourly";
-        $reportName = 'ReportDeal' . $timeType;
+        $reportName = 'ReportAdslot' . $timeType;
         $reportModel = $reportName::model();
         switch ($modelPart) {
             case "ReportMedia":

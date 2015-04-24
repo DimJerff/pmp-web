@@ -159,6 +159,12 @@ class Media extends DbActiveRecord
 
     // 统计应用的列表sql
     public function getMediaPageListSql($companyId, $os=0, $dateTimeArr=array(), $order = '') {
+        // 判断开始时间和结束时间差是否为一日
+        $reportTableName = "{{report_adslot_daily}}";
+        if (($dateTimeArr[1] - $dateTimeArr[0]) <= 86400) {
+            $reportTableName = "{{report_adslot_hourly}}";
+        }
+
         $select = "SQL_CALC_FOUND_ROWS";
         $field = array(
             "m.id",
@@ -193,7 +199,8 @@ class Media extends DbActiveRecord
         $join = array(
             "{{base_os}} o ON m.os = o.id",
             //"{{report_media_daily}} rm ON (m.id = rm.mediaId AND rm.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})",
-            "{{report_deal_daily}} rm ON (m.id = rm.mediaId AND rm.companyId = {$companyId} AND rm.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})",
+            //"{{report_deal_daily}} rm ON (m.id = rm.mediaId AND rm.companyId = {$companyId} AND rm.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})",
+            "{$reportTableName} rm ON (m.id = rm.mediaId AND rm.companyId = {$companyId} AND rm.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})",
         );
         $group = "m.id";
 

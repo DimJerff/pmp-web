@@ -233,13 +233,19 @@ class Deal extends DbActiveRecord
 
     // 获取交易列表sql
     public function getDealListSql($companyId, $dateTimeArr, $order='', $mediaid=0, $adslotid=0, $dealname='', $throw=0) {
+        // 判断开始时间和结束时间差是否为一日
+        $reportTableName = "{{report_deal_daily}}";
+        if (($dateTimeArr[1] - $dateTimeArr[0]) <= 86400) {
+            $reportTableName = "{{report_deal_hourly}}";
+        }
+
         $select = "SQL_CALC_FOUND_ROWS";
         $field = array(
             "d.*",
-            "SUM(bidRequest) AS bidRequest",
+            //"SUM(bidRequest) AS bidRequest",
             "SUM(impressions) AS impressions",
             "SUM(clicks) AS clicks",
-            "IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
+            //"IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
             "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
             "SUM(cost) AS cost",
             "dateTime",
@@ -248,7 +254,7 @@ class Deal extends DbActiveRecord
         $from = "{{deal}} d";
         $join = array(
             "{{user}} u ON u.id = d.developId",
-            "{{report_deal_daily}} rd ON (rd.dealId = d.id AND dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})"
+            "{$reportTableName} rd ON (rd.dealId = d.id AND dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})"
         );
         $where = array(
             "d.companyId = {$companyId}",

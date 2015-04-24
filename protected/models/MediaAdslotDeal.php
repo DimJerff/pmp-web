@@ -154,10 +154,9 @@ class MediaAdslotDeal extends DbActiveRecord
             "d.endDate",
             "d.mediaSharingRate",
             "d.status",
-            "SUM(bidRequest) AS bidRequest",
+            "SUM(bidResponse) AS bidResponse",
             "SUM(impressions) AS impressions",
             "SUM(clicks) AS clicks",
-            "IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
             "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
             "SUM(cost) AS cost",
             "dateTime",
@@ -241,7 +240,7 @@ class MediaAdslotDeal extends DbActiveRecord
             "d.startDate",
             "d.endDate",
             "d.mediaSharingRate",
-            "SUM(bidRequest) AS bidRequest",
+            "SUM(bidResponse) AS bidResponse",
             "SUM(impressions) AS impressions",
             "SUM(clicks) AS clicks",
             "IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
@@ -325,7 +324,7 @@ class MediaAdslotDeal extends DbActiveRecord
             "m.appName",
             "ma.adslotName",
             "ma.status",
-            "SUM(bidRequest) AS bidRequest",
+            "SUM(bidResponse) AS bidResponse",
             "SUM(impressions) AS impressions",
             "SUM(clicks) AS clicks",
             "IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
@@ -365,12 +364,13 @@ class MediaAdslotDeal extends DbActiveRecord
      * @param $companyId 公司id
      * @param $dealId 交易id
      * @param null $order 排序
+     * @param string $adslotName
+     * @param int $throw
      * @return array
      */
     public function getAdslotDataByDealId($dateTimeArr, $companyId, $dealId, $order=NULL, $adslotName='', $throw=0) {
         // 获取sql
         $sql = $this->getAdslotDataByDealIdSql($dateTimeArr, $companyId, $dealId, $order, $adslotName, $throw);
-        fpc($sql);
         // 分页处理
         $paging = Paging::instance();
         $paging->setPageSize(5);

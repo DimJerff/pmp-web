@@ -229,7 +229,7 @@ class MediaAdslot extends DbActiveRecord
         $from = "{{media_adslot}} a";
         $join = array(
             "{{media}} m ON m.id = a.mediaId",
-            "{{report_deal_daily}} ra ON (ra.adslotId = a.id AND ra.companyId = {$companyId} AND ra.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})",
+            "{{report_adslot_daily}} ra ON (ra.adslotId = a.id AND ra.companyId = {$companyId} AND ra.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})",
         );
 
         $where = array();

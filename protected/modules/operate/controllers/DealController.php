@@ -327,9 +327,7 @@ class DealController extends Controller {
             "广告位名称",
             "应用名称",
             "消耗",
-            "请求数",
             "展示数",
-            "填充率",
             "点击数",
             "点击率",
             "eCPM",
@@ -339,9 +337,7 @@ class DealController extends Controller {
             'adslotName'  => 'string',
             'appName'     => 'string',
             'cost'        => 'money',
-            'bidRequest'  => 'number',
             'impressions' => 'number',
-            'fillingr'    => 'percent',
             'clicks'      => 'number',
             'ctr'         => 'percent',
             'ecpm'        => 'money',
@@ -351,9 +347,7 @@ class DealController extends Controller {
             'totalName'   => '总计',
             '0'           => '',
             'cost'        => 0,
-            'bidRequest'  => 0,
             'impressions' => 0,
-            'fillingr'    => 0,
             'clicks'      => 0,
             'ctr'         => 0,
             'ecpm'        => 0,
@@ -363,9 +357,7 @@ class DealController extends Controller {
             'totalName'   => 'string',
             '0'           => 'string',
             'cost'        => 'money',
-            'bidRequest'  => 'number',
             'impressions' => 'number',
-            'fillingr'    => 'percent',
             'clicks'      => 'number',
             'ctr'         => 'percent',
             'ecpm'        => 'money',
@@ -378,12 +370,8 @@ class DealController extends Controller {
                 $records[$k]['adslotName'] = '所有广告位';
             }
             $totalRecord['cost']        += $v['cost'];
-            $totalRecord['bidRequest']  += $v['bidRequest'];
             $totalRecord['impressions'] += $v['impressions'];
             $totalRecord['clicks']      += $v['clicks'];
-        }
-        if ($totalRecord['bidRequest']) {
-            $totalRecord['fillingr'] = round($totalRecord['impressions']/$totalRecord['bidRequest'], 2);
         }
         if ($totalRecord['impressions']) {
             $totalRecord['ctr'] = round($totalRecord['clicks']/$totalRecord['impressions'], 4);

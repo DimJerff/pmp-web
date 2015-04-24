@@ -15,7 +15,7 @@
  * @property string $cost
  * @property string $dateTime
  */
-class ReportAdslotHourly extends CActiveRecord
+class ReportAdslotHourly extends DbActiveRecord
 {
 	/**
 	 * @return string the associated database table name
@@ -116,4 +116,62 @@ class ReportAdslotHourly extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    /**
+     * 根据时间范围和公司id获取应用报表数据
+     * @param $companyId 公司id
+     * @param $dateTimeArr 起始时间数组
+     * @return mixed
+     */
+    public function getReportByCidAndTimeOfMid($companyId, $dateTimeArr, $mediaId) {
+        $field = array(
+            "SUM(bidRequest) AS bidRequest",
+            "SUM(impressions) AS impressions",
+            "SUM(clicks) AS clicks",
+            "IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
+            "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
+            "SUM(cost) AS cost",
+            "dateTime",
+        );
+        $where = array(
+            "companyId = {$companyId}",
+            "dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]}",
+        );
+        if (!empty($mediaId)) {
+            $where[] = "mediaId = {$mediaId}";
+        }
+        $group = "dateTime";
+        $order = "dateTime";
+
+        return $this->_select()->_field($field)->_from()->_where($where)->_group($group)->_order($order)->_query();
+    }
+
+    /**
+     * 根据时间范围和公司id获取广告位报表数据
+     * @param $companyId 公司id
+     * @param $dateTimeArr 起始时间数组
+     * @return mixed
+     */
+    public function getReportByCidAndTimeOfAid($companyId, $dateTimeArr, $adslotId=0) {
+        $field =array(
+            "SUM(bidRequest) AS bidRequest",
+            "SUM(impressions) AS impressions",
+            "SUM(clicks) AS clicks",
+            "IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
+            "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
+            "SUM(cost) AS cost",
+            "dateTime",
+        );
+        $where = array(
+            "companyId = {$companyId}",
+            "dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]}",
+        );
+        if (!empty($mediaId)) {
+            $where[] = "adslotId = {$adslotId}";
+        }
+        $group = "dateTime";
+        $order = "dateTime";
+
+        return $this->_select()->_field($field)->_from()->_where($where)->_group($group)->_order($order)->_query();
+    }
 }

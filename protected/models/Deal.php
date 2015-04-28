@@ -109,11 +109,41 @@ class Deal extends DbActiveRecord
      * 验证公司/广告系列
      */
     public function checkCompaniesCampaigns() {
+        // 私有竞价-判断公司/广告系列是否为空
         if ($this->dealType) {
             if (empty($this->companies) && empty($this->campaigns)) {
                 $this->addError('companies', '公司/广告系列不能为空');
             }
+            if ($this->payType != 3) {
+                return true;
+            }
         }
+
+        // 交易类型下检测选择的广告位同一时段内是否已经被选择
+        $errMsg = array(
+            '以下应用或广告位同一时段已经被其他交易选择',
+        );
+        // 获取公司id
+        $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
+        $checkedMediaList = MediaAdslotDeal::model()->getCheckedMediaList($companyId, CJSON::decode($this->medias, true), $this->startDate, $this->endDate);
+        $checkedAdslotList = MediaAdslotDeal::model()->getCheckedAdslotList($companyId, CJSON::decode($this->adslots, true), $this->startDate, $this->endDate);
+        if (!empty($checkedMediaList)) {
+            foreach ($checkedMediaList as $k=>$v) {
+                $errMsg[] = $v['dealName'].' > '.$v['appName'];
+            }
+        }
+        if (!empty($checkedAdslotList)) {
+            foreach ($checkedAdslotList as $k=>$v) {
+                $errMsg[] = $v['dealName'].' > '.$v['appName'].' > '.$v['adslotName'];
+            }
+        }
+        if (count($errMsg) != 1) {
+            $this->addError('dealType', implode('<br />', $errMsg));
+        }
+
+
+
+
     }
 
     /**

@@ -384,4 +384,44 @@ class MediaAdslotDeal extends DbActiveRecord
         $list = $paging->query($sql);
         return array($list, $paging->data());
     }
+
+    //
+    public function getCheckedMediaList($companyId, $mediaIdArr, $startDate, $endDate=0) {
+        if (empty($mediaIdArr)) {
+            return array();
+        }
+        $field = "t.*, d.dealName, m.appName, ma.adslotName";
+        $join = array(
+            "c_media_adslot ma ON ma.id = t.adslotId",
+            "c_media m ON m.id = t.mediaId",
+        );
+        if (empty($endDate)) {
+            $join[] = "c_deal d ON d.id = t.dealId AND (endDate >= {$startDate} OR (endDate = 0))";
+        } else {
+            $join[] = "c_deal d ON d.id = t.dealId AND (endDate >= {$startDate} OR (startDate <= {$startDate} AND endDate = 0))";
+        }
+        $where = "t.mediaId IN (". implode(",", $mediaIdArr) .") AND d.companyId = {$companyId}";
+
+        return $this->_setLogSql()->_select()->_field($field)->_from()->_join($join)->_where($where)->_query();
+    }
+
+    //
+    public function getCheckedAdslotList($companyId, $adslotIdArr, $startDate, $endDate=0) {
+        if (empty($adslotIdArr)) {
+            return array();
+        }
+        $field = "t.*, d.dealName, m.appName, ma.adslotName";
+        $join = array(
+            "c_media_adslot ma ON ma.id = t.adslotId",
+            "c_media m ON m.id = t.mediaId",
+        );
+        if (empty($endDate)) {
+            $join[] = "c_deal d ON d.id = t.dealId AND (endDate >= {$startDate} OR (endDate = 0))";
+        } else {
+            $join[] = "c_deal d ON d.id = t.dealId AND (endDate >= {$startDate} OR (startDate <= {$startDate} AND endDate = 0))";
+        }
+        $where = "t.adslotId IN (". implode(",", $adslotIdArr) .") AND d.companyId = {$companyId}";
+
+        return $this->_setLogSql()->_select()->_field($field)->_from()->_join($join)->_where($where)->_query();
+    }
 }

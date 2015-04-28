@@ -26,12 +26,15 @@ class DbActiveRecord extends CActiveRecord {
      * @return bool
      */
     protected function _logSql($sql='') {
+        if (!function_exists('fpc')) {
+            return true;
+        }
         if (!empty($sql)) {
             fpc($sql);
             return true;
         }
 
-        if ($this->_logSql && function_exists('fpc')) {
+        if ($this->_logSql) {
             $this->_logSql = false;
             fpc($this->_getBuildSql());
         }

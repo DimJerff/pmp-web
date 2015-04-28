@@ -402,7 +402,7 @@ class MediaAdslotDeal extends DbActiveRecord
         }
         $where = "t.mediaId IN (". implode(",", $mediaIdArr) .") AND d.companyId = {$companyId}";
 
-        return $this->_setLogSql()->_select()->_field($field)->_from()->_join($join)->_where($where)->_query();
+        return $this->_select()->_field($field)->_from()->_join($join)->_where($where)->_query();
     }
 
     //
@@ -422,6 +422,6 @@ class MediaAdslotDeal extends DbActiveRecord
         }
         $where = "t.adslotId IN (". implode(",", $adslotIdArr) .") AND d.companyId = {$companyId}";
 
-        return $this->_setLogSql()->_select()->_field($field)->_from()->_join($join)->_where($where)->_query();
+        return $this->_select()->_field($field)->_from()->_join($join)->_where($where)->_query();
     }
 }

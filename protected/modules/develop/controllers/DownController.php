@@ -20,6 +20,7 @@ class DownController extends Controller {
         $data['footer'] = '<a href="javascript: void(0);" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">完成</a>';
         $body = $this->smartyRender(array(
             'adslot' => $adslot,
+            'sdkLink'=> Yii::app()->params['sdkLink'],
         ), null, true);
         $data['body'] = $body;
 

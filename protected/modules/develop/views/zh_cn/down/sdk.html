@@ -2,10 +2,10 @@
     <div>下载SDK</div>
     <div style="padding-left: 70px;">
         <{if $adslot.os eq 1}>
-        <a class="down-sdk down-sdk-android" href="">下载android SDK</a>
+        <a class="down-sdk down-sdk-android" href="<{$sdkLink['android']}>" target="_blank">下载android SDK</a>
         <{/if}>
         <{if $adslot.os eq 2}>
-        <a class="down-sdk down-sdk-ios" href="">下载ios SDK</a>
+        <a class="down-sdk down-sdk-ios" href="<{$sdkLink['ios']}>" target="_blank">下载ios SDK</a>
         <{/if}>
     </div>
     <div>广告位ID</div>

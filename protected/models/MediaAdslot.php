@@ -271,7 +271,7 @@ class MediaAdslot extends DbActiveRecord
 
         // 分页处理
         $paging = Paging::instance();
-        $paging->setPageSize(5);
+        $paging->setPageSize(25);
         $paging->setPageNumKey('pagenum');
         $list = $paging->query($sql);
         return array($list, $paging->data());

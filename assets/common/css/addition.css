@@ -171,7 +171,8 @@
     width: 46px;
     height: 46px;
     float: right;
-    background: url("../img/icon-n.png") 0px -60px no-repeat
+    background: url("../img/icon-n.png") 0px -60px no-repeat;
+    border-radius: 8px;
 }
 
 .filter-search-a {
@@ -179,16 +180,15 @@
     width: 46px;
     height: 46px;
     float: right;
-    background: url("../img/icon-n.png") 0px -249px no-repeat
+    background: url("../img/icon-n.png") 0px -249px no-repeat;
+    border-radius: 8px;
 }
 
 .filter-select-os, .filter-select-dpi {
     float: right;
     width: 100px;
-    height: 46px;
-    line-height: 46px;
-    margin-right: 20px;
-    line-height: 46px;
+    height: 40px;
+    line-height: 40px;
     margin-right: 20px;
     padding-left: 30px;
 }
@@ -202,8 +202,10 @@
 }
 
 .filter-select-os select, .filter-select-dpi select {
+    margin-top: 5px;
+    margin-bottom: 5px;
     width: 100px;
-    height: 46px;
+    height: 40px;
 }
 
 table.customrize thead th {
@@ -391,7 +393,7 @@ table.customrize thead th:hover {
 
 .deal-popover-hover{
     opacity: 1;
-    transform:translateX(-50px);
+    transform:translateX(-46px);
     transition: all 0.3s ease-out;
 }
 
@@ -400,4 +402,28 @@ table.customrize thead th:hover {
     background: url("../img/icon-n.png") no-repeat 0px -220px ;
     padding-left: 20px;
 }
+
+.company-info h4 {
+    margin: 0 0 6px;
+    font-size: 18px;
+}
+
+.reportrange2 {
+    position: relative;
+    background-image: linear-gradient(to bottom,#fff,#e6e6e6);
+    border-radius: 6px;
+}
+.table th.number_row, .table td.number_row {
+    text-align: center;
+}
+/* 表格总计一栏文字加粗 */
+.amount-tr td {font-weight: 700;}
+/* 隐藏元素 */
+.v-hide{margin-top: -99999px; display: none;}
+/* 面包屑 */
+.breadcrumb-con .breadcrumb { margin-left: 0px; height: auto;}
+.breadcrumb a { color: #08c;}
+.breadcrumb li.active { font-weight: 100; color: #999;}
+/* 修改右上角新建按钮 */
+.add-right-btn { margin-top: 10px; height: 32px; line-height: 32px; font-size: 18px;}
 

@@ -52,7 +52,7 @@ class SiteController extends Controller
 
         // 今日消耗
         $todayCost = ReportDealDaily::model()->getTodayCost($companyId);
-        echo "document.write('". number_format($todayCost) . "');";
+        echo "document.write('". number_format($todayCost, 2) . "');";
     }
 
     /**
@@ -64,6 +64,6 @@ class SiteController extends Controller
 
         // 累计消耗
         $allCost = ReportDealDaily::model()->getAllCost($companyId);
-        echo "document.write('". number_format($allCost) . "');";
+        echo "document.write('". number_format($allCost, 2) . "');";
     }
 }

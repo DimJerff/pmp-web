@@ -220,7 +220,7 @@ class Media extends DbActiveRecord
         $sql = $this->getMediaPageListSql($companyId, $os, $dateTimeArr, $order);
 
         $paging = Paging::instance();
-        $paging->setPageSize(5);
+        $paging->setPageSize(25);
         $paging->setPageNumKey('pagenum');
         $list = $paging->query($sql);
         return array($list, $paging->data());

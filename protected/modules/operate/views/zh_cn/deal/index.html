@@ -12,7 +12,7 @@
                     <h4><{$company.companyName}></h4>
                     <div class="company-info-detail">
                         <a href="javascript:void (0);">开发者 <span> <script src="<{url route='/develop/user/userCount'}>"></script></span></a>
-                        <a href="<{url route='site/index'}>">应用 <span> <script src="<{url route='/develop/media/mediaCount'}>"></script></span></a>
+                        <a href="<{url route='/develop/site/index'}>">应用 <span> <script src="<{url route='/develop/media/mediaCount'}>"></script></span></a>
                         <a href="javascript:void (0);">交易 <span> <script src="<{url route='/operate/deal/dealCount'}>"></script></span></a>
                     </div>
                 </div>
@@ -26,13 +26,15 @@
                         ¥<span><script src="<{url route='/develop/site/allCost'}>"></script></span>
                     </div>
                 </div>
-                <a class="btn add-adgroup btn-primary-customize right" href="<{url route='add'}>" style="margin-top: 10px;">
+                <a class="btn add-adgroup btn-primary-customize right add-right-btn" href="<{url route='add'}>" style="margin-top: 10px;">
                     <i class="icon-plus icon-white"></i>新建交易
                 </a>
             </div>
             <div class="block-space"></div>
             <!-- 表单时间选择 start -->
-            <{include file="../../../../develop/views/zh_cn/_common/doubleCalendarForm.html"}>
+            <div id="searchTimeBox">
+                <{include file="../../../../develop/views/zh_cn/_common/doubleCalendarForm.html"}>
+            </div>
             <!-- 表单时间选择 end -->
             <div class="block-space"></div>
             <!-- 交易区块 start -->
@@ -51,11 +53,17 @@
                             $(function() {
                                 $("#search-a").click(function() {
                                     var searchId = $(this).data("searid");
+                                    var clickFun = "javascript:$.dealSearch('"+ $("input[name='searchtxt']").val() +"');";
+                                    var firstAppendHtml = "";
+                                    if (!$("input[name='searchtxt']").val()) {
+                                        firstAppendHtml = '<li><a href="'+clickFun+'">全部</a></li>';
+                                    }
+
                                     $("#search-box").show().position({
                                         of: $( "#search-a" ),
                                         my: "right top",
-                                        at: "right bottom"
-                                    }).find(":text").focus().blur(function() {
+                                        at: "left top"
+                                    }).append(firstAppendHtml).find(":text").focus().blur(function() {
                                         setTimeout(function() {
                                             $("#search-box").hide().find(".show-name").nextAll().remove();
                                         }, 400);
@@ -68,6 +76,9 @@
                                             if (result[0]) {
                                                 var clickFun = "javascript:$.dealSearch('"+ $("input[name='searchtxt']").val() +"');";
                                                 $("#search-box").append('<li><a href="'+clickFun+'">选择所有搜索结果</a></li>');
+                                            } else {
+                                                var clickFun = "javascript:$.dealSearch('"+ $("input[name='searchtxt']").val() +"');";
+                                                $("#search-box").append('<li><a href="'+clickFun+'">全部</a></li>');
                                             }
                                             for (var i in result) {
                                                 var clickFun = "javascript:$.dealSearch('"+ result[i] +"');";
@@ -85,7 +96,7 @@
                                 });
                             });
                         </script>
-                        <span style=" vertical-align: bottom; display: block; float: right; height: 46px; margin-right: 10px;"><input type="checkbox" name="throwType" value="1" style="margin-top: 0px;" onclick="if($(this).prop('checked')) {ajaxDealPage('throw=1');} else {ajaxDealPage('throw=0');}" />仅显示投放中</span>
+                        <span id="throw-input" style=" vertical-align: bottom; display: block; float: right; height: 46px; margin-right: 10px;"><input type="checkbox" name="throwType" value="1" style="margin-top: 0px;" onclick="if($(this).prop('checked')) {ajaxDealPage('throw=1');} else {ajaxDealPage('throw=0');}" />仅显示运行中的交易</span>
                     </div>
                 </div>
                 <div class="contentList" id="dealList" ajaxfun="ajaxDealPage" data-pagenum ="1" data-timestr="<{$timeStr}>" data-dealname="" data-throw="0"></div>
@@ -99,16 +110,24 @@
 <{include file="../../../../develop/views/zh_cn/_common/footer.html"}>
 </body>
 <script>
-    $(function() {
-        ajaxDealPage("pagenum=1");
-
+$(function() {
+    // 日期选择框元素定位
+    $("#searchTimeBox").position({
+        of: $( "#throw-input" ),
+        my: "right-10 center",
+        at: "left center"
     });
 
-    // 异步获取交易列表的数据
-    function ajaxDealPage(param) {
-        ajaxPage("dealList", '/operate/deal/dealList', param);
-    }
+    // 初始化列表
+    ajaxDealPage("pagenum=1");
+}); // onLoad End
 
-
+/**
+ * 异步获取交易列表的数据
+ * @param param
+ */
+function ajaxDealPage(param) {
+    ajaxPage("dealList", '/operate/deal/dealList', param);
+}
 </script>
 </html>

@@ -218,7 +218,7 @@ class AdslotController extends Controller {
                     // Noting to do
                 } else {
                     $data['id'] = $adslotModel->attributes['id'];
-                    $data['url'] = '/develop/down/sdk/adslotId/' . $data['id'];
+                    $data['url'] = '/develop/down/sdk/finish/1/adslotId/' . $data['id'];
                 }
             } else {
                 $errors = $adslotModel->getErrors();

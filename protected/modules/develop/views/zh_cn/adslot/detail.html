@@ -25,8 +25,8 @@
                     </div>
                 </div>
                 <div class="right add-media">
-                    <a class="btn btn-primary-customize" href="javascript: ajaxSdk(<{$adslot.adslotId}>);">
-                        <i class="icon-globe icon-white"></i> 集成SDK
+                    <a class="btn btn-primary-customize add-right-btn" href="javascript: ajaxSdk(<{$adslot.adslotId}>);" style="margin-top: 0px;">
+                        <i class="icon-list-alt icon-white"></i> 集成SDK
                     </a>
                 </div>
             </div>
@@ -66,23 +66,23 @@
 <{include file="../_common/footer.html"}>
 </body>
 <script>
-    $(function() {
-        // 图表数据生成
-        var chartUrl = "/develop/ajaxReport/adslotChartData/time/<{$timeStr}>/adslotId/<{$adslot.adslotId}>";
-        $.ajaxCall(chartUrl, function(result) {
-            $("#report_container").chartPMP(result.chartData);
-        });
-
-        // 初始化交易关系列表
-        ajaxDealRePage();
+$(function() {
+    // 图表数据生成
+    var chartUrl = "/develop/ajaxReport/adslotChartData/time/<{$timeStr}>/adslotId/<{$adslot.adslotId}>";
+    $.ajaxCall(chartUrl, function(result) {
+        $("#report_container").chartPMP(result.chartData);
     });
 
-    /**
-     * 异步获取交易关系列表
-     * @param param 提交的参数 格式范例:pagenum=1
-     */
-    function ajaxDealRePage(param) {
-        ajaxPage("dealReList", '/operate/deal/dealReList', param);
-    }
+    // 初始化交易关系列表
+    ajaxDealRePage();
+}); // onLoad End
+
+/**
+ * 异步获取交易关系列表
+ * @param param 提交的参数 格式范例:pagenum=1
+ */
+function ajaxDealRePage(param) {
+    ajaxPage("dealReList", '/operate/deal/dealReList', param);
+}
 </script>
 </html>

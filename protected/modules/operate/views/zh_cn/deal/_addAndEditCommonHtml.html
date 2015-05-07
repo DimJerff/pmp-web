@@ -4,7 +4,7 @@
         <input type="text" placeholder="交易名称…" name="deal[dealName]" value="<{$deal.dealName}>">
     </div>
 </div>
-<div class="control-group">
+<div class="control-group <{if $deal.id}>v-hide<{/if}>">
     <label class="control-label"><span class="required">*</span>交易类型</label>
     <div class="controls">
         <label class="radio inline">
@@ -16,6 +16,16 @@
         </label>
     </div>
 </div>
+<{if $deal.id}>
+<div class="control-group">
+    <label class="control-label">交易类型</label>
+    <div class="controls">
+        <label class="radio inline" style="padding-left: 0px;">
+            <{if $deal.dealType eq 0}>公开竞价<{elseif $deal.dealType eq 1}>私有竞价<{/if}>
+        </label>
+    </div>
+</div>
+<{/if}>
 <div class="control-group">
     <label class="control-label"><span class="required">*</span>结算方式</label>
     <div class="controls">
@@ -71,7 +81,7 @@
         <{/if}>
     </div>
 </div>
-<div class="control-group">
+<div class="control-group <{if $deal.id}>v-hide<{/if}>">
     <label class="control-label"><span class="required">*</span>开发者</label>
     <div class="controls">
         <select name="deal[developId]" id="deal_developId">
@@ -82,6 +92,20 @@
         <label for="deal_developId" class="error"></label>
     </div>
 </div>
+<{if $deal.id}>
+<div class="control-group">
+    <label class="control-label">开发者</label>
+    <div class="controls">
+        <{foreach from=$companys item=v}>
+        <{if $deal.developId eq $v.id}>
+        <label class="radio inline" style="padding-left: 0px;">
+        <{$v.companyName}>
+        </label>
+        <{/if}>
+        <{/foreach}>
+    </div>
+</div>
+<{/if}>
 <div class="control-group">
     <label class="control-label"><span class="required">*</span>应用/广告位</label>
     <div class="controls ">
@@ -113,17 +137,17 @@
     <div class="controls">
         <div class="date-picker">
             <i class="glyphicon glyphicon-calendar icon-calendar icon-large"></i>
-            <input class="start-date-picker" type="text" id="deal_startDate" name="deal[startDate]" readonly="readonly" data-date-format="yyyy-mm-dd" value="<{if $deal}><{$deal.startDate|date_format:'%Y/%m/%d'}><{/if}>" />
+            <input class="start-date-picker" type="text" id="<{if !$deal.id}>deal_startDate<{/if}>" name="deal[startDate]" readonly="readonly" data-date-format="yyyy-mm-dd" value="<{if $deal}><{$deal.startDate|date_format:'%Y/%m/%d'}><{/if}>" />
         </div>
         <label for="deal_startDate" class="error"></label>
     </div>
 </div>
 <div class="control-group compare-range">
-    <label class="control-label"><span class="required">*</span>结束日期</label>
+    <label class="control-label">结束日期</label>
     <div class="controls">
         <div class="date-picker inline">
             <i class="glyphicon glyphicon-calendar icon-calendar icon-large"></i>
-            <input class="end-date-picker" type="text" id="deal_endDate" name="deal[endDate]" readonly="readonly" data-date-format="yyyy-mm-dd" value="<{if $deal}><{$deal.endDate|date_format:'%Y/%m/%d'}><{/if}>" />
+            <input class="end-date-picker" type="text" id="deal_endDate" name="deal[endDate]" readonly="readonly" data-date-format="yyyy-mm-dd" value="<{if $deal && $deal.endDate}><{$deal.endDate|date_format:'%Y/%m/%d'}><{/if}>" />
         </div>
         <label for="deal_endDate" class="error"></label>
     </div>

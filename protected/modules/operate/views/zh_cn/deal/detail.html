@@ -7,6 +7,12 @@
 <div class="main-container clearfix">
     <div class="main-content">
         <div class="content-body">
+            <div class="breadcrumb-con">
+                <ul class="breadcrumb">
+                    <li><a href="<{url route='deal/index'}>">全部交易</a> <span class="divider">></span></li>
+                    <li class="active"><{$deal.dealName}></li>
+                </ul>
+            </div>
             <div class="clearfix company-info-container content-body-head">
                 <div class="deal-info left">
                     <h4><{$deal.dealName}></h4>
@@ -49,7 +55,7 @@
                                 <{if $deal.payType gt 100}>
                                 媒体收入占售出额比例 <{$deal.mediaSharingRate}>%
                                 <{else}>
-                                协议支付价格 <{$deal.mediaPrice}>元 <{if $deal.payType eq 1}>每千次点击<{/if}><{if $deal.payType eq 2}>每次点击<{/if}><{if $deal.payType eq 3}>每天<{/if}>
+                                协议支付价格 <{$deal.mediaPrice}>元/<{if $deal.payType eq 1}>每千次点击<{/if}><{if $deal.payType eq 2}>每次点击<{/if}><{if $deal.payType eq 3}>每天<{/if}>
                                 <{/if}>
                             </td>
                         </tr>
@@ -57,13 +63,13 @@
                         <tr>
                             <td>公司/广告系列</td>
                             <td>
-                                <{section  loop=$allNames name=n start=0 max=3}>
+                                <{section  loop=$allNames name=n start=0 max=6}>
                                 <span style="display: inline-block;"><{$allNames[n]}></span>
                                 <{if !$smarty.section.n.last}>
                                 <span style="display: inline-block; width: 20px;">, </span>
                                 <{/if}>
                                 <{/section}>
-                                <{if $smarty.section.n.total gt 2}>
+                                <{if $smarty.section.n.total gt 5}>
                                 <span class="dot-more" style="cursor: pointer; display: inline-block; border: 1px solid rgba(0, 0, 0, 0.2); color: rgba(0, 0, 0, 0.2); border-radius: 3px; padding: 0 4px;">...</span>
                                 <{/if}>
                             </td>
@@ -102,7 +108,6 @@
             <div id="searchTimeBox">
                 <{include file="../../../../develop/views/zh_cn/_common/doubleCalendarForm.html"}>
             </div>
-
             <!-- 表单时间选择 end -->
             <div class="block-space"></div>
             <!-- 交易区块 start -->
@@ -110,9 +115,8 @@
                 <div class="campaign-table-header campaign-table-header-f">
                     <div class="stat-type-btn">
                         <span>广告位</span>
-                        <span style="margin-left: 5px; font-size: 12px; color: #6E6E6E; font-weight: 100;"><input type="checkbox" name="throwType" value="1" style="margin-top: 0px;" onclick="if($(this).prop('checked')) {ajaxDealAdPage('throw=1');} else {ajaxDealAdPage('throw=0');}" />仅显示投放中</span>
+                        <span style="margin-left: 5px; font-size: 12px; color: #6E6E6E; font-weight: 100;"><input type="checkbox" name="throwType" value="1" style="margin-top: 0px;" onclick="if($(this).prop('checked')) {ajaxDealAdPage('throw=1');} else {ajaxDealAdPage('throw=0');}" />仅显示运行中的广告位</span>
                     </div>
-
                     <div class="stat-filter-btn contentOpt hide" style="display: block;">
                         <a class="filter-down-a" href="<{url route='deal/exportDeal' dealid=$deal.id timestr=$timeStr}>"></a>
                         <a class="filter-search-a" id="search-a" href="javascript: void(0);" style="margin-right: 10px;" data-searid="dealList"></a>
@@ -171,52 +175,51 @@
 <{include file="../../../../develop/views/zh_cn/_common/footer.html"}>
 </body>
 <script>
-    $(function() {
-        // 日期选择框元素定位
-        $("#searchTimeBox").position({
-            of: $( "#search-a" ),
-            my: "right-10 center",
-            at: "left center"
+$(function() {
+    // 日期选择框元素定位
+    $("#searchTimeBox").position({
+        of: $( "#search-a" ),
+        my: "right-10 center",
+        at: "left center"
+    });
+
+    // 初始化获取交易列表
+    ajaxDealAdPage();
+
+    // 公司/广告系列更多按钮元素定位及显示隐藏
+    if ($( ".dot-more").length > 0) {
+        $(".deal-popover" ).position({
+            of: $( ".dot-more" ),
+            my: "left+50 center",
+            at: "right center"
         });
 
-        // 初始化获取交易列表
-        ajaxDealAdPage();
-
-        // 公司/广告系列更多按钮元素定位及显示隐藏
-        if ($( ".dot-more").length > 0) {
-            $(".deal-popover" ).position({
-                of: $( ".dot-more" ),
-                my: "left+50 center",
-                at: "right center"
-            });
-
-        }
-        var pTime = null;
-        $(".dot-more").hover(function() {
-            clearTimeout(pTime);
-            $(".deal-popover" ).addClass("deal-popover-hover");
-        }, function() {
-            pTime = setTimeout(function() {
-                $(".deal-popover" ).removeClass("deal-popover-hover");
-            }, 300);
-
-        });
-        $(".deal-popover").hover(function(){
-            clearTimeout(pTime);
-        }, function() {
-            pTime = setTimeout(function() {
-                $(".deal-popover" ).removeClass("deal-popover-hover");
-            }, 300);
-        });
-
-    });// onLoad End
-
-    /**
-     * 异步获取交易列表的数据
-     * @param param 改变请求列表的参数
-     */
-    function ajaxDealAdPage(param) {
-        ajaxPage("dealList", '/operate/deal/dealAdList', param);
     }
+    var pTime = null;
+    $(".dot-more").hover(function() {
+        clearTimeout(pTime);
+        $(".deal-popover" ).addClass("deal-popover-hover");
+    }, function() {
+        pTime = setTimeout(function() {
+            $(".deal-popover" ).removeClass("deal-popover-hover");
+        }, 300);
+
+    });
+    $(".deal-popover").hover(function(){
+        clearTimeout(pTime);
+    }, function() {
+        pTime = setTimeout(function() {
+            $(".deal-popover" ).removeClass("deal-popover-hover");
+        }, 300);
+    });
+});// onLoad End
+
+/**
+ * 异步获取交易列表的数据
+ * @param param 改变请求列表的参数
+ */
+function ajaxDealAdPage(param) {
+    ajaxPage("dealList", '/operate/deal/dealAdList', param);
+}
 </script>
 </html>

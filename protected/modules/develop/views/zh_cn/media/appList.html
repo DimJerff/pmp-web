@@ -4,7 +4,8 @@
     </colgroup>
     <thead>
     <tr>
-        <th colspan="2">&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>操作</th>
         <{include file="../_common/column_sort.html" name="应用名称" sort="appName"}>
         <{include file="../_common/column_sort.html" name="广告位" sort="adslotCount"}>
         <{include file="../_common/column_sort.html" name="收入" sort="cost" class="number_row"}>
@@ -41,13 +42,13 @@
             </td>
             <td class="status_row"><{$v.adslotCount}></td>
             <td class="number_row">￥<{if $v.cost}><{$v.cost|number_format:2}><{else}>0<{/if}></td>
-            <td class="number_row"><{if $v.bidRequest}><{$v.bidRequest}><{else}>0<{/if}></td>
-            <td class="number_row"><{if $v.impressions}><{$v.impressions}><{else}>0<{/if}></td>
+            <td class="number_row"><{if $v.bidRequest}><{$v.bidRequest|number_format}><{else}>0<{/if}></td>
+            <td class="number_row"><{if $v.impressions}><{$v.impressions|number_format}><{else}>0<{/if}></td>
             <td class="number_row"><{$v.fillingr}>%</td>
-            <td class="number_row"><{if $v.clicks}><{$v.clicks}><{else}>0<{/if}></td>
+            <td class="number_row"><{if $v.clicks}><{$v.clicks|number_format}><{else}>0<{/if}></td>
             <td class="number_row"><{$v.ctr}>%</td>
-            <td class="number_row"><{$v.ecpm}></td>
-            <td class="number_row"><{$v.ecpc}></td>
+            <td class="number_row"><{$v.ecpm|number_format:2}></td>
+            <td class="number_row"><{$v.ecpc|number_format:2}></td>
             <td>&nbsp;</td>
         </tr>
         <{/foreach}>
@@ -56,13 +57,13 @@
             <td style="text-align:left;">总计</td>
             <td class="status_row"><{$amount.adslotCount}></td>
             <td class="number_row">￥<{$amount.cost|number_format:2}></td>
-            <td class="number_row"><{$amount.bidRequest}></td>
-            <td class="number_row"><{$amount.impressions}></td>
+            <td class="number_row"><{$amount.bidRequest|number_format}></td>
+            <td class="number_row"><{$amount.impressions|number_format}></td>
             <td class="number_row"><{$amount.fillingr}>%</td>
-            <td class="number_row"><{$amount.clicks}></td>
+            <td class="number_row"><{$amount.clicks|number_format}></td>
             <td class="number_row"><{$amount.ctr}>%</td>
-            <td class="number_row"><{$amount.ecpm}></td>
-            <td class="number_row"><{$amount.ecpc}></td>
+            <td class="number_row"><{$amount.ecpm|number_format:2}></td>
+            <td class="number_row"><{$amount.ecpc|number_format:2}></td>
             <td>&nbsp;</td>
         </tr>
         <{else}>

@@ -40,10 +40,10 @@
             </td>
             <td><{$v.startDate|date_format:'%Y/%m/%d'}></td>
             <td><{$v.endDate|date_format:'%Y/%m/%d'}></td>
-            <td class="number_row">￥<{if $v.cost}><{$v.cost}><{else}>0<{/if}></td>
-            <td class="number_row"><{if $v.impressions}><{$v.impressions}><{else}>0<{/if}></td>
-            <td class="number_row"><{if $v.clicks}><{$v.clicks}><{else}>0<{/if}></td>
-            <td class="number_row"><{if $v.ctr}><{$v.ctr}><{else}>0<{/if}>%</td>
+            <td class="number_row">￥<{if $v.cost}><{$v.cost|number_format:2}><{else}>0<{/if}></td>
+            <td class="number_row"><{if $v.impressions}><{$v.impressions|number_format}><{else}>0<{/if}></td>
+            <td class="number_row"><{if $v.clicks}><{$v.clicks|number_format}><{else}>0<{/if}></td>
+            <td class="number_row"><{if $v.ctr}><{$v.ctr|number_format}><{else}>0<{/if}>%</td>
             <td>&nbsp;</td>
         </tr>
         <{/foreach}>
@@ -53,9 +53,9 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td class="number_row">￥<{$amount.cost}></td>
-            <td class="number_row"><{$amount.impressions}></td>
-            <td class="number_row"><{$amount.clicks}></td>
+            <td class="number_row">￥<{$amount.cost|number_format:2}></td>
+            <td class="number_row"><{$amount.impressions|number_format}></td>
+            <td class="number_row"><{$amount.clicks|number_format}></td>
             <td class="number_row"><{$amount.ctr}>%</td>
             <td>&nbsp;</td>
         </tr>

@@ -5,15 +5,7 @@
         <input type="text" placeholder="应用名称…" id="media_appName" name="media[appName]" value="<{$media.appName}>">
     </div>
 </div>
-<div class="control-group">
-    <{if $media.id}>
-    <label class="control-label">平台类型</label>
-    <div class="controls" value="1">
-        <label class="radio inline">
-            <{if $media.os eq 1}>Android<{else if $media.os eq 2}>iOS<{/if}>
-        </label>
-    </div>
-    <{else}>
+<div class="control-group <{if $media.id}>v-hide<{/if}>">
     <label class="control-label">平台类型</label>
     <div class="controls" value="1">
         <label class="radio inline">
@@ -23,8 +15,17 @@
             <input type="radio" name="media[os]" value="2"> iOS
         </label>
     </div>
-    <{/if}>
 </div>
+<{if $media.id}>
+<div class="control-group">
+    <label class="control-label">平台类型</label>
+    <div class="controls" value="1">
+        <label class="radio inline" style="padding-left: 0px;">
+            <{if $media.os eq 1}>Android<{else if $media.os eq 2}>iOS<{/if}>
+        </label>
+    </div>
+</div>
+<{/if}>
 <div class="control-group" data-image-choosed="1">
     <label class="control-label"><span class="required">*</span>图标</label>
     <div class="controls ">
@@ -33,7 +34,7 @@
                 <span class="btn btn-success fileinput-button btn-primary-customize">
                     <i class="icon-picture icon-white"></i>
                     <span>添加图标</span>
-                    <input id="iconUpload" data-url="iconupload/" class="imgupload" data-list="#imageList" type="file" name="file" multiple>
+                    <input id="iconUpload" data-url="/develop/media/iconupload" class="imgupload" data-list="#imageList" type="file" name="file" multiple>
                 </span>
             </div>
         </div>

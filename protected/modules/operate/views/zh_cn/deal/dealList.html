@@ -4,7 +4,8 @@
     </colgroup>
     <thead>
     <tr>
-        <th colspan="2">&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>操作</th>
         <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="交易名称" sort="dealName"}>
         <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="类型" sort="dealType"}>
         <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="结算方式" sort="firstname" class="number_row"}>
@@ -38,15 +39,15 @@
             <{if $v.payType eq 101}>
             <{$v.mediaSharingRate}>%
             <{else if $v.payType eq 1}>
-            <{$v.mediaPrice}><br />CPM
+            ￥<{$v.mediaPrice|number_format:2}><br />CPM
             <{else if $v.payType eq 2}>
-            <{$v.mediaPrice}><br />CPC
+            ￥<{$v.mediaPrice|number_format:2}><br />CPC
             <{else if $v.payType eq 3}>
-            <{$v.mediaPrice}><br />CPD
+            ￥<{$v.mediaPrice|number_format:2}><br />CPD
             <{/if}>
         </td>
         <td class="number_row"><{$v.developName}></td>
-        <td class="number_row">￥<{if $v.cost}><{$v.cost}><{else}>0<{/if}></td>
+        <td class="number_row">￥<{if $v.cost}><{$v.cost|number_format:2}><{else}>0<{/if}></td>
         <td>&nbsp;</td>
     </tr>
     <{/foreach}>
@@ -56,7 +57,7 @@
         <td class="status_row">&nbsp;</td>
         <td class="status_row">&nbsp;</td>
         <td class="status_row">&nbsp;</td>
-        <td class="number_row">￥<{$amount.cost}></td>
+        <td class="number_row">￥<{$amount.cost|number_format:2}></td>
         <td>&nbsp;</td>
     </tr>
     <{else}>

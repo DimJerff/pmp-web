@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="right add-media">
-                    <a class="btn btn-primary-customize" href="<{url route='adslot/add' mediaId=$media.id}>">
+                    <a class="btn btn-primary-customize add-right-btn" href="<{url route='adslot/add' mediaId=$media.id}>" style="margin-top: 0;">
                         <i class="icon-plus icon-white"></i>新建广告位
                     </a>
                 </div>
@@ -65,15 +65,15 @@
                             </select>
                         </div>
                         <div style=" margin-right: 20px;" class="form-inline right diy-dpi hide">
-                            <input type="text" name="diy_width" class="input-small" />
+                            <input type="text" name="diy_width" class="input-small" placeholder="宽" />
                             x
-                            <input type="text" name="diy_height" class="input-small" />
+                            <input type="text" name="diy_height" class="input-small" placeholder="高" />
                             <input type="button" class="btn btn-primary" value="确定" />
                         </div>
                     </div>
                 </div>
                 <!-- 广告位列表 start -->
-                <div class="contentList" id="adslotList" data-pagenum ="1" data-timestr="<{$timeStr}>" data-mediaid="<{$media.id}>" data-dpi="0"></div>
+                <div class="contentList" id="adslotList" data-pagenum ="1" data-timestr="<{$timeStr}>" data-mediaid="<{$media.id}>" data-dpi="0" data-curmedia="1"></div>
                 <!-- 广告位列表 end -->
             </div>
             <!-- 广告位区块 end -->
@@ -85,7 +85,7 @@
                     </div>
                     <div class="stat-filter-btn contentOpt hide" style="display: block;">
                         <a class="filter-down-a" href="<{url route='deal/exportMedia' timestr=$timeStr mediaid=$media.id}>"></a>
-                        <span style=" vertical-align: bottom; display: block; float: right; height: 46px; margin-right: 10px;"><input type="checkbox" name="throwType" value="1" style="margin-top: 0px;" onclick="if($(this).prop('checked')) {ajaxDealRePage('throw=1');} else {ajaxDealRePage('throw=0');}" />仅显示投放中</span>
+                        <span style=" vertical-align: bottom; display: block; float: right; height: 46px; margin-right: 10px;"><input type="checkbox" name="throwType" value="1" style="margin-top: 0px;" onclick="if($(this).prop('checked')) {ajaxDealRePage('throw=1');} else {ajaxDealRePage('throw=0');}" />仅显示运行中的交易</span>
                     </div>
                 </div>
                 <div class="contentList" id="dealReList" data-pagenum ="1" data-timestr="<{$timeStr}>" data-mediaid="<{$media.id}>"></div>
@@ -98,86 +98,86 @@
 <!-- 页脚 -->
 <{include file="../_common/footer.html"}>
 <script>
-    $(function() {
-        // 图表数据生成
-        var chartUrl = "/develop/ajaxReport/mediaChartData/time/<{$timeStr}>/mediaId/<{$media.id}>";
-        $.ajaxCall(chartUrl, function(result) {
-            $("#report_container").chartPMP(result.chartData);
-        });
-
-        // 初始化广告位
-        ajaxAdslotPage();
-
-        // 初始化交易关系列表
-        ajaxDealRePage();
-
-        // 广告位分辨率选择框改变事件
-        $("select[name='adslot-dpi']").change(function() {
-            if ($(this).val() == "") {
-
-                $(".diy-dpi").show();
-                //$.modalBox('自定义dpi查询');
-                return false;
-            }
-            ajaxAdslotPage("dpi=" + $(this).val());
-        });
-
-        // 自定义分辨率
-        $(".diy-dpi input[type='button']").click(function() {
-            var diy_width = $("input[name='diy_width']").val();
-            var diy_height = $("input[name='diy_height']").val();
-
-            if (!parseInt(diy_width)) {
-                $.alert("自定义宽度 不能为空且数字", null, 320);
-                return false;
-            }
-
-            if (!parseInt(diy_height)) {
-                $.alert("自定义高度 不能为空且数字", null, 320);
-                return false;
-            }
-
-            var dpi = diy_width + "x" + diy_height;
-            if (!$("select[name='adslot-dpi'][value='"+ dpi +"']").html()) {
-                $("select[name='adslot-dpi']").append('<option value="'+ dpi +'">'+ dpi +'</option>');
-            }
-            $("select[name='adslot-dpi']").val(dpi).change();
-            clearDiyDpi();
-        });
-
-        // 广告位报表下载
-        $("#down-adslot-export").click(function() {
-            var href = $(this).attr("href");
-            href += "?dpi=" + $("select[name='adslot-dpi']").val();
-            window.open(href);
-            return false;
-        });
+$(function() {
+    // 图表数据生成
+    var chartUrl = "/develop/ajaxReport/mediaChartData/time/<{$timeStr}>/mediaId/<{$media.id}>";
+    $.ajaxCall(chartUrl, function(result) {
+        $("#report_container").chartPMP(result.chartData);
     });
 
-    /**
-     * 清理自定义宽
-     */
-    function clearDiyDpi() {
-        $("input[name='diy_width']").val('');
-        $("input[name='diy_height']").val('');
-        $(".diy-dpi").hide();
-    }
+    // 初始化广告位
+    ajaxAdslotPage();
 
-    /**
-     * 异步获取广告位列表
-     * @param param 提交的参数 格式范例:pagenum=1
-     */
-    function ajaxAdslotPage(param) {
-        ajaxPage("adslotList", '/develop/adslot/adslotList', param);
-    }
+    // 初始化交易关系列表
+    ajaxDealRePage();
 
-    /**
-     * 异步获取交易关系列表
-     * @param param 提交的参数 格式范例:pagenum=1
-     */
-    function ajaxDealRePage(param) {
-        ajaxPage("dealReList", '/operate/deal/dealReList', param);
-    }
+    // 广告位分辨率选择框改变事件
+    $("select[name='adslot-dpi']").change(function() {
+        if ($(this).val() == "") {
+
+            $(".diy-dpi").show();
+            //$.modalBox('自定义dpi查询');
+            return false;
+        }
+        ajaxAdslotPage("dpi=" + $(this).val());
+    });
+
+    // 自定义分辨率
+    $(".diy-dpi input[type='button']").click(function() {
+        var diy_width = $("input[name='diy_width']").val();
+        var diy_height = $("input[name='diy_height']").val();
+
+        if (!parseInt(diy_width)) {
+            $.alert("自定义宽度 不能为空且数字", null, 320);
+            return false;
+        }
+
+        if (!parseInt(diy_height)) {
+            $.alert("自定义高度 不能为空且数字", null, 320);
+            return false;
+        }
+
+        var dpi = diy_width + "x" + diy_height;
+        if (!$("select[name='adslot-dpi'][value='"+ dpi +"']").html()) {
+            $("select[name='adslot-dpi']").append('<option value="'+ dpi +'">'+ dpi +'</option>');
+        }
+        $("select[name='adslot-dpi']").val(dpi).change();
+        clearDiyDpi();
+    });
+
+    // 广告位报表下载
+    $("#down-adslot-export").click(function() {
+        var href = $(this).attr("href");
+        href += "?dpi=" + $("select[name='adslot-dpi']").val();
+        window.open(href);
+        return false;
+    });
+}); // onLoad End
+
+/**
+ * 清理自定义宽
+ */
+function clearDiyDpi() {
+    $("input[name='diy_width']").val('');
+    $("input[name='diy_height']").val('');
+    $(".diy-dpi").hide();
+}
+
+/**
+ * 异步获取广告位列表
+ * @param param 提交的参数 格式范例:pagenum=1
+ */
+function ajaxAdslotPage(param) {
+    ajaxPage("adslotList", '/develop/adslot/adslotList', param);
+}
+
+/**
+ * 异步获取交易关系列表
+ * @param param 提交的参数 格式范例:pagenum=1
+ */
+function ajaxDealRePage(param) {
+    ajaxPage("dealReList", '/operate/deal/dealReList', param);
+}
 </script>
 </body>
 </html>

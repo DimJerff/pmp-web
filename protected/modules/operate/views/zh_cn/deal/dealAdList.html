@@ -30,11 +30,11 @@
         <td><{if $v.adslotName}><{$v.adslotName}><{else}>所有广告位<{/if}></td>
         <td><{$v.appName}></td>
         <td class="number_row">¥<{if $v.cost}><{$v.cost}><{else}>0<{/if}></td>
-        <td class="number_row"><{if $v.impressions}><{$v.impressions}><{else}>0<{/if}></td>
-        <td class="number_row"><{if $v.clicks}><{$v.clicks}><{else}>0<{/if}></td>
+        <td class="number_row"><{if $v.impressions}><{$v.impressions|number_format}><{else}>0<{/if}></td>
+        <td class="number_row"><{if $v.clicks}><{$v.clicks|number_format}><{else}>0<{/if}></td>
         <td class="number_row"><{$v.ctr}>%</td>
-        <td class="number_row"><{$v.ecpm}></td>
-        <td class="number_row"><{$v.ecpc}></td>
+        <td class="number_row"><{$v.ecpm|number_format:2}></td>
+        <td class="number_row"><{$v.ecpc|number_format:2}></td>
         <td>&nbsp;</td>
     </tr>
     <{/foreach}>
@@ -43,11 +43,11 @@
         <td style="text-align:left;">总计</td>
         <td class="status_row">&nbsp;</td>
         <td class="number_row">￥<{$amount.cost}></td>
-        <td class="number_row"><{$amount.impressions}></td>
-        <td class="number_row"><{$amount.clicks}></td>
+        <td class="number_row"><{$amount.impressions|number_format}></td>
+        <td class="number_row"><{$amount.clicks|number_format}></td>
         <td class="number_row"><{$amount.ctr}>%</td>
-        <td class="number_row"><{$amount.ecpm}></td>
-        <td class="number_row"><{$amount.ecpc}></td>
+        <td class="number_row"><{$amount.ecpm|number_format:2}></td>
+        <td class="number_row"><{$amount.ecpc|number_format:2}></td>
         <td>&nbsp;</td>
     </tr>
     <{else}>

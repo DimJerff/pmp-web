@@ -42,7 +42,7 @@ class Deal extends DbActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('dealName, dealType, payType, developId, startDate, endDate, bidfloor', 'required'),
+			array('dealName, dealType, payType, developId, startDate, bidfloor', 'required'),
 			array('dealType, payType, mediaPrice, bidfloor, status, mflag, modificationTime, creationTime', 'numerical', 'integerOnly'=>true),
 			array('mediaSharingRate', 'numerical'),
 			array('dealName', 'length', 'max'=>60, 'min'=>2),
@@ -150,6 +150,9 @@ class Deal extends DbActiveRecord
      * 验证时间
      */
     public function checkDate() {
+        if (empty($this->endDate)) {
+            return true;
+        }
         if ($this->startDate > $this->endDate) {
             $this->addError('endDate', '结束时间不能小于开始时间');
         }
@@ -279,11 +282,13 @@ class Deal extends DbActiveRecord
             "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
             "SUM(cost) AS cost",
             "dateTime",
-            "CONCAT(u.firstname,u.lastname) AS developName",
+            //"CONCAT(u.firstname,u.lastname) AS developName",
+            "c.companyName AS developName",
         );
         $from = "{{deal}} d";
         $join = array(
-            "{{user}} u ON u.id = d.developId",
+            //"{{user}} u ON u.id = d.developId",
+            "{{company}} c ON c.id = d.developId",
             "{$reportTableName} rd ON (rd.dealId = d.id AND dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})"
         );
         $where = array(
@@ -310,7 +315,7 @@ class Deal extends DbActiveRecord
 
         // 分页处理
         $paging = Paging::instance();
-        $paging->setPageSize(5);
+        $paging->setPageSize(25);
         $paging->setPageNumKey('pagenum');
         $list = $paging->query($sql);
         return array($list, $paging->data());

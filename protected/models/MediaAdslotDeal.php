@@ -201,7 +201,7 @@ class MediaAdslotDeal extends DbActiveRecord
 
         // 分页处理
         $paging = Paging::instance();
-        $paging->setPageSize(5);
+        $paging->setPageSize(25);
         $paging->setPageNumKey('pagenum');
         $list = $paging->query($sql);
         return array($list, $paging->data());
@@ -289,7 +289,7 @@ class MediaAdslotDeal extends DbActiveRecord
 
         // 分页处理
         $paging = Paging::instance();
-        $paging->setPageSize(5);
+        $paging->setPageSize(25);
         $paging->setPageNumKey('pagenum');
         $list = $paging->query($sql);
         return array($list, $paging->data());
@@ -379,7 +379,7 @@ class MediaAdslotDeal extends DbActiveRecord
         $sql = $this->getAdslotDataByDealIdSql($dateTimeArr, $companyId, $dealId, $order, $adslotName, $throw);
         // 分页处理
         $paging = Paging::instance();
-        $paging->setPageSize(5);
+        $paging->setPageSize(25);
         $paging->setPageNumKey('pagenum');
         $list = $paging->query($sql);
         return array($list, $paging->data());

@@ -426,4 +426,5 @@ table.customrize thead th:hover {
 .breadcrumb li.active { font-weight: 100; color: #999;}
 /* 修改右上角新建按钮 */
 .add-right-btn { margin-top: 10px; height: 32px; line-height: 32px; font-size: 18px;}
+.fieldset-header-first { margin-top: 50px;}
 

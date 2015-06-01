@@ -102,6 +102,24 @@
             <div class="block-space"></div>
         </div>
     </div>
+    <!-- Button to trigger modal -->
+    <a href="#myModal" role="button" class="btn" data-toggle="modal">查看演示案例</a>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Modal header</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-inline">
+                <input type="text" class="input-small" placeholder="宽">X<input type="text" class="input-small" placeholder="高">
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button><button class="btn btn-primary">确定</button>
+        </div>
+    </div>
 </div>
 <!-- 主体内容 end -->
 <!-- 页脚 -->
@@ -154,15 +172,47 @@ $(function() {
     // 广告位分辨率选择框改变事件
     $("select[name='adslot-dpi']").change(function() {
         if ($(this).val() == "") {
+            //$(".diy-dpi").show();
+            //<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+            $.modalBox(
+                    '自定义dpi',
+                    '<input type="text" name="diy_width" id="diy_width_input" class="input-small" placeholder="宽"> X <input type="text" name="diy_height" id="diy_height_input" class="input-small" placeholder="高"><div id="diy_msg" class="hidden" style="color: red;"></div>',
+                    '<button class="btn btn-primary" id="diy_sub">确定</button>'
+            );
+            // 自定义dpi确定提交
+            $("#diy_sub").click(function() {
+                var diy_width = $("#diy_width_input").val();
+                var diy_height = $("#diy_height_input").val();
 
-            $(".diy-dpi").show();
-            //$.modalBox('自定义dpi查询');
+
+                if (!parseInt(diy_width)) {
+                    //$.alert("自定义宽度 不能为空且数字", null, 320);
+                    $("#diy_msg").html("自定义宽度 不能为必填且数字").show();
+                    return false;
+                }
+
+                if (!parseInt(diy_height)) {
+                    //$.alert("自定义高度 不能为空且数字", null, 320);
+                    $("#diy_msg").html("自定义高度 不能为必填且数字").show();
+                    return false;
+                }
+
+                var dpi = diy_width + "x" + diy_height;
+                if (!$("select[name='adslot-dpi'][value='"+ dpi +"']").html()) {
+                    $("select[name='adslot-dpi']").append('<option value="'+ dpi +'">'+ dpi +'</option>');
+                }
+                $("select[name='adslot-dpi']").val(dpi).change();
+                $("#modalboxContent > div").modal('hide');
+            });
+
+
             return false;
         }
         ajaxAdslotPage("dpi=" + $(this).val());
     });
 
     // 自定义分辨率
+    /*
     $(".diy-dpi input[type='button']").click(function() {
         var diy_width = $("input[name='diy_width']").val();
         var diy_height = $("input[name='diy_height']").val();
@@ -184,6 +234,7 @@ $(function() {
         $("select[name='adslot-dpi']").val(dpi).change();
         clearDiyDpi();
     });
+    */
 
     // 应用报表下载
     $("#down-media-export").click(function() {
@@ -214,11 +265,14 @@ function ajaxAppPage(param) {
 /**
  * 清理自定义宽
  */
+/*
 function clearDiyDpi() {
     $("input[name='diy_width']").val('');
     $("input[name='diy_height']").val('');
     $(".diy-dpi").hide();
 }
+*/
+
 
 /**
  * 异步获取广告位列表

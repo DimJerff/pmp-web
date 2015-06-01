@@ -167,12 +167,15 @@ class ReportAdslotDaily extends DbActiveRecord
             "companyId = {$companyId}",
             "dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]}",
         );
+        /*
         if (!empty($mediaId)) {
             $where[] = "adslotId = {$adslotId}";
         }
+        */
+        $where[] = "adslotId = {$adslotId}";
         $group = "dateTime";
         $order = "dateTime";
 
-        return $this->_select()->_field($field)->_from()->_where($where)->_group($group)->_order($order)->_query();
+        return $this->_setLogSql()->_select()->_field($field)->_from()->_where($where)->_group($group)->_order($order)->_query();
     }
 }

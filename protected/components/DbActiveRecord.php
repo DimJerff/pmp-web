@@ -4,6 +4,7 @@
  * User: limei
  * Date: 15-3-25
  * Time: 上午11:36
+ * ModTime: 15-5-4 17:20
  */
 class DbActiveRecord extends CActiveRecord {
     // 临时拼接sql
@@ -27,10 +28,6 @@ class DbActiveRecord extends CActiveRecord {
      */
     protected function _logSql($sql='') {
         if (!function_exists('fpc')) {
-            return true;
-        }
-        if (!empty($sql)) {
-            fpc($sql);
             return true;
         }
 

@@ -118,6 +118,9 @@ class Deal extends DbActiveRecord
                 return true;
             }
         }
+        if (empty($this->startDate)){
+            return false;
+        }
 
         // 交易类型下检测选择的广告位同一时段内是否已经被选择
         $errMsg = array(

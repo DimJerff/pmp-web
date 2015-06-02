@@ -243,7 +243,7 @@ class MediaAdslotDeal extends DbActiveRecord
             "SUM(bidResponse) AS bidResponse",
             "SUM(impressions) AS impressions",
             "SUM(clicks) AS clicks",
-            "IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
+            //"IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
             "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
             "IF(SUM(impressions), SUM(cost)/SUM(impressions)/1000, 0) AS ecpm",
             "IF(SUM(clicks), SUM(cost)/SUM(clicks)/1000000, 0) AS ecpc",
@@ -273,26 +273,6 @@ class MediaAdslotDeal extends DbActiveRecord
         }
 
         return $this->_select($select)->_field($field)->_from($from, true)->_join($join)->_where($where)->_group($group)->_order($order)->_getBuildSql();
-    }
-
-    /**
-     * 通过交易id获取交易对应的交易信息
-     * @param $dateTimeArr
-     * @param $companyId
-     * @param $dealId
-     * @param null $order
-     * @return array
-     */
-    public function getDealByDealId($dateTimeArr, $companyId, $dealId, $order=NULL) {
-        // 获取sql
-        $sql = $this->getDealByDealIdSql($dateTimeArr, $companyId, $dealId, $order);
-
-        // 分页处理
-        $paging = Paging::instance();
-        $paging->setPageSize(25);
-        $paging->setPageNumKey('pagenum');
-        $list = $paging->query($sql);
-        return array($list, $paging->data());
     }
 
     /**

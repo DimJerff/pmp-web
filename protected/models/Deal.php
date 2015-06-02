@@ -294,8 +294,14 @@ class Deal extends DbActiveRecord
         $where = array(
             "d.companyId = {$companyId}",
         );
-        if ($throw) {
-            $where[] = "d.status = 1";
+        if ($mediaid) {
+            $where[] = "rd.mediaId = {$mediaid}";
+        }
+        if ($mediaid) {
+            $where[] = "rd.mediaId = {$mediaid}";
+        }
+        if ($adslotid) {
+            $where[] = "rd.adslotId = {$adslotid}";
         }
         if (!empty($dealname)) {
             $where[] = "dealName LIKE '%". $dealname ."%'";

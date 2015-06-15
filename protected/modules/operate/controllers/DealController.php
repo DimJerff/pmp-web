@@ -408,7 +408,7 @@ class DealController extends Controller {
 
     // 导出单个应用下面的交易报表
     public function actionExportMedia($timestr, $mediaid) {
-// 获取公司id
+        // 获取公司id
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
 
         // 查询出符合条件的数据

@@ -185,7 +185,7 @@
 		object.show().removeClass('alert-error,alert-success').addClass('alert-'+status).html($.LANG(content)+'.');
 		if($.tips.handle) clearTimeout($.tips.handle);
 		$.tips.handle = setTimeout(function(){
-			object.hide();
+			object.remove();
 			$.tips.handle = null;
 		}, interval);
 	}

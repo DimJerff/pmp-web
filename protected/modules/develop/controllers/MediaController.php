@@ -234,8 +234,10 @@ class MediaController extends Controller {
             $errors = null;
             if (isset($_POST['media']['id']) && !empty($_POST['media']['id'])) {
                 $mediaModel = Media::model()->findByPk($_POST['media']['id']);
+                $operationType = 4;
             } else {
                 $mediaModel = new Media();
+                $operationType = 3;
             }
             $mediaModel->attributes = $_POST['media'];
             $mediaModel->companyId = Yii::app()->user->getRecord()->defaultCompanyID;
@@ -247,7 +249,8 @@ class MediaController extends Controller {
                     $cookie->expire = time()+180;
                     Yii::app()->request->cookies['newMediaId']=$cookie;
                 }
-
+                // 记录操作日记
+                OperationLog::model()->add("media", $operationType, $mediaModel->id, $mediaModel->appName, $mediaModel->attributes);
             } else {
                 $errors = $mediaModel->getErrors();
 

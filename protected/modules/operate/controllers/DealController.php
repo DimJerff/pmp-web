@@ -687,8 +687,10 @@ class DealController extends Controller {
             // 获取广告位数据模型实例
             if (isset($postData['id']) && !empty($postData['id'])) {
                 $model = Deal::model()->findByPk($postData['id']);
+                $operationType = 4;
             } else {
                 $model = new Deal();
+                $operationType = 3;
             }
 
             $model->attributes = $this->_dealDataBeforeValidate($postData);
@@ -701,6 +703,7 @@ class DealController extends Controller {
                     $transaction->commit(); //提交事务
                 } else {
                     $transaction->rollback(); //回滚事务
+
                 }
                 $data = array();
                 if (isset($postData['id']) && !empty($postData['id'])) {
@@ -711,6 +714,11 @@ class DealController extends Controller {
             } else {
                 $errors = $model->getErrors();
             }
+            if (empty($errors)) {
+                // 记录操作日记
+                OperationLog::model()->add("deal", $operationType, $model->id, $model->dealName, $model->attributes);
+            }
+
             $errors ? $this->rspJSON($errors,'error') : $this->rspJSON($data);die;
         }
     }

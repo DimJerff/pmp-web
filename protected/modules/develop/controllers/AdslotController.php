@@ -206,8 +206,10 @@ class AdslotController extends Controller {
             // 获取广告位数据模型实例
             if (isset($_POST['adslot']['id']) && !empty($_POST['adslot']['id'])) {
                 $adslotModel = MediaAdslot::model()->findByPk($_POST['adslot']['id']);
+                $operationType = 4;
             } else {
                 $adslotModel = new MediaAdslot();
+                $operationType = 3;
             }
 
             $adslotModel->attributes = $this->_dealDataBeforeValidate($_POST['adslot']);
@@ -216,10 +218,13 @@ class AdslotController extends Controller {
                 $data = array();
                 if (isset($_POST['adslot']['id']) && !empty($_POST['adslot']['id'])) {
                     // Noting to do
+
                 } else {
                     $data['id'] = $adslotModel->attributes['id'];
                     $data['url'] = '/develop/down/sdk/finish/1/adslotId/' . $data['id'];
                 }
+                // 记录操作日记
+                OperationLog::model()->add("adslot", $operationType, $adslotModel->id, $adslotModel->adslotName, $adslotModel->attributes);
             } else {
                 $errors = $adslotModel->getErrors();
             }

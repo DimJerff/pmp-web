@@ -58,7 +58,7 @@
             <input type="text" name="deal[mediaPrice]" value="<{$deal.mediaPrice}>"  placeholder="金额..." style="width: 60px;" />
             <span>元</span>
             <input type="hidden" name="deal[payType]" value="<{$deal.payType}>" />
-            <span>/
+            <span>
             <{if $deal.payType eq 3}>
                 每天
             <{/if}>
@@ -112,7 +112,7 @@
         <input type="hidden" name="deal[medias]" value="<{if $deal}><{$deal.medias}><{/if}>">
         <input type="hidden" name="deal[adslots]" value="<{if $deal}><{$deal.adslots}><{/if}>">
         <div class="settings">
-            <a data-choosed="" data-choose="" data-name="media_adslot" data-title="" id="deal_medias_adslots" class="btn btn-link">设置</a>
+            <a data-choosed="" data-choose="" data-name="media_adslot" data-title="" id="deal_medias_adslots" class="btn btn-link" style="padding-left: 0px;">设置</a>
             <div>
                 <span>您已经选择了<span class="choosed-num"><{if $deal}><{$dealAttach.mediaAdslotCount}><{else}>0<{/if}></span>个</span>
             </div>
@@ -154,7 +154,7 @@
 </div>
 
 <div class="control-group">
-    <label class="control-label"><span class="required">*</span>售出低价</label>
+    <label class="control-label"><span class="required">*</span>售出底价</label>
     <div class="controls">
         <input type="text" name="deal[bidfloor]" value="<{if $deal}><{$deal.bidfloor}><{/if}>" placeholder="金额..." />
         <span>元/千次展示</span>

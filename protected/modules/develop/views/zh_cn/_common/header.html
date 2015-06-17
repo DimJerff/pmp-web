@@ -10,7 +10,9 @@
     </div>
     <ul class="top-nav left clearfix">
         <li class="index"><a href="<{url route='/develop/site/index'}>"<{if $controllerid eq 'site' || $controllerid eq 'media' || $controllerid eq 'adslot'}> class="selected"<{/if}>>资源管理</a></li>
+        <{if $checkAccess['#develop/deal/index']}>
         <li class="ads-throw"><a href="<{url route='/operate/deal/index'}>"<{if $controllerid eq 'deal'}> class="selected"<{/if}>>交易管理</a></li>
+        <{/if}>
     </ul>
     <{if $controllerId neq 'reportShare'}>
     <div class="action-bar right clearfix">
@@ -23,7 +25,7 @@
                 <li><a href="javascript:;" id="switchCompany"><i class="icon-resize-horizontal"></i>切换开发者</a></li>
                 <{/if}>
                 <li class="divider"></li>
-                <li><a id="logout_btn" href="<{url route='user/logout'}>" onclick="$.confirm('确定退出系统？', function(){location.href=$('#logout_btn').attr('href')}, null, 300);return false;"><i class="icon-off"></i>退出系统</a></li>
+                <li><a id="logout_btn" href="<{url route='/develop/user/logout'}>" onclick="$.confirm('确定退出系统？', function(){location.href=$('#logout_btn').attr('href')}, null, 300);return false;"><i class="icon-off"></i>退出系统</a></li>
             </ul>
         </div>
     </div>

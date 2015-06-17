@@ -266,12 +266,12 @@ class MediaAdslot extends DbActiveRecord
      * @param int $mediaId 媒体id
      * @return array
      */
-    public function getMediaPageList($companyId, $os=0, $dpi, $dateTimeArr=array(), $order='',  $mediaId=0) {
+    public function getMediaPageList($companyId, $os=0, $dpi, $dateTimeArr=array(), $order='',  $mediaId=0, $pageSize=25) {
         $sql = $this->getAdslotListSql($companyId, $os, $dpi, $dateTimeArr, $order,  $mediaId);
 
         // 分页处理
         $paging = Paging::instance();
-        $paging->setPageSize(25);
+        $paging->setPageSize($pageSize);
         $paging->setPageNumKey('pagenum');
         $list = $paging->query($sql);
         return array($list, $paging->data());

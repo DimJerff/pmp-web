@@ -11,18 +11,18 @@
                 <div class="company-info left">
                     <h4><{$company.companyName}></h4>
                     <div class="company-info-detail">
-                        <a href="javascript:void (0);">开发者 <span> <script src="<{url route='/develop/user/userCount'}>"></script></span></a>
+                        <a href="javascript:void (0);" style="cursor: default;">开发者 <span> <script src="<{url route='/develop/user/userCount'}>"></script></span></a>
                         <a href="<{url route='/develop/site/index'}>">应用 <span> <script src="<{url route='/develop/media/mediaCount'}>"></script></span></a>
-                        <a href="javascript:void (0);">交易 <span> <script src="<{url route='/operate/deal/dealCount'}>"></script></span></a>
+                        <a href="javascript:void (0);" style="cursor: default;">交易 <span> <script src="<{url route='/operate/deal/dealCount'}>"></script></span></a>
                     </div>
                 </div>
                 <div class="company-account info-box left">
                     <div class="info expense">
-                        <h4>今日收入</h4>
+                        <h4>当日已消耗</h4>
                         ¥<span><script src="<{url route='/develop/site/todayCost'}>"></script></span>
                     </div>
                     <div class="info balance">
-                        <h4>累计收入</h4>
+                        <h4>累计消耗</h4>
                         ¥<span><script src="<{url route='/develop/site/allCost'}>"></script></span>
                     </div>
                 </div>
@@ -42,11 +42,12 @@
                 <div class="campaign-table-header campaign-table-header-f">
                     <div class="stat-type-btn">
                         <span>交易</span>
+                        <span id="throw-input" style="color: #000000; font-weight: 100; font-size: 14px;"><input type="checkbox" name="throwType" value="1" style="margin-top: 0px;" onclick="if($(this).prop('checked')) {ajaxDealPage('throw=1');} else {ajaxDealPage('throw=0');}" />仅显示运行中的交易</span>
                     </div>
                     <div class="stat-filter-btn contentOpt hide" style="display: block;">
                         <a class="filter-down-a" href="<{url route='deal/exportAll' timestr=$timeStr}>"></a>
                         <a class="filter-search-a" id="search-a" href="javascript: void(0);" style="margin-right: 10px;" data-searid="dealList"></a>
-                        <ul class="dropdown-menu" id="search-box">
+                        <ul class="dropdown-menu" id="search-box" style="padding: 10px;">
                             <li class="show-name"><input type="text" name="searchtxt" placeholder="搜索..."></li>
                         </ul>
                         <script>
@@ -96,7 +97,6 @@
                                 });
                             });
                         </script>
-                        <span id="throw-input" style=" vertical-align: bottom; display: block; float: right; height: 46px; margin-right: 10px;"><input type="checkbox" name="throwType" value="1" style="margin-top: 0px;" onclick="if($(this).prop('checked')) {ajaxDealPage('throw=1');} else {ajaxDealPage('throw=0');}" />仅显示运行中的交易</span>
                     </div>
                 </div>
                 <div class="contentList" id="dealList" ajaxfun="ajaxDealPage" data-pagenum ="1" data-timestr="<{$timeStr}>" data-dealname="" data-throw="0"></div>
@@ -113,7 +113,7 @@
 $(function() {
     // 日期选择框元素定位
     $("#searchTimeBox").position({
-        of: $( "#throw-input" ),
+        of: $( "#search-a" ),
         my: "right-10 center",
         at: "left center"
     });

@@ -26,7 +26,7 @@
                         ¥<span><script src="<{url route='site/allCost'}>"></script></span>
                     </div>
                 </div>
-                <a class="btn add-adgroup btn-primary-customize right" href="<{url route='media/add'}>" style="margin-top: 10px; height: 38px; line-height: 38px; font-size: 18px; ">
+                <a class="btn add-adgroup btn-primary-customize right add-right-btn" href="<{url route='media/add'}>" style="margin-top: 10px;">
                     <i class="icon-plus icon-white"></i>新建应用
                 </a>
             </div>
@@ -157,7 +157,7 @@ $(function() {
             //$(".diy-dpi").show();
             //<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
             $.modalBox(
-                    '自定义dpi',
+                    '自定义',
                     '<input type="text" name="diy_width" id="diy_width_input" class="input-small" placeholder="宽"> X <input type="text" name="diy_height" id="diy_height_input" class="input-small" placeholder="高"><div id="diy_msg" class="hidden" style="color: red;"></div>',
                     '<button class="btn btn-primary" id="diy_sub">确定</button>'
             );

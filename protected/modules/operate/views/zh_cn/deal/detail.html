@@ -7,17 +7,17 @@
 <div class="main-container clearfix">
     <div class="main-content">
         <div class="content-body">
-            <div class="breadcrumb-con">
+            <!--<div class="breadcrumb-con">
                 <ul class="breadcrumb">
                     <li><a href="<{url route='deal/index'}>">全部交易</a> <span class="divider">></span></li>
                     <li class="active"><{$deal.dealName}></li>
                 </ul>
-            </div>
+            </div>-->
             <div class="clearfix company-info-container content-body-head">
                 <div class="deal-info left">
                     <h4><{$deal.dealName}></h4>
                     <div class="company-info-detail">
-                        <a href="javascript:void (0);">开发者 <span><{$deal.userInfo.firstname}> <{$deal.userInfo.lastname}></span></a>
+                        <a href="javascript:void (0);" style="cursor: default;">开发者 <span><{$company.companyName}></span></a>
                     </div>
                 </div>
                 <div class="company-account info-box left">
@@ -30,8 +30,8 @@
                         ¥<span><script src="<{url route='/develop/site/allCost'}>"></script></span>
                     </div>
                 </div>
-                <a class="btn add-adgroup btn-primary-customize right" href="<{url route='edit' id=$deal.id}>" style="margin-top: 10px;">
-                    <i class="icon-plus icon-white"></i>编辑交易
+                <a class="btn add-adgroup btn-primary-customize right add-right-btn" href="<{url route='edit' id=$deal.id}>" style="margin-top: 10px;">
+                    <i class="icon-pencil icon-white"></i>编辑交易
                 </a>
             </div>
             <div class="block-space"></div>

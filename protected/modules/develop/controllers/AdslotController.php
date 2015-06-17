@@ -242,7 +242,7 @@ class AdslotController extends Controller {
     /**
      * 广告位列表
      */
-    public function actionAdslotList($ostype=0, $timestr='', $sort='', $dpi='', $mediaid=0) {
+    public function actionAdslotList($ostype=0, $timestr='', $sort='', $dpi='', $mediaid=0, $pagesize=25) {
         // 提交的参数处理
         $order = '';
         if (!empty($sort)) {
@@ -251,7 +251,7 @@ class AdslotController extends Controller {
         // 获取应用表模型
         $adslotModel = MediaAdslot::model();
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
-        list($records, $pagingData) = $adslotModel->getMediaPageList($companyId, $ostype, $dpi, explode("_", $timestr), $order, $mediaid);
+        list($records, $pagingData) = $adslotModel->getMediaPageList($companyId, $ostype, $dpi, explode("_", $timestr), $order, $mediaid, $pagesize);
 
         // 模板分配显示
         $html = $this->smartyRender(array(

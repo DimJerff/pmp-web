@@ -8,7 +8,7 @@
     <div class="main-content">
         <div class="content-body">
             <!-- 应用信息和添加应用区块 start -->
-            <div class="clearfix company-info-container" style="height: 48px;">
+            <div class="clearfix company-info-container" style="height: 48px; border: 1px solid #E3E3E3; padding: 10px; border-radius: 4px;">
                 <div class="media-detail-img">
                     <img src="<{$media.appIcon|attach_url}>" width="48" height="48" />
                 </div>
@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <!-- 广告位列表 start -->
-                <div class="contentList" id="adslotList" data-pagenum ="1" data-timestr="<{$timeStr}>" data-mediaid="<{$media.id}>" data-dpi="0" data-curmedia="1"></div>
+                <div class="contentList" id="adslotList" data-pagenum ="1" data-timestr="<{$timeStr}>" data-mediaid="<{$media.id}>" data-dpi="0" data-curmedia="1" data-pagesize="10"></div>
                 <!-- 广告位列表 end -->
             </div>
             <!-- 广告位区块 end -->

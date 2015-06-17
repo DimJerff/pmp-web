@@ -413,9 +413,6 @@ table.customrize thead th:hover {
     background-image: linear-gradient(to bottom,#fff,#e6e6e6);
     border-radius: 6px;
 }
-.table th.number_row, .table td.number_row {
-    text-align: center;
-}
 /* 表格总计一栏文字加粗 */
 .amount-tr td {font-weight: 700;}
 /* 隐藏元素 */

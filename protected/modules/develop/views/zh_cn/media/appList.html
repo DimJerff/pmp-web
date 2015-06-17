@@ -7,7 +7,7 @@
         <th>&nbsp;</th>
         <th>操作</th>
         <{include file="../_common/column_sort.html" name="应用名称" sort="appName"}>
-        <{include file="../_common/column_sort.html" name="广告位" sort="adslotCount"}>
+        <{include file="../_common/column_sort.html" name="广告位" sort="adslotCount" class="number_row"}>
         <{include file="../_common/column_sort.html" name="收入" sort="cost" class="number_row"}>
         <{include file="../_common/column_sort.html" name="请求数" sort="bidRequest" class="number_row"}>
         <{include file="../_common/column_sort.html" name="展示数" sort="impressions" class="number_row"}>
@@ -40,7 +40,7 @@
                     <i class="icon-edit-custom"></i>
                 </a>
             </td>
-            <td class="status_row"><{$v.adslotCount}></td>
+            <td class="number_row"><{$v.adslotCount}></td>
             <td class="number_row">￥<{if $v.cost}><{$v.cost|number_format:2}><{else}>0<{/if}></td>
             <td class="number_row"><{if $v.bidRequest}><{$v.bidRequest|number_format}><{else}>0<{/if}></td>
             <td class="number_row"><{if $v.impressions}><{$v.impressions|number_format}><{else}>0<{/if}></td>

@@ -638,6 +638,7 @@ class DealController extends Controller {
      * @param $status
      */
     public function actionChange_status($id, $status) {
+        /*
         $model = Deal::model()->findByPk($id);
         $data = array();
         $data['id'] = $id;
@@ -645,6 +646,13 @@ class DealController extends Controller {
         $model->attributes = $data;
 
         if ($model->save()) {
+            $this->rspJSON();
+        } else {
+            $this->rspErrorJSON(304, "状态修改失败");
+        }
+        */
+        $count = Deal::model()->updateByPk($id, array('status'=>$status));
+        if ($count > 0) {
             $this->rspJSON();
         } else {
             $this->rspErrorJSON(304, "状态修改失败");

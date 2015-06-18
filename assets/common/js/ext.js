@@ -882,7 +882,7 @@ $.fn.chartPMP = function (data) {
             },
             labels: {
                 formatter: function() {
-                    return this.value +' %';
+                    return this.value.toFixed(2) +' %';
                 },
                 style: {
                     color: '#FE9A00'
@@ -898,13 +898,13 @@ $.fn.chartPMP = function (data) {
             },
             labels: {
                 formatter: function() {
-                    return this.value +' %';
+                    return this.value.toFixed(2) +' %';
                 },
                 style: {
                     color: '#CE3533'
                 }
             },
-            opposite: true
+            opposite: true,
         }],
         tooltip: {
             shared: true

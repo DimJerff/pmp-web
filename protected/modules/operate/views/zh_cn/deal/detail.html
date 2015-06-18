@@ -55,7 +55,7 @@
                                 <{if $deal.payType gt 100}>
                                 媒体收入占售出额比例 <{$deal.mediaSharingRate}>%
                                 <{else}>
-                                协议支付价格 <{$deal.mediaPrice}>元/<{if $deal.payType eq 1}>每千次点击<{/if}><{if $deal.payType eq 2}>每次点击<{/if}><{if $deal.payType eq 3}>每天<{/if}>
+                                协议支付价格 <{$deal.mediaPrice}>元 <{if $deal.payType eq 1}>每千次点击<{/if}><{if $deal.payType eq 2}>每次点击<{/if}><{if $deal.payType eq 3}>每天<{/if}>
                                 <{/if}>
                             </td>
                         </tr>
@@ -84,7 +84,7 @@
                             <td><{$deal.endDate|date_format:'%Y/%m/%d'}></td>
                         </tr>
                         <tr>
-                            <td>售出低价</td>
+                            <td>售出底价</td>
                             <td><{$deal.bidfloor}>元</td>
                         </tr>
                         <tr>

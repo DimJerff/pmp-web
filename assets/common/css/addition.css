@@ -408,6 +408,10 @@ table.customrize thead th:hover {
     font-size: 18px;
 }
 
+.table th.number_row {
+    text-align: center;
+}
+
 .reportrange2 {
     position: relative;
     background-image: linear-gradient(to bottom,#fff,#e6e6e6);

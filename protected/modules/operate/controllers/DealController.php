@@ -218,6 +218,15 @@ class DealController extends Controller {
     }
 
     /**
+     * 获取所有交易的数目
+     */
+    public function actionDealAllCount() {
+        $count = Deal::model()->count();
+        $count = $count ? $count : 0;
+        echo "document.write(". $count . ");";
+    }
+
+    /**
      * 所有交易的消耗报表
      * @param $timestr
      * @throws PHPExcel_Exception

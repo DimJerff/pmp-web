@@ -117,6 +117,15 @@ class MediaController extends Controller {
         echo "document.write(". $count . ");";
     }
 
+    /**
+     * 获取所有的应用数目
+     */
+    public function actionMediaAllCount() {
+        $count = Media::model()->count();
+        $count = $count ? $count : 0;
+        echo "document.write(". $count . ");";
+    }
+
     // 报表下载
     public function actionExportAll($timestr, $os=0) {
         // 获取当前用户的默认公司id

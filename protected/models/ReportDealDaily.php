@@ -124,10 +124,11 @@ class ReportDealDaily extends DbActiveRecord
      * @param $companyId 公司id
      * @return mixed
      */
-    public function getTodayCost($companyId) {
-        //$sql = "SELECT SUM(cost) AS cost FROM {{report_media_daily}} WHERE companyId = {$companyId} AND dateTime = " . strtotime(date("Y-m-d", time()));
+    public function getTodayCost($companyId = 0) {
         $field = "SUM(cost) AS cost";
-        $where[] = "companyId = {$companyId}";
+        if (!empty($companyId)) {
+            $where[] = "companyId = {$companyId}";
+        }
         $where[] = "dateTime = " . strtotime(date("Y-m-d", time()));
 
         $result = $this->_select()->_field($field)->_from()->_where($where)->_find();
@@ -139,10 +140,11 @@ class ReportDealDaily extends DbActiveRecord
      * @param $companyId 公司id
      * @return mixed
      */
-    public function getAllCost($companyId) {
-        //$sql = "SELECT SUM(cost) AS cost FROM {{report_media_daily}} WHERE companyId = {$companyId} ";
+    public function getAllCost($companyId = 0) {
         $field = "SUM(cost) AS cost";
-        $where[] = "companyId = {$companyId}";
+        if (!empty($companyId)) {
+            $where[] = "companyId = {$companyId}";
+        }
 
         $result = $this->_select()->_field($field)->_from()->_where($where)->_find();
         return $result['cost'] ? $result['cost']: '0.00';

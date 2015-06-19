@@ -56,6 +56,15 @@ class SiteController extends Controller
     }
 
     /**
+     * 获取当天的交易消耗
+     */
+    public function actionTodayAllCost() {
+        // 今日消耗
+        $todayCost = ReportDealDaily::model()->getTodayCost();
+        echo "document.write('". number_format($todayCost, 2) . "');";
+    }
+
+    /**
      * 获取当前累计公司交易消耗
      */
     public function actionAllCost() {
@@ -64,6 +73,16 @@ class SiteController extends Controller
 
         // 累计消耗
         $allCost = ReportDealDaily::model()->getAllCost($companyId);
+        echo "document.write('". number_format($allCost, 2) . "');";
+    }
+
+
+    /**
+     * 获取所有所有交易消耗
+     */
+    public function actionAllAllCost() {
+        // 累计消耗
+        $allCost = ReportDealDaily::model()->getAllCost();
         echo "document.write('". number_format($allCost, 2) . "');";
     }
 }

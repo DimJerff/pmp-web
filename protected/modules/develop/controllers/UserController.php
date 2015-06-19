@@ -378,4 +378,13 @@ class UserController extends Controller
         echo "document.write(". $count . ");";
     }
 
+    /**
+     * 获取所有开发者数目
+     */
+    public function actionUserAllCount() {
+        $count = User::model()->count();
+        $count = $count ? $count : 0;
+        echo "document.write(". $count . ");";
+    }
+
 }

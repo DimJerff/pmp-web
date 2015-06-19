@@ -9,21 +9,21 @@
         <div class="content-body">
             <div class="clearfix company-info-container content-body-head">
                 <div class="company-info left">
-                    <h4><{$company.companyName}></h4>
+                    <h4>力美PMP</h4>
                     <div class="company-info-detail">
-                        <a href="javascript:void (0);" style="cursor: default;">开发者 <span> <script src="<{url route='/develop/user/userCount'}>"></script></span></a>
-                        <a href="<{url route='/develop/site/index'}>">应用 <span> <script src="<{url route='/develop/media/mediaCount'}>"></script></span></a>
-                        <a href="javascript:void (0);" style="cursor: default;">交易 <span> <script src="<{url route='/operate/deal/dealCount'}>"></script></span></a>
+                        <a href="javascript:void (0);" style="cursor: default;">开发者 <span> <script src="<{url route='/develop/user/userAllCount'}>"></script></span></a>
+                        <a href="javascript:void (0);" style="cursor: default;">应用 <span> <script src="<{url route='/develop/media/mediaAllCount'}>"></script></span></a>
+                        <a href="javascript:void (0);" style="cursor: default;">交易 <span> <script src="<{url route='/operate/deal/dealAllCount'}>"></script></span></a>
                     </div>
                 </div>
                 <div class="company-account info-box left">
                     <div class="info expense">
                         <h4>当日已消耗</h4>
-                        ¥<span><script src="<{url route='/develop/site/todayCost'}>"></script></span>
+                        ¥<span><script src="<{url route='/develop/site/todayAllCost'}>"></script></span>
                     </div>
                     <div class="info balance">
                         <h4>累计消耗</h4>
-                        ¥<span><script src="<{url route='/develop/site/allCost'}>"></script></span>
+                        ¥<span><script src="<{url route='/develop/site/allAllCost'}>"></script></span>
                     </div>
                 </div>
                 <a class="btn add-adgroup btn-primary-customize right add-right-btn" href="<{url route='add'}>" style="margin-top: 10px;">

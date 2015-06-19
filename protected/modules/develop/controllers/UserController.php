@@ -382,7 +382,7 @@ class UserController extends Controller
      * 获取所有开发者数目
      */
     public function actionUserAllCount() {
-        $count = User::model()->count();
+        $count = Company::model()->count("status=:status", array(":status" => 1));
         $count = $count ? $count : 0;
         echo "document.write(". $count . ");";
     }

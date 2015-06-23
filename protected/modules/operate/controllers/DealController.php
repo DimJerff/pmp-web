@@ -668,6 +668,23 @@ class DealController extends Controller {
         }
     }
 
+    // 异步修改交易详情项状态
+    public function actionDetailChange_status($status, $dealId, $mediaId, $adslotId=0) {
+        $attributes = array('status' => (int)$status);
+        $condition = "dealId=:dealId AND mediaId=:mediaId AND adslotId=:adslotId";
+        $params = array(
+            ":dealId" => (int)$dealId,
+            ":mediaId" => (int)$mediaId,
+            ":adslotId" => (int)$adslotId,
+        );
+        $count = MediaAdslotDeal::model()->updateAll($attributes,$condition,$params);
+        if ($count > 0) {
+            $this->rspJSON();
+        } else {
+            $this->rspErrorJSON(304, "状态修改失败");
+        }
+    }
+
     /**
      * 异步获取交易名
      * @param $name

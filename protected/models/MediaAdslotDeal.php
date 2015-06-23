@@ -309,7 +309,7 @@ class MediaAdslotDeal extends DbActiveRecord
             "mad.*",
             "m.appName",
             "ma.adslotName",
-            "ma.status",
+            //"ma.status",
             //"SUM(bidResponse) AS bidResponse",
             "SUM(impressions) AS impressions",
             "SUM(clicks) AS clicks",
@@ -357,6 +357,7 @@ class MediaAdslotDeal extends DbActiveRecord
     public function getAdslotDataByDealId($dateTimeArr, $companyId, $dealId, $order=NULL, $adslotName='', $throw=0) {
         // 获取sql
         $sql = $this->getAdslotDataByDealIdSql($dateTimeArr, $companyId, $dealId, $order, $adslotName, $throw);
+
         // 分页处理
         $paging = Paging::instance();
         $paging->setPageSize(25);

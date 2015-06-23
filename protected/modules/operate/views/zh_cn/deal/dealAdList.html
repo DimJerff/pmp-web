@@ -20,9 +20,9 @@
         <td>&nbsp;</td>
         <td>
             <{if $v.status eq 1}>
-            <a href="<{url route='/develop/adslot/change_status' id=$v.adslotId status=2}>" confirmLang="base.confirmPause"><i class="icon-stop"></i></a>
+            <a href="<{url route='/operate/deal/detailChange_status' dealId=$v.dealId status=2 mediaId=$v.mediaId adslotId=$v.adslotId}>" confirmLang="base.confirmPause"><i class="icon-stop"></i></a>
             <{elseif $v.status eq 2}>
-            <a href="<{url route='/develop/adslot/change_status' id=$v.adslotId status=1}>" confirmLang="base.confirmStart"><i class="icon-on"></i></a>
+            <a href="<{url route='/operate/deal/detailChange_status' dealId=$v.dealId status=1 mediaId=$v.mediaId adslotId=$v.adslotId}>" confirmLang="base.confirmStart"><i class="icon-on"></i></a>
             <{elseif $v.status eq 3}>
             <i class="icon-pause-2 icon-white"></i>
             <{/if}>

@@ -94,7 +94,7 @@ class MediaController extends Controller {
                 break;
             }
         }
-        $curCatePathArr = explode('-', $curCatePathStr);unset($curCatePathStr);
+        $curCatePathArr = explode('_', $curCatePathStr);unset($curCatePathStr);
         array_shift($curCatePathArr);
 
         // 模板分配显示

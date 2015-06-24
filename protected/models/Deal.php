@@ -128,8 +128,8 @@ class Deal extends DbActiveRecord
         );
         // 获取公司id
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
-        $checkedMediaList = MediaAdslotDeal::model()->getCheckedMediaList($companyId, CJSON::decode($this->medias, true), $this->startDate, $this->endDate);
-        $checkedAdslotList = MediaAdslotDeal::model()->getCheckedAdslotList($companyId, CJSON::decode($this->adslots, true), $this->startDate, $this->endDate);
+        $checkedMediaList = MediaAdslotDeal::model()->getCheckedMediaList($companyId, CJSON::decode($this->medias, true), $this->id, $this->startDate, $this->endDate);
+        $checkedAdslotList = MediaAdslotDeal::model()->getCheckedAdslotList($companyId, CJSON::decode($this->adslots, true), $this->id, $this->startDate, $this->endDate);
         if (!empty($checkedMediaList)) {
             foreach ($checkedMediaList as $k=>$v) {
                 $errMsg[] = $v['dealName'].' > '.$v['appName'];

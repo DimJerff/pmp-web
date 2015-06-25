@@ -59,5 +59,11 @@ return array(
                 //*/
             ),
         ),
+        'smarty' => array(
+            /* 默认assign进模板的数据 */
+            'assignConfig' => array(
+                'versionCode' => '20140805',
+            ),
+        ),
     ),
 );

@@ -51,10 +51,6 @@ return CMap::mergeArray(
                     'caching' => false,
                     'cache_lifetime' => 3600,
                 ),
-                /* 默认assign进模板的数据 */
-                'assignConfig' => array(
-                    'versionCode' => '20140805',
-                ),
             ),
             'authManager' => array(
                 'class' => 'CDbAuthManager',
@@ -127,5 +123,5 @@ return CMap::mergeArray(
         ),
     ),
     // 运维定制配置文件
-    require $__curDir . 'mainAddition.php'
+    require $__curDir . 'deployment.php'
 );

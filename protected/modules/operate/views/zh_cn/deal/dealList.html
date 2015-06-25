@@ -9,7 +9,7 @@
         <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="交易名称" sort="dealName"}>
         <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="类型" sort="dealType"}>
         <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="结算方式" sort="firstname" class="number_row"}>
-        <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="开放者名称" sort="bidRequest" class="number_row"}>
+        <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="开发者名称" sort="bidRequest" class=""}>
         <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="消耗" sort="cost" class="number_row"}>
         <th>&nbsp;</th>
     </tr>
@@ -46,7 +46,7 @@
             ￥<{$v.mediaPrice|number_format:2}><br />CPD
             <{/if}>
         </td>
-        <td class="number_row"><{$v.developName}></td>
+        <td class=""><{$v.developName}></td>
         <td class="number_row">￥<{if $v.cost}><{$v.cost|number_format:2}><{else}>0<{/if}></td>
         <td>&nbsp;</td>
     </tr>

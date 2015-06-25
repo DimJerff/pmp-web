@@ -118,7 +118,7 @@ class MediaAdslotDeal extends DbActiveRecord
         $arr = array();
         if (!empty($mediaIdArr)) {
             foreach ($mediaIdArr as $v) {
-                $arr[] = "({$v}, 0, {$dealId})";
+                $arr[] = "({$v}, 0, {$dealId}, 1)";
             }
         }
 
@@ -381,7 +381,10 @@ class MediaAdslotDeal extends DbActiveRecord
         } else {
             $join[] = "c_deal d ON d.id = t.dealId AND (endDate >= {$startDate} OR (startDate <= {$startDate} AND endDate = 0))";
         }
-        $where = "t.mediaId IN (". implode(",", $mediaIdArr) .") AND d.companyId = {$companyId} and t.dealId != {$dealId}";
+        $where[] = "t.mediaId IN (". implode(",", $mediaIdArr) .") AND d.companyId = {$companyId}";
+        if (!empty($dealId)) {
+            $where[] = "t.dealId != {$dealId}";
+        }
 
         return $this->_select()->_field($field)->_from()->_join($join)->_where($where)->_query();
     }

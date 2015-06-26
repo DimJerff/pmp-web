@@ -801,6 +801,11 @@
 		else url = url.replace(prefix, relationDir);
 		return url;
 	}
+    $(document).ajaxStart(function(){
+        NProgress.start();
+    }).ajaxComplete(function(){
+        NProgress.done();
+    });
 })(jQuery);
 
 /**

@@ -171,9 +171,9 @@ class MediaAdslotDeal extends DbActiveRecord
         );
 
         if (empty($adslotId)) {
-            $where[] = "rda.mediaId = {$mediaId}";
+            $where[] = "mad.mediaId = {$mediaId}";
         } else {
-            $where[] = "rda.adslotId = {$adslotId} OR (rda.mediaId = {$mediaId} AND rda.adslotId = 0)";
+            $where[] = "mad.adslotId = {$adslotId} OR (mad.mediaId = {$mediaId} AND mad.adslotId = 0)";
         }
         if ($throw) {
             $where[] = "d.status = 1";

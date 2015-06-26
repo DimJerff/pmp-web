@@ -125,7 +125,7 @@ class MediaAdslotDeal extends DbActiveRecord
         if (!empty($adslotIdArr)) {
             $adslotIdArr = MediaAdslot::model()->getMediaIdsByIds($adslotIdArr);
             foreach ($adslotIdArr as $v) {
-                $arr[] = "({$v['mediaId']}, {$v['adslotId']}, {$dealId})";
+                $arr[] = "({$v['mediaId']}, {$v['adslotId']}, {$dealId}, 1)";
             }
         }
         $sql = "INSERT INTO ".$this->tableName()." VALUES " . implode(", ", $arr);

@@ -120,7 +120,7 @@
                     <div class="stat-filter-btn contentOpt hide" style="display: block;">
                         <a class="filter-down-a" href="<{url route='deal/exportDeal' dealid=$deal.id timestr=$timeStr}>"></a>
                         <a class="filter-search-a" id="search-a" href="javascript: void(0);" style="margin-right: 10px;" data-searid="dealList"></a>
-                        <ul class="dropdown-menu" id="search-box">
+                        <ul class="dropdown-menu" id="search-box" style="padding: 10px; display: none; top: 234px; left: 1517px;">
                             <li class="show-name"><input type="text" name="searchtxt" placeholder="搜索..."></li>
                         </ul>
                         <script>
@@ -130,7 +130,7 @@
                                     $("#search-box").show().position({
                                         of: $( "#search-a" ),
                                         my: "right top",
-                                        at: "right bottom"
+                                        at: "left top"
                                     }).find(":text").focus().blur(function() {
                                         setTimeout(function() {
                                             $("#search-box").hide().find(".show-name").nextAll().remove();

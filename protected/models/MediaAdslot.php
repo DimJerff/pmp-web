@@ -406,7 +406,7 @@ class MediaAdslot extends DbActiveRecord
         $from = "ma";
         $where =array();
         $where[] = "adslotName LIKE '%". $adslotNameLike ."%'";
-        $where[] = "status IN (1, 2)";
+        $where[] = "mad.status IN (1, 2)";
         $join = "";
         if ($dealid) {
             $join = "{{media_adslot_deal}} mad ON mad.adslotId = ma.id";

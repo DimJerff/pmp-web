@@ -8,7 +8,7 @@
     <div class="main-content">
         <div class="content-body">
             <!-- 广告位信息 start -->
-            <div class="clearfix company-info-container" style="height: 48px; border: 1px solid #E3E3E3; padding: 10px; border-radius: 4px;">
+            <div class="clearfix company-info-container content-body-head" style="height: 48px; border: 1px solid #E3E3E3; padding: 10px; border-radius: 4px;">
                 <div class="media-detail-img">
                     <img src="<{$adslot.appIcon|attach_url}>" width="48" height="48">
                 </div>
@@ -48,7 +48,7 @@
                         <span>交易</span>
                     </div>
                     <div class="stat-filter-btn contentOpt hide" style="display: block;">
-                        <a class="filter-down-a" href=""></a>
+                        <a class="filter-down-a" href="<{url route='/operate/deal/exportAdslot' timestr=$timeStr mediaid=$adslot.mediaId adslotid=$adslot.adslotId}>"></a>
                         <span style=" vertical-align: bottom; display: block; float: right; height: 46px; margin-right: 10px;">
                             <input type="checkbox" name="throwType" value="1" style="margin-top: 0px;" onclick="if($(this).prop('checked')) {ajaxDealRePage('throw=1');} else {ajaxDealRePage('throw=0');}">
                             仅显示投放中

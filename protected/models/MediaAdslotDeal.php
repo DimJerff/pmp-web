@@ -125,7 +125,7 @@ class MediaAdslotDeal extends DbActiveRecord
         if (!empty($adslotIdArr)) {
             $adslotIdArr = MediaAdslot::model()->getMediaIdsByIds($adslotIdArr);
             foreach ($adslotIdArr as $v) {
-                $arr[] = "({$v['mediaId']}, {$v['adslotId']}, {$dealId})";
+                $arr[] = "({$v['mediaId']}, {$v['adslotId']}, {$dealId}, 1)";
             }
         }
         $sql = "INSERT INTO ".$this->tableName()." VALUES " . implode(", ", $arr);
@@ -171,9 +171,9 @@ class MediaAdslotDeal extends DbActiveRecord
         );
 
         if (empty($adslotId)) {
-            $where[] = "rda.mediaId = {$mediaId}";
+            $where[] = "mad.mediaId = {$mediaId}";
         } else {
-            $where[] = "rda.adslotId = {$adslotId} OR (rda.mediaId = {$mediaId} AND rda.adslotId = 0)";
+            $where[] = "mad.adslotId = {$adslotId} OR (mad.mediaId = {$mediaId} AND mad.adslotId = 0)";
         }
         if ($throw) {
             $where[] = "d.status = 1";
@@ -214,9 +214,9 @@ class MediaAdslotDeal extends DbActiveRecord
      * @param $mediaId
      * @return mixed
      */
-    public function getDealListByMidOrAid($dateTimeArr, $companyId, $mediaId) {
+    public function getDealListByMidOrAid($dateTimeArr, $companyId, $mediaId, $adslotId=0) {
         // 获取sql
-        $sql = $this->getDealByMidOrAidSql($dateTimeArr, $companyId, $mediaId, 0, NULL);
+        $sql = $this->getDealByMidOrAidSql($dateTimeArr, $companyId, $mediaId, $adslotId, NULL);
 
         return $this->_query($sql);
     }

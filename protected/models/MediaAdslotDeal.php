@@ -214,9 +214,9 @@ class MediaAdslotDeal extends DbActiveRecord
      * @param $mediaId
      * @return mixed
      */
-    public function getDealListByMidOrAid($dateTimeArr, $companyId, $mediaId) {
+    public function getDealListByMidOrAid($dateTimeArr, $companyId, $mediaId, $adslotId=0) {
         // 获取sql
-        $sql = $this->getDealByMidOrAidSql($dateTimeArr, $companyId, $mediaId, 0, NULL);
+        $sql = $this->getDealByMidOrAidSql($dateTimeArr, $companyId, $mediaId, $adslotId, NULL);
 
         return $this->_query($sql);
     }

@@ -125,7 +125,7 @@ class ReportDealDaily extends DbActiveRecord
      * @return mixed
      */
     public function getTodayCost($companyId = 0) {
-        $field = "SUM(cost) AS cost";
+        $field = "SUM(cost)/1000000 AS cost";
         if (!empty($companyId)) {
             $where[] = "companyId = {$companyId}";
         }
@@ -141,7 +141,7 @@ class ReportDealDaily extends DbActiveRecord
      * @return mixed
      */
     public function getAllCost($companyId = 0) {
-        $field = "SUM(cost) AS cost";
+        $field = "SUM(cost)/1000000 AS cost";
         if (!empty($companyId)) {
             $where[] = "companyId = {$companyId}";
         }
@@ -163,7 +163,7 @@ class ReportDealDaily extends DbActiveRecord
             "SUM(clicks) AS clicks",
             "IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
             "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
-            "SUM(cost) AS cost",
+            "SUM(cost)/1000000 AS cost",
             "dateTime",
         );
         $where = array(
@@ -192,7 +192,7 @@ class ReportDealDaily extends DbActiveRecord
             "SUM(clicks) AS clicks",
             "IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
             "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
-            "SUM(cost) AS cost",
+            "SUM(cost)/1000000 AS cost",
             "dateTime",
         );
 

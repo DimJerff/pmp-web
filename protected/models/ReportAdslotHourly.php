@@ -130,7 +130,7 @@ class ReportAdslotHourly extends DbActiveRecord
             "SUM(clicks) AS clicks",
             "IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
             "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
-            "SUM(cost) AS cost",
+            "SUM(cost)/1000000 AS cost",
             "dateTime",
         );
         $where = array(
@@ -159,7 +159,7 @@ class ReportAdslotHourly extends DbActiveRecord
             "SUM(clicks) AS clicks",
             "IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
             "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
-            "SUM(cost) AS cost",
+            "SUM(cost)/1000000 AS cost",
             "dateTime",
         );
         $where = array(

@@ -158,7 +158,7 @@ class MediaAdslotDeal extends DbActiveRecord
             "SUM(impressions) AS impressions",
             "SUM(clicks) AS clicks",
             "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
-            "SUM(cost) AS cost",
+            "SUM(cost)/1000000 AS cost",
             "dateTime",
         );
         $from = "mad";
@@ -247,7 +247,7 @@ class MediaAdslotDeal extends DbActiveRecord
             "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
             "IF(SUM(impressions), SUM(cost)/SUM(impressions)/1000, 0) AS ecpm",
             "IF(SUM(clicks), SUM(cost)/SUM(clicks)/1000000, 0) AS ecpc",
-            "SUM(cost) AS cost",
+            "SUM(cost)/1000000 AS cost",
             "dateTime",
             "mad.mediaId",
             "mad.adslotId",
@@ -315,7 +315,7 @@ class MediaAdslotDeal extends DbActiveRecord
             "SUM(clicks) AS clicks",
             //"IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
             "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
-            "SUM(cost) AS cost",
+            "SUM(cost)/1000000 AS cost",
             "IF(SUM(impressions), SUM(cost)/SUM(impressions)/1000, 0) AS ecpm",
             "IF(SUM(clicks), SUM(cost)/SUM(clicks)/1000000, 0) AS ecpc",
         );

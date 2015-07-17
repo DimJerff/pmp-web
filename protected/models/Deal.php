@@ -283,7 +283,7 @@ class Deal extends DbActiveRecord
             "SUM(clicks) AS clicks",
             //"IF(SUM(bidRequest), ROUND((SUM(impressions)/SUM(bidRequest) * 100), 2), 0) AS fillingr",
             "IF(SUM(impressions), ROUND((SUM(clicks)/SUM(impressions) * 100), 2), 0) AS ctr",
-            "SUM(cost) AS cost",
+            "SUM(cost)/100000 AS cost",
             "dateTime",
             //"CONCAT(u.firstname,u.lastname) AS developName",
             "c.companyName AS developName",

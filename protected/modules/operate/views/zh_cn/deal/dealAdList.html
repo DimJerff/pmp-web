@@ -30,7 +30,7 @@
         </td>
         <td><{if $v.adslotName}><{$v.adslotName}><{else}>所有广告位<{/if}></td>
         <td><{$v.appName}></td>
-        <td class="number_row">¥<{if $v.cost}><{$v.cost}><{else}>0<{/if}></td>
+        <td class="number_row">¥<{if $v.cost}><{$v.cost|number_format:2}><{else}>0.00<{/if}></td>
         <td class="number_row"><{if $v.impressions}><{$v.impressions|number_format}><{else}>0<{/if}></td>
         <td class="number_row"><{if $v.clicks}><{$v.clicks|number_format}><{else}>0<{/if}></td>
         <td class="number_row"><{$v.ctr}>%</td>
@@ -43,7 +43,7 @@
         <td colspan="2">&nbsp;</td>
         <td style="text-align:left;">总计</td>
         <td class="status_row">&nbsp;</td>
-        <td class="number_row">￥<{$amount.cost}></td>
+        <td class="number_row">￥<{$amount.cost|number_format:2}></td>
         <td class="number_row"><{$amount.impressions|number_format}></td>
         <td class="number_row"><{$amount.clicks|number_format}></td>
         <td class="number_row"><{$amount.ctr}>%</td>

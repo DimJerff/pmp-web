@@ -328,10 +328,10 @@ class Util extends CComponent {
                 $amount['ctr'] =  round($amount['clicks']/$amount['impressions'] * 100, 2);
             }
             if ($amount['impressions']) {
-                $amount['ecpm'] =  $amount['cost']/$amount['impressions'] / 1000;
+                $amount['ecpm'] =  $amount['cost']/$amount['impressions'] * 1000;
             }
             if ($amount['clicks']) {
-                $amount['ecpc'] =  $amount['cost']/$amount['clicks'] / 1000000;
+                $amount['ecpc'] =  $amount['cost']/$amount['clicks'];
             }
         }
         return $amount;

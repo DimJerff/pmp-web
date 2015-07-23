@@ -223,7 +223,7 @@ class MediaAdslot extends DbActiveRecord
             "a.`status`",
             "m.os",
             "CONCAT(width,'x',height) AS dpi",
-            "SUM(cost) AS cost",
+            "SUM(cost)/1000000 AS cost",
             "SUM(bidRequest) AS bidRequest",
             "SUM(impressions) AS impressions",
             "SUM(clicks) AS clicks",

@@ -40,7 +40,7 @@
             </td>
             <td><{$v.startDate|date_format:'%Y/%m/%d'}></td>
             <td><{$v.endDate|date_format:'%Y/%m/%d'}></td>
-            <td class="number_row">￥<{if $v.cost}><{$v.cost|number_format:2}><{else}>0<{/if}></td>
+            <td class="number_row">￥<{if $v.cost}><{$v.cost|number_format:2}><{else}>0.00<{/if}></td>
             <td class="number_row"><{if $v.impressions}><{$v.impressions|number_format}><{else}>0<{/if}></td>
             <td class="number_row"><{if $v.clicks}><{$v.clicks|number_format}><{else}>0<{/if}></td>
             <td class="number_row"><{if $v.ctr}><{$v.ctr|number_format}><{else}>0<{/if}>%</td>

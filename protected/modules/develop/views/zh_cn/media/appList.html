@@ -41,14 +41,14 @@
                 </a>
             </td>
             <td class="number_row"><{$v.adslotCount}></td>
-            <td class="number_row">￥<{if $v.cost}><{$v.cost|number_format:2}><{else}>0<{/if}></td>
+            <td class="number_row">￥<{if $v.cost}><{$v.cost|number_format:2}><{else}>0.00<{/if}></td>
             <td class="number_row"><{if $v.bidRequest}><{$v.bidRequest|number_format}><{else}>0<{/if}></td>
             <td class="number_row"><{if $v.impressions}><{$v.impressions|number_format}><{else}>0<{/if}></td>
             <td class="number_row"><{$v.fillingr}>%</td>
             <td class="number_row"><{if $v.clicks}><{$v.clicks|number_format}><{else}>0<{/if}></td>
             <td class="number_row"><{$v.ctr}>%</td>
-            <td class="number_row"><{$v.ecpm|number_format:2}></td>
-            <td class="number_row"><{$v.ecpc|number_format:2}></td>
+            <td class="number_row"><{if $v.ecpm}><{$v.ecpm|number_format:2}><{else}>-<{/if}></td>
+            <td class="number_row"><{if $v.ecpc}><{$v.ecpc|number_format:2}><{else}>-<{/if}></td>
             <td>&nbsp;</td>
         </tr>
         <{/foreach}>
@@ -62,8 +62,8 @@
             <td class="number_row"><{$amount.fillingr}>%</td>
             <td class="number_row"><{$amount.clicks|number_format}></td>
             <td class="number_row"><{$amount.ctr}>%</td>
-            <td class="number_row"><{$amount.ecpm|number_format:2}></td>
-            <td class="number_row"><{$amount.ecpc|number_format:2}></td>
+            <td class="number_row"><{if $amonut.ecpm}><{$amount.ecpm|number_format:2}><{else}>-<{/if}></td>
+            <td class="number_row"><{if $amonut.ecpc}><{$amount.ecpc|number_format:2}><{else}>-<{/if}></td>
             <td>&nbsp;</td>
         </tr>
         <{else}>

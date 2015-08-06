@@ -46,7 +46,7 @@ class AjaxReportController extends Controller
         $this->defaultCompanyID = $defaultCompanyId = $userState->defaultCompanyID;
 
         // 对时间进行判断处理
-        $timeArr = explode('_', $time);
+        $timeArr = Util::_time2Arr($time);
 
         $timeInterval = $timeArr[1] - $timeArr[0];
         if ($timeInterval > (86400 * 30 *2) ) {

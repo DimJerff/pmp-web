@@ -15,7 +15,7 @@ return CMap::mergeArray(
 					'From'=>'dsp-admin@limei.com',
 					'FromName'=>'力美广告'
 				),
-				/* 异常或错误，发送邮件 */
+				/* 异常或错误，发送邮件：注释 */
 				'exceptionEmail' => array('gaojie@limei.com', ),
 			),
 		),

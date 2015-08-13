@@ -130,7 +130,7 @@ class MediaController extends Controller {
     public function actionExportAll($timestr, $os=0) {
         // 获取当前用户的默认公司id
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
-        $records = Media::model()->getMediaList($companyId, explode("_", $timestr), $os);
+        $records = Media::model()->getMediaList($companyId, Util::_time2Arr($timestr), $os);
         $totalRecord = array(
             'adslotCount' => 0,
             'cost'        => 0,
@@ -288,7 +288,7 @@ class MediaController extends Controller {
         }
 
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
-        list($records, $pagingData) = $mediaModel->getMediaPageList($companyId, $ostype, explode("_", $timestr), $order);
+        list($records, $pagingData) = $mediaModel->getMediaPageList($companyId, $ostype, Util::_time2Arr($timestr), $order);
 
         // 模板分配显示
         $html = $this->smartyRender(array(

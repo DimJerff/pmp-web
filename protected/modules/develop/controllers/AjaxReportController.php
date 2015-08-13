@@ -46,12 +46,12 @@ class AjaxReportController extends Controller
         $this->defaultCompanyID = $defaultCompanyId = $userState->defaultCompanyID;
 
         // 对时间进行判断处理
-        $timeArr = explode('_', $time);
+        $timeArr = Util::_time2Arr($time);
 
         $timeInterval = $timeArr[1] - $timeArr[0];
         if ($timeInterval > (86400 * 30 *2) ) {
             $timeType = 'Monthly';
-        } else if ($timeInterval > 86400) {
+        } else if ($timeInterval >= 86400) {
             $timeType = "Daily";
         } else {
             $timeType = "Hourly";
@@ -93,7 +93,7 @@ class AjaxReportController extends Controller
         $interval = $timeArr[1] - $timeArr[0];
         if ($interval > 86400 * 2 * 30) {
             $timeType = 1; // 月
-        } else if ($interval > 86400) {
+        } else if ($interval >= 86400) {
             $timeType = 2; // 天
         } else {
             $timeType = 3; // 时

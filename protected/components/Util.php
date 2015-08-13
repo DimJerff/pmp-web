@@ -299,7 +299,11 @@ class Util extends CComponent {
         return $data;
     }
 
-    // 处理力列表数据总计
+    /**
+     * 处理力列表数据总计
+     * @param $records
+     * @return array
+     */
     public static function listAmount($records) {
         // 处理统计数据
         $amount = array();
@@ -335,5 +339,35 @@ class Util extends CComponent {
             }
         }
         return $amount;
+    }
+
+    /**
+     * 对下划线连接的起始时间戳处理成数组
+     * @param $time
+     * @return array
+     */
+    public static function _time2Arr($time) {
+        // 为空的处理
+        if (!$time) {
+            return $time;
+        }
+
+        // 无下划线分割处理
+        if (strpos($time, '_') == false) {
+            return $time;
+        }
+
+        // 分割字符串成数组处理
+        // 已经为数组处理
+        if (is_array($time)) {
+            $timeArr = $time;
+        } else {
+            $timeArr = explode('_', $time);
+        }
+
+        // 起始时间相同处理
+        if ($timeArr[1] == $timeArr[0]) $timeArr[1] += 86400 - 1;
+
+        return $timeArr;
     }
 }

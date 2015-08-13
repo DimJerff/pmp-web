@@ -91,7 +91,7 @@ class AdslotController extends Controller {
     public function actionExportAll($timestr, $mediaid=0, $os=0, $dpi=0) {
         // 获取当前用户的默认公司id
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
-        $records = MediaAdslot::model()->getAdslotList($companyId, explode("_", $timestr), $mediaid, $os, $dpi);
+        $records = MediaAdslot::model()->getAdslotList($companyId, Util::_time2Arr($timestr), $mediaid, $os, $dpi);
         $totalRecord = array(
             '0'           => '',
             'cost'        => 0,
@@ -251,7 +251,7 @@ class AdslotController extends Controller {
         // 获取应用表模型
         $adslotModel = MediaAdslot::model();
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
-        list($records, $pagingData) = $adslotModel->getMediaPageList($companyId, $ostype, $dpi, explode("_", $timestr), $order, $mediaid, $pagesize);
+        list($records, $pagingData) = $adslotModel->getMediaPageList($companyId, $ostype, $dpi, Util::_time2Arr($timestr), $order, $mediaid, $pagesize);
 
         // 模板分配显示
         $html = $this->smartyRender(array(

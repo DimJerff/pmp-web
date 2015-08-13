@@ -236,7 +236,7 @@ class DealController extends Controller {
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
 
         // 查出符合条件的数据
-        $records = Deal::model()->getDealList($companyId, explode("_", $timestr));
+        $records = Deal::model()->getDealList($companyId, Util::_time2Arr($timestr));
 
         // 查询出来的统计数据进行处理
         $totalRecord = array(
@@ -327,7 +327,7 @@ class DealController extends Controller {
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
 
         // 查询出符合条件的数据
-        $records = MediaAdslotDeal::model()->getDealListByDealId(explode("_", $timestr), $companyId, $dealid);
+        $records = MediaAdslotDeal::model()->getDealListByDealId(Util::_time2Arr($timestr), $companyId, $dealid);
 
         // 对查询的数据进行处理以符合excel的要求
         $timeArr = explode("_", $timestr);
@@ -426,7 +426,7 @@ class DealController extends Controller {
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
 
         // 查询出符合条件的数据
-        $records = MediaAdslotDeal::model()->getDealListByMidOrAid(explode("_", $timestr), $companyId, $mediaid);
+        $records = MediaAdslotDeal::model()->getDealListByMidOrAid(Util::_time2Arr($timestr), $companyId, $mediaid);
 
         // 对查询的数据进行处理以符合excel的要求
         $timeArr = explode("_", $timestr);
@@ -548,7 +548,7 @@ class DealController extends Controller {
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
 
         // 查询出符合条件的数据
-        $records = MediaAdslotDeal::model()->getDealListByMidOrAid(explode("_", $timestr), $companyId, $mediaid, $adslotid);
+        $records = MediaAdslotDeal::model()->getDealListByMidOrAid(Util::_time2Arr($timestr), $companyId, $mediaid, $adslotid);
 
         // 对查询的数据进行处理以符合excel的要求
         $timeArr = explode("_", $timestr);
@@ -684,7 +684,7 @@ class DealController extends Controller {
         $dealModel = Deal::model();
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
         list($records, $pagingData) = $dealModel
-            ->getDealPageList($companyId, explode("_", $timestr), $order, $mediaid, $adslotid, $dealname, $throw);
+            ->getDealPageList($companyId, Util::_time2Arr($timestr), $order, $mediaid, $adslotid, $dealname, $throw);
 
         // 模板分配显示
         $html = $this->smartyRender(array(
@@ -722,7 +722,7 @@ class DealController extends Controller {
         $model = MediaAdslotDeal::model();
 
         // 获取关系列表数据
-        list($records, $pagingData) = $model->getDealByMidOrAid(explode("_", $timestr), $companyId, $mediaid, $adslotid, $order, $throw);
+        list($records, $pagingData) = $model->getDealByMidOrAid(Util::_time2Arr($timestr), $companyId, $mediaid, $adslotid, $order, $throw);
 
         // 模板分配显示
         $html = $this->smartyRender(array(
@@ -755,7 +755,7 @@ class DealController extends Controller {
         $model = MediaAdslotDeal::model();
 
         // 获取关系列表数据
-        list($records, $pagingData) = $model->getAdslotDataByDealId(explode("_", $timestr), $companyId, $dealid, $order, $adslotname, $throw);
+        list($records, $pagingData) = $model->getAdslotDataByDealId(Util::_time2Arr($timestr), $companyId, $dealid, $order, $adslotname, $throw);
 
         // 模板分配显示
         $html = $this->smartyRender(array(

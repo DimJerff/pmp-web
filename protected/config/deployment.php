@@ -17,10 +17,10 @@ return array(
     ),
     'components' => array(
         'db' => array(
-            'connectionString' => 'mysql:dbname=cheetahx;host=dsp.corp.limei.com',
+            'connectionString' => 'mysql:dbname=cheetahx;host=127.0.0.1',
             'emulatePrepare' => true,
-            'username' => 'bunny',
-            'password' => 'DDsMKoB3hLfV',
+            'username' => 'cheetahx',
+            'password' => '97xkAJJyLiBR3rsw',
             'charset' => 'utf8',
             /* 表结构缓存有效期， 单位：秒  */
             'schemaCachingDuration' => 0,
@@ -29,10 +29,10 @@ return array(
         ),
         'db2' => array(
             'class'            => 'CDbConnection' ,
-            'connectionString' => 'mysql:dbname=bunny;host=dsp.corp.limei.com',
+            'connectionString' => 'mysql:dbname=bunny;host=127.0.0.1',
             'emulatePrepare'   => true,
             'username'         => 'bunny',
-            'password'         => 'DDsMKoB3hLfV',
+            'password'         => 'fUEJLV94GIev',
             'charset'          => 'utf8',
             /* 表结构缓存有效期， 单位：秒  */
             'schemaCachingDuration' => 0,
@@ -62,7 +62,7 @@ return array(
         'smarty' => array(
             /* 默认assign进模板的数据 */
             'assignConfig' => array(
-                'versionCode' => '20140805',
+                'versionCode' => '20150813140840',
             ),
         ),
     ),

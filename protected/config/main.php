@@ -114,11 +114,6 @@ return CMap::mergeArray(
                         ),
                     ),
                 ),
-                // sdk下载地址
-                'sdkLink' => array(
-                    'android' => 'http://android.cc',
-                    'ios'     => 'http://ios.cc',
-                ),
             ),
             // 文件上传配置
             require $__curDir.'upload.php'

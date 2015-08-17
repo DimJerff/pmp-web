@@ -66,4 +66,11 @@ return array(
             ),
         ),
     ),
+    'params' => array(
+        // sdk下载地址
+        'sdkLink' => array(
+            'android' => '@android@',
+            'ios'     => '@ios@',
+        ),
+    ),
 );

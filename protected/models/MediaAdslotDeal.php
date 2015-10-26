@@ -162,10 +162,17 @@ class MediaAdslotDeal extends DbActiveRecord
             "dateTime",
         );
         $from = "mad";
-        $join = array(
+        /*$join = array(
             "{{deal}} d ON d.id = mad.dealId",
             "{{report_deal_daily}} rda ON (rda.dealId = mad.dealId AND rda.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})",
-        );
+        );*/
+        $join[] = "{{deal}} d ON d.id = mad.dealId";
+        if (empty($adslotId)) {
+            $join[] = "{{report_deal_daily}} rda ON (rda.dealId = mad.dealId AND rda.mediaId = mad.mediaId AND rda.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})";
+        } else {
+            $join[] = "{{report_deal_daily}} rda ON (rda.dealId = mad.dealId AND (mad.adslotId = {$adslotId} OR (mad.mediaId = {$mediaId} AND mad.adslotId = 0)) AND rda.dateTime BETWEEN {$dateTimeArr[0]} AND {$dateTimeArr[1]})";
+        }
+
         $where = array(
             "d.companyId = {$companyId}",
         );

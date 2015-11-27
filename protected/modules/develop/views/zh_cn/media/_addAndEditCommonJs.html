@@ -9,19 +9,28 @@ $(function () {
         previewMaxWidth: 100,
         previewMaxHeight: 100,
         acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-        done : function(e, data) {
-            var res = data.result;
-            if (res[0] == 'normal') {
-                $("#iconShow").attr("src", $.showAttachUrl(res[1]['thumbUrlPath'])).show();
-                $("input[name='media[appIcon]']").val(res[1]['urlPath']);
-                return;
-            }
-
-            if (res[0] == 'error') {
-                $.tipsError(res[1].message[1]);
-                return;
-            }
-        }
+        add:function(e,data) {
+            data.submit().success(function (result, textStatus, jqXHR) {
+                if($.isArray(result) && result[0] == 'normal'){
+                    result = result[1];
+                    $("#iconShow").attr("src", $.showAttachUrl(result.thumbUrl)).show();
+                    $("input[name='media[appIcon]']").val(result.url);
+                } else if ($.isArray(result) && result[0] == 'error') {
+                    if(result[1].message[0] < 100){
+                        $.tipsError(result[1].message[1]);
+                    }else{
+                        $.tipsError(result[1].message[1]+'：'+result[1].message[2]);
+                    }
+                } else{
+                    $.tipsError('上传失败，请稍后再试！');
+                }
+            })
+            .error(function (jqXHR, textStatus, errorThrown) {
+                $.tipsError('上传失败，请稍后再试！');
+            })
+            .complete(function (result, textStatus, jqXHR) {});
+        },
+        done: function(e, result) {}
     });
     <{if $media.id}>buildSelect(<{$media.os}>);<{/if}>
 

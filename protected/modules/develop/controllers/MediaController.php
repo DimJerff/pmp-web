@@ -355,38 +355,5 @@ class MediaController extends Controller {
         }
     }
 
-
-    /******************************************************************************************************************
-     *
-     * 异步ajax方式post方式访问的方法
-     *
-     */
-
-    /**
-     * 应用图标上传
-     */
-    public function actionIconupload() {
-        // 获取用户信息
-        $userState = Yii::app()->user->getRecord();
-
-        // 实例化应用图片上传类
-        $model = new MediaFile();
-
-        // 获取图片上传实例对象
-        $model->instance = CUploadedFile::getInstanceByName('file');
-        // 添加附件入附件库信息
-        $result = $model->save(array(
-            'companyId' => $userState->defaultCompanyID,
-        ));
-
-        // 返回上传信息
-        if($result) {
-            $result['path'] = $model->path;
-            $result['urlPath'] = $model->urlPath;
-            $result['thumbUrlPath'] = $model->thumbUrlPath;
-            $this->rspJSON($result);
-        }else{
-            $this->rspErrorJSON(403, $model->showError());
-        }
-    }
+    /******************************************************************************************************************/
 }

@@ -247,29 +247,6 @@ class UserController extends Controller
 		));
 	}
 
-    /* 上传文件 */
-    public function actionUpload($type)
-    {
-        $type = ucfirst(strval($type));
-        if(!in_array($type, array('BusinessLicense', 'IdentityCard', 'IdentityCard2', 'Creative', 'CompanyDomainLogo1', 'CompanyDomainLogo2', ))) {
-            throw new CHttpException(403, 'Invalid Request');
-        }
-        $clsname = ($type == 'IdentityCard2' ? 'IdentityCard' : $type).'File';
-        $model = new $clsname;
-        $model->instance = CUploadedFile::getInstanceByName(lcfirst($type));
-        if($model->save()) {
-            $this->rspJSON(array(
-                'path' => $model->path,
-                'urlPath' => $model->urlPath,
-                'absUrl' => $model->absUrl,
-                'size' => $model->size,
-            ));
-        }else{
-            $this->rspErrorJSON(403, $model->getErrors());
-        }
-    }
-
-
 	/* 修改密码 */
 	public function actionEdit_passwd() {
 		$this->checkAccess();

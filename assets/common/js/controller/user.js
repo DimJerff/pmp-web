@@ -366,13 +366,13 @@ $(function(){
 	        }
 		});
 	});
-	
+
 	/* 文件上传 */
 	$('#businessLicense').each(function(){
 		$(this).fileupload({
-			url: "/develop/user/upload?type=businessLicense",
+			url: "/develop/site/upload?type=businessLicense",
 	        dataType: 'json',
-	        maxFileSize: 5000000,
+	        maxFileSize: 10485760,
 	        previewMaxWidth: 100,
 	        previewMaxHeight: 100,
 	        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
@@ -380,11 +380,21 @@ $(function(){
 	            data.submit().success(function (result, textStatus, jqXHR) {
 	                if($.isArray(result) && result[0] == 'normal'){
 	                	result = result[1];
-	                    $("#businessLicense_img").attr('src', $.showAttachUrl(result.urlPath)).show();
-	                    $("#file_businessLicense").val(result.urlPath);
-	                }
+	                    $("#businessLicense_img").attr('src', $.showAttachUrl(result.thumbUrl)).show();
+	                    $("#file_businessLicense").val(result.url);
+	                } else if ($.isArray(result) && result[0] == 'error') {
+                        if(result[1].message[0] < 100){
+                            $.tipsError(result[1].message[1]);
+                        }else{
+                            $.tipsError(result[1].message[1]+'：'+result[1].message[2]);
+                        }
+                    } else{
+                        $.tipsError('上传失败，请稍后再试！');
+                    }
 	            })
-	            .error(function (jqXHR, textStatus, errorThrown) {})
+	            .error(function (jqXHR, textStatus, errorThrown) {
+                    $.tipsError('上传失败，请稍后再试！');
+                })
 	            .complete(function (result, textStatus, jqXHR) {});
 	        },
 	        done: function(e, result) {}
@@ -393,9 +403,9 @@ $(function(){
 	/* 身份证正面 */
 	$('#identityCard').each(function(){
 		$(this).fileupload({
-			url: "/develop/user/upload?type=identityCard",
+			url: "/develop/site/upload?type=identityCard",
 	        dataType: 'json',
-	        maxFileSize: 5000000,
+	        maxFileSize: 10485760,
 	        previewMaxWidth: 100,
 	        previewMaxHeight: 100,
 	        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
@@ -403,11 +413,21 @@ $(function(){
 	            data.submit().success(function (result, textStatus, jqXHR) {
 	                if($.isArray(result) && result[0] == 'normal'){
 	                	result = result[1];
-	                	$("#identityCard_img").attr('src', $.showAttachUrl(result.urlPath)).show();
-	                    $("#file_identityCard").val(result.urlPath);
-	                }
+	                	$("#identityCard_img").attr('src', $.showAttachUrl(result.thumbUrl)).show();
+	                    $("#file_identityCard").val(result.url);
+	                } else if ($.isArray(result) && result[0] == 'error') {
+                        if(result[1].message[0] < 100){
+                            $.tipsError(result[1].message[1]);
+                        }else{
+                            $.tipsError(result[1].message[1]+'：'+result[1].message[2]);
+                        }
+                    } else{
+                        $.tipsError('上传失败，请稍后再试！');
+                    }
 	            })
-	            .error(function (jqXHR, textStatus, errorThrown) {})
+	            .error(function (jqXHR, textStatus, errorThrown) {
+                        $.tipsError('上传失败，请稍后再试！');
+                    })
 	            .complete(function (result, textStatus, jqXHR) {});
 	        },
 	        done: function(e, result) {}
@@ -416,9 +436,9 @@ $(function(){
 	/* 身份证反面 */
 	$('#identityCard2').each(function(){
 		$(this).fileupload({
-			url: "/develop/user/upload?type=identityCard2",
+			url: "/develop/site/upload?type=identityCard&file=identityCard2",
 	        dataType: 'json',
-	        maxFileSize: 5000000,
+	        maxFileSize: 10485760,
 	        previewMaxWidth: 100,
 	        previewMaxHeight: 100,
 	        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
@@ -426,11 +446,21 @@ $(function(){
 	            data.submit().success(function (result, textStatus, jqXHR) {
 	                if($.isArray(result) && result[0] == 'normal'){
 	                	result = result[1];
-	                	$("#identityCard2_img").attr('src', $.showAttachUrl(result.urlPath)).show();
-	                    $("#file_identityCard2").val(result.urlPath);
-	                }
+	                	$("#identityCard2_img").attr('src', $.showAttachUrl(result.thumbUrl)).show();
+	                    $("#file_identityCard2").val(result.url);
+	                } else if ($.isArray(result) && result[0] == 'error') {
+                        if(result[1].message[0] < 100){
+                            $.tipsError(result[1].message[1]);
+                        }else{
+                            $.tipsError(result[1].message[1]+'：'+result[1].message[2]);
+                        }
+                    } else{
+                        $.tipsError('上传失败，请稍后再试！');
+                    }
 	            })
-	            .error(function (jqXHR, textStatus, errorThrown) {})
+	            .error(function (jqXHR, textStatus, errorThrown) {
+                        $.tipsError('上传失败，请稍后再试！');
+                    })
 	            .complete(function (result, textStatus, jqXHR) {});
 	        },
 	        done: function(e, result) {}

@@ -2,8 +2,7 @@
 return array(
 	/* 上传路径 */
 	'uploadPath' => dirname(__FILE__) . '/../../',
-	/* 附件URL */
-	'uploadUrl' => '/',
+    'uploadDir' => 'upload',
 	/* 附件规则 */
 	'uploadRuleType' => array(
 		'img' => 'application.validators.ImageValidator',
@@ -21,7 +20,6 @@ return array(
             'ruleType' => 'img',
             'extTypes' => 'jpg, png, gif',
             'maxSize' => 1024*1024*10, /* 10M */
-            'savePath' => 'upload/media',
             'urlPath' => 'media',
             'widthHeights' => array(
                 '200x200',
@@ -36,7 +34,6 @@ return array(
             'ruleType' => 'img',
             'extTypes' => 'jpg, png, gif',
             'maxSize' => 1024*1024*10, /* 10M */
-            'savePath' => 'upload/profile/business_license',
             'urlPath' => 'profile/business_license',
             /* 保存缩略图 */
             'thumbWidth' => 100,
@@ -47,7 +44,6 @@ return array(
             'ruleType' => 'img',
             'extTypes' => 'jpg, png, gif',
             'maxSize' => 1024*1024*10, /* 10M */
-            'savePath' => 'upload/profile/identity_card',
             'urlPath' => 'profile/identity_card',
             /* 保存缩略图 */
             'thumbWidth' => 100,

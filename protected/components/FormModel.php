@@ -147,7 +147,7 @@ class FormModel extends CFormModel {
      */
 	public function createRandomName($extName = NULL) {
 		if(!isset($extName)) $extName = $this->extensionName;
-		return substr($_SERVER['REQUEST_TIME'], 2).'.'.mt_rand(0, (double)microtime() * 1000000).'.'.$extName;
+		return substr($_SERVER['REQUEST_TIME'], 2).mt_rand(0, (double)microtime() * 1000000).'.'.$extName;
 	}
 
     /**

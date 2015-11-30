@@ -370,7 +370,7 @@ $(function(){
 	/* 文件上传 */
 	$('#businessLicense').each(function(){
 		$(this).fileupload({
-			url: "/develop/site/upload?type=businessLicense",
+			url: "/site/upload?type=businessLicense",
 	        dataType: 'json',
 	        maxFileSize: 10485760,
 	        previewMaxWidth: 100,
@@ -403,7 +403,7 @@ $(function(){
 	/* 身份证正面 */
 	$('#identityCard').each(function(){
 		$(this).fileupload({
-			url: "/develop/site/upload?type=identityCard",
+			url: "/site/upload?type=identityCard",
 	        dataType: 'json',
 	        maxFileSize: 10485760,
 	        previewMaxWidth: 100,
@@ -436,7 +436,7 @@ $(function(){
 	/* 身份证反面 */
 	$('#identityCard2').each(function(){
 		$(this).fileupload({
-			url: "/develop/site/upload?type=identityCard&file=identityCard2",
+			url: "/site/upload?type=identityCard&file=identityCard2",
 	        dataType: 'json',
 	        maxFileSize: 10485760,
 	        previewMaxWidth: 100,

@@ -379,14 +379,14 @@ $(function(){
 	        add:function(e,data) {
 	            data.submit().success(function (result, textStatus, jqXHR) {
 	                if($.isArray(result) && result[0] == 'normal'){
-	                	result = result[1];
-	                    $("#businessLicense_img").attr('src', $.showAttachUrl(result.thumbUrl)).show();
-	                    $("#file_businessLicense").val(result.url);
+	                    $("#businessLicense_img").attr('src', $.showAttachUrl(result[1].thumbUrl)).show();
+	                    $("#file_businessLicense").val(result[2].url);
 	                } else if ($.isArray(result) && result[0] == 'error') {
                         if(result[1].message[0] < 100){
                             $.tipsError(result[1].message[1]);
                         }else{
-                            $.tipsError(result[1].message[1]+'：'+result[1].message[2]);
+                            var message2 = result[1].message[2] ? '：'+result[1].message[2] : '';
+                            $.tipsError(result[1].message[1]+message2);
                         }
                     } else{
                         $.tipsError('上传失败，请稍后再试！');
@@ -412,14 +412,14 @@ $(function(){
 	        add:function(e,data) {
 	            data.submit().success(function (result, textStatus, jqXHR) {
 	                if($.isArray(result) && result[0] == 'normal'){
-	                	result = result[1];
-	                	$("#identityCard_img").attr('src', $.showAttachUrl(result.thumbUrl)).show();
-	                    $("#file_identityCard").val(result.url);
+	                	$("#identityCard_img").attr('src', $.showAttachUrl(result[1].thumbUrl)).show();
+	                    $("#file_identityCard").val(result[1].url);
 	                } else if ($.isArray(result) && result[0] == 'error') {
                         if(result[1].message[0] < 100){
                             $.tipsError(result[1].message[1]);
                         }else{
-                            $.tipsError(result[1].message[1]+'：'+result[1].message[2]);
+                            var message2 = result[1].message[2] ? '：'+result[1].message[2] : '';
+                            $.tipsError(result[1].message[1]+message2);
                         }
                     } else{
                         $.tipsError('上传失败，请稍后再试！');
@@ -445,14 +445,14 @@ $(function(){
 	        add:function(e,data) {
 	            data.submit().success(function (result, textStatus, jqXHR) {
 	                if($.isArray(result) && result[0] == 'normal'){
-	                	result = result[1];
-	                	$("#identityCard2_img").attr('src', $.showAttachUrl(result.thumbUrl)).show();
-	                    $("#file_identityCard2").val(result.url);
+	                	$("#identityCard2_img").attr('src', $.showAttachUrl(result[1].thumbUrl)).show();
+	                    $("#file_identityCard2").val(result[1].url);
 	                } else if ($.isArray(result) && result[0] == 'error') {
                         if(result[1].message[0] < 100){
                             $.tipsError(result[1].message[1]);
                         }else{
-                            $.tipsError(result[1].message[1]+'：'+result[1].message[2]);
+                            var message2 = result[1].message[2] ? '：'+result[1].message[2] : '';
+                            $.tipsError(result[1].message[1]+message2);
                         }
                     } else{
                         $.tipsError('上传失败，请稍后再试！');

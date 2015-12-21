@@ -8,7 +8,7 @@ class UserController extends Controller
 	{
 		return CMap::mergeArray(array(
 			array('allow',
-				'actions' => array('login', 'loginapi', 'forgot', 'forgotpasswd', 'register', 'InviteRegister', 'InviteLogin', 'exists', 'upload', 'privacy_policy', 'domainExists', ),
+				'actions' => array('login', 'loginapi', 'forgot', 'forgotpasswd', 'register', 'InviteRegister', 'InviteLogin', 'exists', 'privacy_policy', 'domainExists', ),
 				'users' => array('?'),
 			),
 		), parent::accessRules());

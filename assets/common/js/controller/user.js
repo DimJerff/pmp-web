@@ -380,7 +380,7 @@ $(function(){
 	            data.submit().success(function (result, textStatus, jqXHR) {
 	                if($.isArray(result) && result[0] == 'normal'){
 	                    $("#businessLicense_img").attr('src', $.showAttachUrl(result[1].thumbUrl)).show();
-	                    $("#file_businessLicense").val(result[2].url);
+	                    $("#file_businessLicense").val(result[1].url);
 	                } else if ($.isArray(result) && result[0] == 'error') {
                         if(result[1].message[0] < 100){
                             $.tipsError(result[1].message[1]);

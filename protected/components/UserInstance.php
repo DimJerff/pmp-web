@@ -74,7 +74,6 @@ class UserInstance extends CWebUser
 
 		$relations = $roleItemList[$roleId];
 
-
 		$operation = strtolower($operation);
 		$index = strpos($operation, '#');
 		if($index > 0) {

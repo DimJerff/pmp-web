@@ -224,7 +224,7 @@ class AdslotController extends Controller {
                     $data['url'] = '/develop/down/sdk/finish/1/adslotId/' . $data['id'];
                 }
                 // 记录操作日记
-                OperationLog::model()->add("adslot", $operationType, $adslotModel->id, $adslotModel->adslotName, $adslotModel->attributes);
+                OperationLog::model()->addModel($adslotModel);
             } else {
                 $errors = $adslotModel->getErrors();
             }

@@ -1,0 +1,69 @@
+<div class="mini_footer">
+    <ul>
+        <li>
+            <a href="http://www.limei.com/privacy?tabindex=1" title="隐私政策">隐私政策</a>
+        </li>
+        <li>
+            <a href="http://www.limei.com/privacy?tabindex=0" title="服务条款">服务条款</a>
+        </li>
+        <li>
+            <a href="http://www.limei.com/about" target="_blank" title="关于我们">关于我们</a>
+        </li>
+        <li>
+            <a href="http://www.limei.com/contact" target="_blank" title="联系我们">联系我们</a>
+        </li>
+    </ul>
+    <p>
+        &copy; <{$smarty.now|date_format:'%Y'}>
+        <{if $domainModel && $domainModel.copyright}>
+        <{$domainModel.copyright|escape:'html'}>
+        <{else}>
+        上海力竞广告有限公司（力美控股）
+        <{/if}>
+    </p>
+</div>
+
+<script src="<{$assetsCommon}>/common/js/lib/jquery.1.10.1.min.js"></script>
+
+<script src="<{$assetsCommon}>/common/js/lib/jquery-ui-1.10.3.custom.min.js"></script>
+<link rel="stylesheet" href="<{$assetsCommon}>/common/css/jquery-ui-1.10.3.custom.min.css" />
+<script src="<{$assetsCommon}>/common/js/lib/bootstrap.js"></script>
+<script src="<{$assetsCommon}>/common/components/slider/js/bootstrap-slider.js"></script>
+<script src="<{$assetsCommon}>/common/js/lib/jquery.validate.min.js"></script>
+<script src="<{$assetsCommon}>/common/js/lib/jquery.validate.additional.js"></script>
+
+<script src="<{$assetsCommon}>/common/components/jquery.file.upload/js/vendor/jquery.ui.widget.js"></script>
+<script src="<{$assetsCommon}>/common/components/jquery.file.upload/js/jquery.iframe-transport.js"></script>
+<script src="<{$assetsCommon}>/common/components/jquery.file.upload/js/jquery.fileupload.js"></script>
+<script src="<{$assetsCommon}>/common/components/jquery.file.upload/js/jquery.fileupload-process.js"></script>
+<script src="<{$assetsCommon}>/common/components/jquery.file.upload/js/jquery.fileupload-image.js"></script>
+<script src="<{$assetsCommon}>/common/components/jquery.file.upload/js/jquery.fileupload-validate.js"></script>
+
+<script src="<{$assetsCommon}>/common/components/datepicker/js/bootstrap-datepicker.js"></script>
+<link rel="stylesheet" href="<{$assetsCommon}>/common/components/datepicker/css/datepicker.css">
+<script src="<{$assetsCommon}>/common/components/daterangepicker/moment.js"></script>
+
+<script src="<{$assetsCommon}>/common/components/daterangepicker/daterangepicker.js"></script>
+<link rel="stylesheet" href="<{$assetsCommon}>/common/components/daterangepicker/daterangepicker-bs2.css" />
+
+<script src="<{$assetsCommon}>/common/components/jquery.tzCheckbox/jquery.tzCheckbox.js"></script>
+<link rel="stylesheet" href="<{$assetsCommon}>/common/components/jquery.tzCheckbox/jquery.tzCheckbox.css" />
+
+<script src="<{$assetsCommon}>/common/js/lib/highcharts.js"></script>
+<script src="<{$assetsCommon}>/common/js/lib/exporting.js"></script>
+
+<link rel="stylesheet" href="<{$assetsCommon}>/common/components/jquery.fancybox/jquery.fancybox.css" media="screen" />
+<script src="<{$assetsCommon}>/common/components/jquery.fancybox/jquery.fancybox.pack.js"></script>
+<script src="<{$assetsUrl}>/common/js/ZeroClipboard.min.js"></script>
+<script src="<{$assetsUrl}>/common/js/lib/jquery.form.js"></script>
+
+<script src="<{$assetsUrl}>/common/lang/<{$language}>/base.js"></script>
+<script src="<{$assetsUrl}>/common/js/ext.js"></script>
+<script src="<{$assetsUrl}>/common/js/controller/<{$controllerid}>.js"></script>
+<{*
+<link rel="stylesheet" href="<{$assetsCommon}>/common/css/base_src.css" />
+*}>
+<link rel="stylesheet" href="<{$assetsCommon}>/common/components/slider/css/slider.css" />
+
+</body>
+</html>

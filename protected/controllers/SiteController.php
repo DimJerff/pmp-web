@@ -6,8 +6,17 @@ class SiteController extends Controller
 	public $noCheckPermission = TRUE;
     public function accessRules(){
         return CMap::mergeArray(array(
-            array('allow',
-                'actions' => array('login', 'loginapi', 'forgot', 'forgotpasswd', 'register', 'exists', 'upload'),
+            array(
+                'allow',
+                'actions' => array(
+                    'login',
+                    //'loginapi',
+                    //'forgot',
+                    //'forgotpasswd',
+                    //'register',
+                    //'exists',
+                    'upload'
+                ),
                 'users' => array('?'),
             ),
         ), parent::accessRules());
@@ -37,4 +46,48 @@ class SiteController extends Controller
 			$this->rspErrorJSON(403, $model->error());
 		}
 	}
+
+    /**
+     * 用户登陆页面
+     */
+    public function actionLogin()
+    {
+        $yii = Yii::app();
+        /* Guest jump to homepage */
+        if(!$yii->user->isGuest) {
+            $this->redirect($yii->user->returnUrl);
+        }
+
+        $errors = null;
+        if(isset($_POST['login'])) {
+            /* check params */
+            $formModel = new UserForm('login');
+            $formModel->attributes = $_POST['login'];
+            if($formModel->validate()) {
+                $identity = $formModel->getIdentity();
+                /* login */
+                $yii->user->login($identity, $formModel->rememberMe);
+                /* 操作日志 */
+                OperationLog::model()->add('user', 7, $yii->user->id, '用户登录', array('loginTime'=>$_SERVER['REQUEST_TIME'],'loginIP'=>$_SERVER['REMOTE_ADDR']));
+                /* jump to previours url */
+                $this->redirect($yii->user->returnUrl);
+            }else{
+                /* get format errors */
+                $errors = $formModel->getErrors();
+            }
+        }
+        $this->smartyRender(array(
+            'errors' => $errors,
+        ));
+    }
+
+    /**
+     * 退出登陆
+     */
+    public function actionLogout()
+    {
+        $user = Yii::app()->user;
+        $user->logout();
+        $this->redirect($user->returnUrl);
+    }
 }

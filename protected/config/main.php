@@ -30,7 +30,7 @@ return CMap::mergeArray(
             'user' => array(
                 'class' => 'UserInstance',
                 /* 没登陆跳到指定地址 */
-                'loginUrl' => array('develop/user/login'),
+                'loginUrl' => array('site/login'),
                 'returnUrl' => array('site/index'),
                 /* 未登陆返回的内容 */
                 'loginRequiredAjaxResponse' => '["error",{"code":401}]',

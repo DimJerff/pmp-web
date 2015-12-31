@@ -115,15 +115,6 @@ class UserInstance extends CWebUser
         User::model()->updateByPk($this->getId(), array(
             'lastLoginTime' => $_SERVER['REQUEST_TIME'],
         ));
-
-        /* 修复默认公司ID */
-        $userState = $this->getRecord();
-        if(!$userState->defaultCompanyID) {
-            foreach($userState->companyList as $company) {
-                $userState->setDefaultCompanyId($company->id);
-                break;
-            }
-        }
     }
 
 	/* login by identity */

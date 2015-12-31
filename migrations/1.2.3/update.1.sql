@@ -7,9 +7,9 @@ use cheetahx;
 SET AUTOCOMMIT = 0;
 
 -- 审计表
-RENAME TABLE `b_operation_log` TO `b_operation_log_bk`;
-DROP TABLE IF EXISTS `b_operation_log`;
-CREATE TABLE `b_operation_log` (
+RENAME TABLE `c_operation_log` TO `c_operation_log_bk`;
+DROP TABLE IF EXISTS `c_operation_log`;
+CREATE TABLE `c_operation_log` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '审计ID',
   `userId` int(11) unsigned NOT NULL COMMENT '操作用户ID',
   `model` varchar(255) NOT NULL COMMENT '操作表名',

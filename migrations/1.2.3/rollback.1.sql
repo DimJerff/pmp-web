@@ -7,8 +7,8 @@ use cheetahx;
 SET AUTOCOMMIT = 0;
 
 -- 审计表
-DROP TABLE IF EXISTS `b_operation_log`;
-RENAME TABLE `b_operation_log_bk` TO `b_operation_log`;
+DROP TABLE IF EXISTS `c_operation_log`;
+RENAME TABLE `c_operation_log_bk` TO `c_operation_log`;
 
 -- 提交所有sql，如果失败，则全部失败
 commit;

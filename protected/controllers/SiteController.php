@@ -14,7 +14,7 @@ class SiteController extends Controller
                     //'forgot',
                     //'forgotpasswd',
                     //'register',
-                    //'exists',
+                    'exists',
                     'upload'
                 ),
                 'users' => array('?'),
@@ -55,7 +55,7 @@ class SiteController extends Controller
         $yii = Yii::app();
         /* Guest jump to homepage */
         if(!$yii->user->isGuest) {
-            $this->redirect($yii->user->returnUrl);
+            $this->redirect($yii->user->getReturnUrl());
         }
 
         $errors = null;
@@ -70,7 +70,7 @@ class SiteController extends Controller
                 /* 操作日志 */
                 OperationLog::model()->add('user', 7, $yii->user->id, '用户登录', array('loginTime'=>$_SERVER['REQUEST_TIME'],'loginIP'=>$_SERVER['REMOTE_ADDR']));
                 /* jump to previours url */
-                $this->redirect($yii->user->returnUrl);
+                $this->redirect($yii->user->getReturnUrl());
             }else{
                 /* get format errors */
                 $errors = $formModel->getErrors();
@@ -81,6 +81,12 @@ class SiteController extends Controller
         ));
     }
 
+    /* 不存在 */
+    public function actionExists($email, $userId = null)
+    {
+        echo !$userId && User::model()->findByAttributes(array('email' => $email,)) ? 'false' : 'true';
+    }
+
     /**
      * 退出登陆
      */
@@ -88,6 +94,6 @@ class SiteController extends Controller
     {
         $user = Yii::app()->user;
         $user->logout();
-        $this->redirect($user->returnUrl);
+        $this->redirect($user->getReturnUrl());
     }
 }

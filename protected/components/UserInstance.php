@@ -102,29 +102,35 @@ class UserInstance extends CWebUser
 
 	/* 登陆前 */
 	public function beforeLogin($id, $states, $fromCookie) {
-		$this->returnUrl = Yii::app()->controller->createUrl('site/index');
+
 		return true;
 	}
-	
+
+    /**
+     * 登录后
+     */
+    public function afterLogin()
+    {
+        /* 更新最后登陆时间 */
+        User::model()->updateByPk($this->getId(), array(
+            'lastLoginTime' => $_SERVER['REQUEST_TIME'],
+        ));
+
+        /* 修复默认公司ID */
+        $userState = $this->getRecord();
+        if(!$userState->defaultCompanyID) {
+            foreach($userState->companyList as $company) {
+                $userState->setDefaultCompanyId($company->id);
+                break;
+            }
+        }
+    }
+
 	/* login by identity */
 	public function login($identity, $isRememberMe = false)
 	{
 		if(!parent::login($identity)) return false;
 		if($isRememberMe) $this->remember($identity->getId(), 14*86400);
-		
-		/* 更新最后登陆时间 */
-		User::model()->updateByPk($identity->getId(), array(
-			'lastLoginTime' => $_SERVER['REQUEST_TIME'],
-		));
-
-		/* 修复默认公司ID */
-		$userState = $this->getRecord();
-		if(!$userState->defaultCompanyID) {
-			foreach($userState->companyList as $company) {
-				$userState->setDefaultCompanyId($company->id);
-				break;
-			}
-		}
 	}
 
 	/* remember cookie */

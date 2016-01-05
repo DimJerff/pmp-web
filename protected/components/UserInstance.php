@@ -174,4 +174,31 @@ class UserInstance extends CWebUser
 			return false;
 		}
 	}
+
+    /**
+     * 用户当前访问的公司Id
+     * @return mixed|void
+     */
+    public function defaultCompanyId(){
+        $userState = $this->getRecord();
+        if(!$userState->defaultCompanyID) {
+            foreach($userState->companyList as $company) {
+                $userState->setDefaultCompanyId($company->id);
+                break;
+            }
+        }
+
+        return $userState->defaultCompanyID;
+    }
+
+    /**
+     * 获取当前访问公司实例
+     * @return Company
+     */
+    public function defaultCompany(){
+        $defaultCompanyId = $this->defaultCompanyId();
+        $defaultCompany = Company::model()->findAllByPk($defaultCompanyId);
+
+        return $defaultCompany;
+    }
 }

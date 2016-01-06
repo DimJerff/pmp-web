@@ -129,7 +129,7 @@ class ExcelExtend extends CApplicationComponent{
                     $this->excelSetMoney($this->activeSheet, self::cell($ascii, $this->rowInd), $item[$k]);
                     break;
                 default:
-                    $this->excelSetCenter($this->activeSheet, self::cell($ascii, $this->rowInd))->SetCellValue($char.$this->rowInd, $item[$k]);
+                    $this->excelSetCenter($this->activeSheet, self::cell($ascii, $this->rowInd))->SetCellValue(self::cell($ascii, $this->rowInd), $item[$k]);
                     break;
             }
             $ascii++;

@@ -5,6 +5,7 @@ assets/*
 !assets/pc
 !assets/common
 !assets/bj
+!assets/limei-ad.js
 
 protected/runtime/*
 protected/modules/*/views/*/*/tpl_c/*.php

@@ -1,5 +1,5 @@
 <?php
-class Encrypt extends CComponent
+class Encrypt
 {
 	public static function encode($str, $key = '', $expiry = 0)
 	{

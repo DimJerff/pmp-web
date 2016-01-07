@@ -373,7 +373,15 @@ class MediaAdslotDeal extends DbActiveRecord
         return array($list, $paging->data());
     }
 
-    //
+    /**
+     * 查询一段时间范围内在交易的应用列表信息[不包含制定交易id]
+     * @param $companyId 公司id
+     * @param $mediaIdArr 应用id集合
+     * @param $dealId 交易id
+     * @param $startDate 开始时间戳
+     * @param int $endDate 结果时间戳
+     * @return array|mixed
+     */
     public function getCheckedMediaList($companyId, $mediaIdArr, $dealId, $startDate, $endDate=0) {
         if (empty($mediaIdArr)) {
             return array();
@@ -396,7 +404,15 @@ class MediaAdslotDeal extends DbActiveRecord
         return $this->_select()->_field($field)->_from()->_join($join)->_where($where)->_query();
     }
 
-    //
+    /**
+     * 查询一段时间范围内在交易的广告位列表信息[不包含制定交易id]
+     * @param $companyId 公司id
+     * @param $adslotIdArr 应用id集合
+     * @param $dealId 交易id
+     * @param $startDate 开始时间戳
+     * @param int $endDate 结果时间戳
+     * @return array|mixed
+     */
     public function getCheckedAdslotList($companyId, $adslotIdArr, $dealId, $startDate, $endDate=0) {
         if (empty($adslotIdArr)) {
             return array();
@@ -411,7 +427,10 @@ class MediaAdslotDeal extends DbActiveRecord
         } else {
             $join[] = "c_deal d ON d.id = t.dealId AND (endDate >= {$startDate} OR (startDate <= {$startDate} AND endDate = 0))";
         }
-        $where = "t.adslotId IN (". implode(",", $adslotIdArr) .") AND d.companyId = {$companyId} and t.dealId != {$dealId}";
+        $where[] = "t.adslotId IN (". implode(",", $adslotIdArr) .") AND d.companyId = {$companyId}";
+        if (!empty($dealId)) {
+            $where[] = "t.dealId != {$dealId}";
+        }
 
         return $this->_select()->_field($field)->_from()->_join($join)->_where($where)->_query();
     }

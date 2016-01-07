@@ -108,11 +108,11 @@ class Attachment extends CActiveRecord
 		
 		return true;
 	}
-	
-	public function getLocalSource($absolute=true) {
-		if($absolute)
-			return Yii::app()->params['uploadPath'].'/upload/'.$this->sourcePath;
-		else
-			return 'upload/'.$this->sourcePath;
-	}
+
+    public function getLocalSource($absolute=true) {
+        if($absolute)
+            return Yii::app()->params['uploadPath'].'/'.Yii::app()->params['uploadDir'].'/'.$this->sourcePath;
+        else
+            return Yii::app()->params['uploadDir'].'/'.$this->sourcePath;
+    }
 }

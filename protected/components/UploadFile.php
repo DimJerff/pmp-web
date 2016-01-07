@@ -20,8 +20,6 @@ class UploadFile extends CFormModel {
 	private $_extensionName;
 	private $_instance_error = null;
 	private $_limitConfig = null;
-	private $_adgroupId = null;
-	private $_campaignId = null;
 
 	public function __construct($limitType='') {
 		parent::__construct('');
@@ -51,23 +49,6 @@ class UploadFile extends CFormModel {
 	}
 
 	/**
-	 * 判断操作权限,并保存attachment
-	 * @param $adgroupId
-	 * @throws CHttpException
-	 */
-	public function setAdgroupId($adgroupId){
-		if(empty($adgroupId)) return ;
-		$user = Yii::app()->user;
-		$adgroupModel = CampaignAdGroup::model()->findByPk($adgroupId);
-		if(!$user->companyRight($adgroupModel->company)){
-			throw new CHttpException(403, 'Record No Found');
-		}
-
-		$this->_adgroupId = $adgroupModel->id;
-		$this->_campaignId = $adgroupModel->campaignId;
-	}
-
-	/**
 	 * 保存,同Model层
 	 * @param array $attr
 	 * @return array|bool
@@ -86,12 +67,8 @@ class UploadFile extends CFormModel {
 			$this->thumbImage($this->path, $this->_limitConfig['thumbWidth'], $this->_limitConfig['thumbHeight'], $this->_limitConfig['water']);
 		}
 
-		if($this->_adgroupId){
-			$attr['adGroupId'] = $this->_adgroupId;
-			$attr['campaignId'] = $this->_campaignId;
-			$attr['companyId'] = Yii::app()->user->defaultCompanyId();
-			$this->addAttachment($attr);
-		}
+		$attr['companyId'] = Yii::app()->user->defaultCompanyId();
+        $this->addAttachment($attr);
 
 		return $this->result($this->_limitConfig['resultExt'] ? $this->_limitConfig['resultExt'] : array());
 	}

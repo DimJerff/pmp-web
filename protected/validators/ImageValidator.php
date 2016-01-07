@@ -25,7 +25,7 @@ class ImageValidator extends CFileValidator{
 					'{file}' => $file->getName(),
 					'{widthHeights}' => implode(', ', $this->widthHeights),
 				));
-				$object->setError(302, '尺寸错误：'.implode(', ', $this->widthHeights));
+				$object->setError(302, '尺寸错误：允许的尺寸是'.implode(', ', $this->widthHeights));
 			}
 		}
 		/* 验证长宽比 */
@@ -37,8 +37,7 @@ class ImageValidator extends CFileValidator{
 					'{file}' => $file->getName(),
 					'{scale}' => implode(', ', $this->scales),
 				));
-				$object->setError(303, '比例错误：'.implode(', ', $this->scales));
-				$error = true;
+				$object->setError(303, '比例错误：允许的比例是'.implode(', ', $this->scales));
 			}
 		}
 		/* 验证最小长宽 */
@@ -50,8 +49,7 @@ class ImageValidator extends CFileValidator{
 					'{file}' => $file->getName(),
 					'{minWidthHeight}' => implode(', ', $this->minWidthHeight),
 				));
-				$object->setError(302, '尺寸错误：'.implode(', ', $this->minWidthHeight));
-				$error = true;
+				$object->setError(302, '尺寸错误：允许的最小长宽是'.implode(', ', $this->minWidthHeight));
 			}
 		}
 	}

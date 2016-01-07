@@ -877,7 +877,7 @@ class DealController extends Controller {
             }
             if (empty($errors)) {
                 // 记录操作日记
-                OperationLog::model()->add("deal", $operationType, $model->id, $model->dealName, $model->attributes);
+                OperationLog::model()->addModel($model);
             }
 
             $errors ? $this->rspJSON($errors,'error') : $this->rspJSON($data);die;

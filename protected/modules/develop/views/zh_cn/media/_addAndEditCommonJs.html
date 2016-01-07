@@ -12,14 +12,14 @@ $(function () {
         add:function(e,data) {
             data.submit().success(function (result, textStatus, jqXHR) {
                 if($.isArray(result) && result[0] == 'normal'){
-                    result = result[1];
-                    $("#iconShow").attr("src", $.showAttachUrl(result.thumbUrl)).show();
-                    $("input[name='media[appIcon]']").val(result.url);
+                    $("#iconShow").attr("src", $.showAttachUrl(result[1].thumbUrl)).show();
+                    $("input[name='media[appIcon]']").val(result[1].url);
                 } else if ($.isArray(result) && result[0] == 'error') {
                     if(result[1].message[0] < 100){
-                        $.tipsError(result[1].message[1]);
+                        $.tipsError(result[1].message[1]+result[1].message[0]);
                     }else{
-                        $.tipsError(result[1].message[1]+'：'+result[1].message[2]);
+                        var message2 = result[1].message[2] ? '：'+result[1].message[2] : '';
+                        $.tipsError(result[1].message[1]+message2);
                     }
                 } else{
                     $.tipsError('上传失败，请稍后再试！');

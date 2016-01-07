@@ -259,7 +259,7 @@ class MediaController extends Controller {
                     Yii::app()->request->cookies['newMediaId']=$cookie;
                 }
                 // 记录操作日记
-                OperationLog::model()->add("media", $operationType, $mediaModel->id, $mediaModel->appName, $mediaModel->attributes);
+                OperationLog::model()->addModel($mediaModel);
             } else {
                 $errors = $mediaModel->getErrors();
 

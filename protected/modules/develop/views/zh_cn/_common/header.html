@@ -19,13 +19,13 @@
         <div class="user-name clearfix left">
             <a class="dropdown-toggle text-hidden" data-toggle="dropdown" href="<{url route='user/edit'}>"><{$user.firstname}> <{$user.lastname}></a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                <li><a href="<{url route='user/edit'}>"><i class="icon-cog"></i>账户信息</a></li>
-                <li><a href="<{url route='user/edit_passwd'}>"><i class="icon-lock"></i>修改密码</a></li>
+                <li><a href="<{url route='/develop/user/edit'}>"><i class="icon-cog"></i>账户信息</a></li>
+                <li><a href="<{url route='/develop/user/edit_passwd'}>"><i class="icon-lock"></i>修改密码</a></li>
                 <{if $checkAccess['#develop/user/switch']}>
                 <li><a href="javascript:;" id="switchCompany"><i class="icon-resize-horizontal"></i>切换开发者</a></li>
                 <{/if}>
                 <li class="divider"></li>
-                <li><a id="logout_btn" href="<{url route='/develop/user/logout'}>" onclick="$.confirm('确定退出系统？', function(){location.href=$('#logout_btn').attr('href')}, null, 300);return false;"><i class="icon-off"></i>退出系统</a></li>
+                <li><a id="logout_btn" href="<{url route='/site/logout'}>" onclick="$.confirm('确定退出系统？', function(){location.href=$('#logout_btn').attr('href')}, null, 300);return false;"><i class="icon-off"></i>退出系统</a></li>
             </ul>
         </div>
     </div>

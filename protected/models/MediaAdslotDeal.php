@@ -427,7 +427,7 @@ class MediaAdslotDeal extends DbActiveRecord
         } else {
             $join[] = "c_deal d ON d.id = t.dealId AND (endDate >= {$startDate} OR (startDate <= {$startDate} AND endDate = 0))";
         }
-        $where = "t.adslotId IN (". implode(",", $adslotIdArr) .") AND d.companyId = {$companyId}";
+        $where[] = "t.adslotId IN (". implode(",", $adslotIdArr) .") AND d.companyId = {$companyId}";
         if (!empty($dealId)) {
             $where[] = "t.dealId != {$dealId}";
         }

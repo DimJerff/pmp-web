@@ -117,9 +117,9 @@ class OperationLog extends CActiveRecord
 
     /**
      * 根据模型添加记录
-     * @param $model_name 模型的表名
-     * @param $id 模型的id
-     * @param $info 模型属性数据
+     * @param string $model_name 模型的表名
+     * @param int $id 模型的id
+     * @param array $info 模型属性数据
      * @param array $params 附加参数数据
      * @return bool
      */

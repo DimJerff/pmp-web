@@ -68,7 +68,7 @@ class SiteController extends Controller
                 /* login */
                 $yii->user->login($identity, $formModel->rememberMe);
                 /* 操作日志 */
-                OperationLog::model()->add('user', 7, $yii->user->id, '用户登录', array('loginTime'=>$_SERVER['REQUEST_TIME'],'loginIP'=>$_SERVER['REMOTE_ADDR']));
+                OperationLog::model()->add('user', $yii->user->id, '用户登录', array('loginTime'=>$_SERVER['REQUEST_TIME'],'loginIP'=>$_SERVER['REMOTE_ADDR']));
                 /* jump to previours url */
                 $this->redirect($yii->user->getReturnUrl());
             }else{

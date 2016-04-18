@@ -16,7 +16,7 @@ class UserController extends Controller
 	}
 
     /* 编辑用户信息 */
-    public function actionEdit() {
+    public function actionEdit_passwd() {
         $this->checkAccess();
         $user = Yii::app()->user;
         $userState = $user->getRecord();

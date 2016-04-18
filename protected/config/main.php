@@ -13,10 +13,12 @@ return CMap::mergeArray(
             'application.extensions.*',
             'application.vendors.phpexcel.PHPExcel',
         ),
+        /* 获取组件配置信息 */
         'components' => array(
             'session' => array(
                 'timeout' => 3600,
             ),
+            /* url 验证规则 */
             'urlManager' => array(
                 'class'  => 'CUrlManager',
                 'urlFormat' => 'path',
@@ -38,12 +40,15 @@ return CMap::mergeArray(
             'errorHandler' => array(
                 'errorAction' => 'site/error',
             ),
+            /* 日志 */
             'log' => array(
                 'class' => 'CLogRouter',
             ),
             /* Smarty的配置项 */
             'smarty' => array(
+                //指向 protected/extensions/SmartyViewRender.php 类文件
                 'class'=>'application.extensions.SmartyViewRender',
+                //配置信息
                 'config' => array (
                     'left_delimiter' => "<{",
                     'right_delimiter' => "}>",
@@ -114,6 +119,9 @@ return CMap::mergeArray(
                         ),
                     ),
                 ),
+                //广告形式
+                //'adtype'=>array(1=>"Banner", 2=>"插屏广告", /* 3=>"扩展式广告",*/ 4=>"全屏广告", 5=>"文字链广告", 6=>"视频广告", 7=>"原生广告", /*8=>"积分墙",*/ 9=>"开屏广告")
+                'adtype'=>array(1=>'banner',2=>'插屏广告'),
             ),
             // 文件上传配置
             require $__curDir.'upload.php'

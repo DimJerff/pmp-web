@@ -43,13 +43,13 @@ class AdslotController extends Controller {
         $this->checkAccess();
         // 从配置文件中获取设定的设备分辨率
         $deviceDpi = Yii::app()->params['deviceDpi'];
-
+        $adtype = Yii::app()->params['adtype'];
         // 获取当前操作的应用信息
         $media = Media::model()->findByPk($mediaId);
-
         // 模板分配显示
         $this->smartyRender(array(
             'deviceDpi' => $deviceDpi,
+            'adtype'    => $adtype,
             'media'     => $media,
         ));
     }

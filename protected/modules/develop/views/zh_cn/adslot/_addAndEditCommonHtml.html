@@ -15,6 +15,17 @@
     </div>
 </div>
 <div class="control-group">
+    <label class="control-label"><span class="required">*</span>广告形式</label>
+    <div class="controls">
+        <select class="select-adtype" name="adslot[adtype]" id="select-adtype">
+            <{foreach from=adtype key=k item=v}>
+            <option value="<{$k}>"><{$v}></option>
+            <{/foreach}>
+        </select>
+    </div>
+</div>
+
+<div class="control-group">
     <label class="control-label"><span class="required">*</span>尺寸</label>
     <div class="controls">
         <{foreach from=$deviceDpi key=k item=v}>
@@ -56,5 +67,11 @@
                     <input name="adslot[frequencyCapAmount]" type="text" value="<{if $adslot}><{if $adslot.frequencyCapAmount gt 0}><{$adslot.frequencyCapAmount}><{/if}><{/if}>" style="width: 40px;" disabled="disabled" /> 次
                 </span>
         </label>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>标示位</label>
+    <div class="controls">
+        <input type="text" placeholder="标示位…" name="adslot[relationId]" value="<{if $adslot}><{$adslot.relationId}><{/if}>">
     </div>
 </div>

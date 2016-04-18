@@ -22,7 +22,6 @@ class SiteController extends Controller
 		$yii = Yii::app();
 		$user = $yii->user;
 		$userState = $user->getRecord();
-
 		// 获取当前用户的默认公司id
 		$this->defaultCompanyID = $defaultCompanyId = $userState->defaultCompanyID;
 
@@ -34,7 +33,7 @@ class SiteController extends Controller
 
         // 获取当前公司的信息
         $company = Company::model()->findByPk($defaultCompanyId);
-
+        //print_r($company);exit;
         // 模板分配显示
         $this->smartyRender(array(
             'time'    => $time,

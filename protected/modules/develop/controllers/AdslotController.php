@@ -212,7 +212,7 @@ class AdslotController extends Controller {
                 $operationType = 3;
             }
 
-            $adslotModel->attributes = $this->_dealDataBeforeValidate($_POST['adslot']);
+            $adslotModel->attributes = $this->_dealDataBeforeValidate($_POST['adslot']);print_r($_POST['adslot']);print_r($adslotModel->attributes);exit;
             if ($adslotModel->validate()) {
                 $adslotModel->save();
                 $data = array();

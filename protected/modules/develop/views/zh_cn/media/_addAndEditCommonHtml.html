@@ -26,6 +26,29 @@
     </div>
 </div>
 <{/if}>
+
+<div class="control-group <{if $media.id}>v-hide<{/if}>">
+    <label class="control-label">接入方式</label>
+    <div class="controls" value="1">
+        <label class="radio inline">
+            <input type="radio" name="media[sdkType]" value="1" checked="checked"> SDK/JS
+        </label>
+        <label class="radio inline">
+            <input type="radio" name="media[sdkType]" value="2"> S2S
+        </label>
+    </div>
+</div>
+<{if $media.id}>
+<div class="control-group">
+    <label class="control-label">接入方式</label>
+    <div class="controls" value="1">
+        <label class="radio inline" style="padding-left: 0px;">
+            <{if $media.sdkType eq 1}>SDK/JS<{else if $media.sdkType   eq 2}>S2S<{/if}>
+        </label>
+    </div>
+</div>
+<{/if}>
+
 <div class="control-group" data-image-choosed="1">
     <label class="control-label"><span class="required">*</span>图标</label>
     <div class="controls ">
@@ -60,5 +83,69 @@
     <label class="control-label"><span class="required">*</span>媒体类型</label>
     <input type="hidden" name="media[appCategory]" value="" />
     <div class="controls" id="media_appCategory">
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>结算方式</label>
+    <div class="controls">
+        <{if !$media}>
+        <label class="radio inline">
+            <input type="radio" name="media[_mediaPrice_mediaSharingRate]" value="201" checked="checked" />
+            <span>按照实时协议价</span>
+        </label>
+        <br />
+        <label class="radio inline">
+            <input type="radio" name="media[_mediaPrice_mediaSharingRate]" value="0">
+            <span>协议支付价格</span>
+            <input type="text" name="media[mediaPrice]" value="<{if $media}><{if $media.payType < 100}><{$media.mediaPrice}><{/if}><{/if}>"  placeholder="金额..." style="width: 60px;" />
+            <span>元</span>
+            <span class="radio-frequency">
+                <select name="media[payType]" style="width: 100px;">
+                    <option value="3" <{if $media}><{if $media.payType eq 3}>selected="selected"<{/if}><{/if}> >每天</option>
+                    <option value="2" <{if $media}><{if $media.payType eq 2}>selected="selected"<{/if}><{/if}> >每次点击</option>
+                    <option value="1" <{if $media}><{if $media.payType eq 1}>selected="selected"<{/if}><{/if}> >每千次展示</option>
+                </select>
+            </span>
+        </label>
+        <br />
+        <label class="radio inline">
+            <input type="radio" name="media[_mediaPrice_mediaSharingRate]" value="101" />
+            <span>媒体收入占售出额比例</span>
+            <input type="text" name="media[mediaSharingRate]" value="<{if $media}><{if $media.payType > 100}><{$media.mediaSharingRate}><{/if}><{/if}>" style="width: 60px;"  />
+            <span>%</span>
+        </label>
+        <{else}>
+        <{if $media.payType lt 100}>
+        <label class="radio inline" style="padding-left: 0px;">
+            <input type="hidden" name="media[_mediaPrice_mediaSharingRate]" value="0">
+            <span>协议支付价格</span>
+            <input type="text" name="media[mediaPrice]" value="<{$media.mediaPrice}>"  placeholder="金额..." style="width: 60px;" />
+            <span>元</span>
+            <input type="hidden" name="media[payType]" value="<{$media.payType}>" />
+            <span>
+            <{if $media.payType eq 3}>
+                每天
+            <{/if}>
+            <{if $media.payType eq 2}>
+                每次点击
+            <{/if}>
+            <{if $media.payType eq 1}>
+                每千次展示
+            <{/if}>
+            </span>
+        </label>
+        <{else if $media.payType gt 200}>
+        <label class="radio inline" style="padding-left: 0px;">
+            <input type="hidden" name="adslot[_mediaPrice_mediaSharingRate]" value="201" />
+            <span>按照实时协议价</span>
+        <{else}>
+        <label class="radio inline" style="padding-left: 0px;">
+            <input type="hidden" name="media[_mediaPrice_mediaSharingRate]" value="101" />
+            <span>媒体收入占售出额比例</span>
+            <input type="text" name="media[mediaSharingRate]" value="<{$media.mediaSharingRate}>" style="width: 60px;"  />
+            <span>%</span>
+        </label>
+        <{/if}>
+        <{/if}>
     </div>
 </div>

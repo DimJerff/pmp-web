@@ -42,7 +42,7 @@ class Deal extends DbActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('dealName, dealType, payType, developId, startDate, bidfloor', 'required'),
+			array('dealName, dealType, payType, developId, startDate, bidfloor , bidStrategy', 'required'),
 			array('dealType, payType, mediaPrice, bidfloor, status, mflag, modificationTime, creationTime', 'numerical', 'integerOnly'=>true),
 			array('mediaSharingRate', 'numerical'),
 			array('dealName', 'length', 'max'=>60, 'min'=>2),

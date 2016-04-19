@@ -41,13 +41,13 @@ class MediaAdslot extends DbActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-            array('mediaId, adslotName, adslotIdStr, refreshTime, deviceType, width, height, frequencyCapUnit, frequencyCapAmount', 'required'),
+            array('mediaId, adslotName, adslotIdStr, refreshTime, deviceType, width, height, frequencyCapUnit, frequencyCapAmount , relationId', 'required'),
 			array('deviceType, frequencyCapUnit, frequencyCapAmount', 'numerical', 'integerOnly'=>true),
 			array('mediaId, refreshTime, width, height', 'length', 'max'=>11),
 			array('adslotName', 'length', 'max'=>64),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, mediaId, adslotName, adslotIdStr, refreshTime, deviceType, width, height, frequencyCapUnit, frequencyCapAmount, adtype, apiFramework, privateAuction, status, mflag, modificationTime, creationTime', 'safe', 'on'=>'search'),
+			array('id, mediaId, adslotName, adslotIdStr, refreshTime, deviceType, width, height, frequencyCapUnit, frequencyCapAmount, adtype, apiFramework, privateAuction, status, mflag, modificationTime, creationTime , relationId', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -85,6 +85,7 @@ class MediaAdslot extends DbActiveRecord
 			'mflag' => '修改状态',
 			'modificationTime' => '修改时间',
 			'creationTime' => '创建时间',
+            'relationId'   => '广告位',
 		);
 	}
 
@@ -123,6 +124,7 @@ class MediaAdslot extends DbActiveRecord
 		$criteria->compare('mflag',$this->mflag);
 		$criteria->compare('modificationTime',$this->modificationTime);
 		$criteria->compare('creationTime',$this->creationTime);
+		$criteria->compare('relationId',$this->relationId);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

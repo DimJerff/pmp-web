@@ -31,6 +31,11 @@
     <div class="controls">
         <{if !$deal}>
         <label class="radio inline">
+            <input type="radio" name="deal[_mediaPrice_mediaSharingRate]" value="201">
+            <span>按照实时协议价</span>
+        </label>
+        <br />
+        <label class="radio inline">
             <input type="radio" name="deal[_mediaPrice_mediaSharingRate]" value="0">
             <span>协议支付价格</span>
             <input type="text" name="deal[mediaPrice]" value="<{if $deal}><{if $deal.payType < 100}><{$deal.mediaPrice}><{/if}><{/if}>"  placeholder="金额..." style="width: 60px;" />
@@ -70,6 +75,10 @@
             <{/if}>
             </span>
         </label>
+        <{else if $deal.payType gt 200}>
+        <label class="radio inline" style="padding-left: 0px;">
+            <input type="hidden" name="adslot[_mediaPrice_mediaSharingRate]" value="201" />
+            <span>按照实时协议价</span>
         <{else}>
         <label class="radio inline" style="padding-left: 0px;">
             <input type="hidden" name="deal[_mediaPrice_mediaSharingRate]" value="101" />
@@ -112,6 +121,7 @@
         <input type="hidden" name="deal[medias]" value="<{if $deal}><{$deal.medias}><{/if}>">
         <input type="hidden" name="deal[adslots]" value="<{if $deal}><{$deal.adslots}><{/if}>">
         <div class="settings">
+            <span data-choosed="" data-choose="" data-name="media_adslot" data-title="" id="" class="btn btn-link" style="padding-left: 0px;">不限</span>
             <a data-choosed="" data-choose="" data-name="media_adslot" data-title="" id="deal_medias_adslots" class="btn btn-link" style="padding-left: 0px;">设置</a>
             <div>
                 <span>您已经选择了<span class="choosed-num"><{if $deal}><{$dealAttach.mediaAdslotCount}><{else}>0<{/if}></span>个</span>
@@ -154,8 +164,16 @@
 </div>
 
 <div class="control-group">
-    <label class="control-label"><span class="required">*</span>售出底价</label>
     <div class="controls">
+    <label class="radio inline">
+        <input type="radio" name="deal[bidStrategy]" value="2" <{if $deal.bidStrategy=='2'}>checked="checked"<{/if}>/>
+        <span>按规则</span>
+    </label>
+    <br />
+    <label class="radio inline">
+        <input type="radio" name="deal[bidStrategy]" value="1" <{if $deal}><{if $deal.bidStrategy=='1'}>checked="checked"<{/if}><{else}>checked="checked"<{/if}>/>
+        <span>固定价</span>
+    </label>
         <input type="text" name="deal[bidfloor]" value="<{if $deal}><{$deal.bidfloor}><{/if}>" placeholder="金额..." />
         <span>元 每千次展示</span>
     </div>

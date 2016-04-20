@@ -239,6 +239,7 @@ class MediaController extends Controller {
      * 处理应用提交的表单数据
      */
     public function actionPostMedia() {
+        $postData=$_POST['media'];
         if ($_POST['media']) {
             $errors = null;
             if (isset($_POST['media']['id']) && !empty($_POST['media']['id'])) {
@@ -248,8 +249,8 @@ class MediaController extends Controller {
                 $mediaModel = new Media();
                 $operationType = 3;
             }
-            $mediaModel->attributes = $_POST['media'];
             $mediaModel->companyId = Yii::app()->user->getRecord()->defaultCompanyID;
+            $mediaModel->attributes=$this->_mediaDataBeforeValidate($postData);
             if ($mediaModel->validate()) {
                 $mediaModel->save();
                 if ($_POST['media']['addadslot']) {
@@ -356,4 +357,17 @@ class MediaController extends Controller {
     }
 
     /******************************************************************************************************************/
+
+    /*
+     * 验证提交数据前的处理
+     */
+    public function _mediaDataBeforeValidate ($data){
+        if($data['_mediaPrice_mediaSharingRate']){
+            $data['payType']=$data['_mediaPrice_mediaSharingRate'];
+            $data['mediaPrice']=0;
+        }else{
+            $data['mediaSharingRate']= 0;
+        }
+        return $data;
+    }
 }

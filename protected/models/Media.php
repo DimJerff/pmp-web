@@ -8,6 +8,7 @@
  * @property integer $id
  * @property integer $companyId
  * @property integer $os
+ * @property integer $sdkType
  * @property string $appName
  * @property integer $appCategory
  * @property string $appBundle
@@ -15,6 +16,9 @@
  * @property integer $mflag
  * @property integer $creationTime
  * @property integer $modificationTime
+ * @property integer $payType
+ * @property integer $mediaPrice
+ * @property integer $mediaSharingRate
  */
 class Media extends DbActiveRecord
 {
@@ -48,8 +52,8 @@ class Media extends DbActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('companyId, os, appName, appCategory, appBundle, appIcon', 'required'),
-			array('companyId, os, appCategory', 'numerical', 'integerOnly'=>true),
+			array('companyId , os, sdkType , appName, appCategory , appBundle , appIcon , payType , mediaPrice , mediaSharingRate', 'required'),
+			array('companyId , os, appCategory , payType , mediaPrice , mediaSharingRate', 'numerical', 'integerOnly'=>true),
 			array('appName, ', 'length', 'max'=>32),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -79,6 +83,7 @@ class Media extends DbActiveRecord
 			'id' => 'ID',
 			'companyId' => 'companyId',
 			'os' => 'OS',
+			'sdkType' => '接入方式',
             'appIcon' => '图标',
 			'appName' => '应用名称必填',
 			'appCategory' => 'App Category',
@@ -87,6 +92,9 @@ class Media extends DbActiveRecord
 			'mflag' => 'Mflag',
 			'creationTime' => 'Creation Time',
 			'modificationTime' => 'Update Time',
+			'payType' => '结算方式',
+			'mediaPrice' => '协议支付价格',
+			'mediaSharingRate' => '媒体分成',
 		);
 	}
 
@@ -112,6 +120,7 @@ class Media extends DbActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('companyId',$this->companyId);
 		$criteria->compare('os',$this->os,true);
+		$criteria->compare('sdkType',$this->sdkType);
 		$criteria->compare('appName',$this->appName);
 		$criteria->compare('appCategory',$this->appCategory);
 		$criteria->compare('appBundle',$this->appBundle,true);
@@ -119,6 +128,7 @@ class Media extends DbActiveRecord
 		$criteria->compare('mflag',$this->mflag);
 		$criteria->compare('creationTime',$this->creationTime);
 		$criteria->compare('modificationTime',$this->modificationTime);
+		$criteria->compare('payType',$this->payType);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

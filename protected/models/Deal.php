@@ -19,6 +19,7 @@
  * @property integer $endDate
  * @property integer $bidfloor
  * @property string $wseat
+ * @property string $bidStrategy
  * @property integer $status
  * @property integer $mflag
  * @property integer $modificationTime
@@ -42,21 +43,21 @@ class Deal extends DbActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('dealName, dealType, payType, developId, startDate, bidfloor , bidStrategy', 'required'),
-			array('dealType, payType, mediaPrice, bidfloor, status, mflag, modificationTime, creationTime', 'numerical', 'integerOnly'=>true),
+			array('dealName , dealType , payType , mediaPrice , mediaSharingRate , developId , startDate , bidfloor , bidStrategy', 'required'),
+			array('dealType , payType , mediaPrice , bidfloor , status , mflag , modificationTime , creationTime', 'numerical', 'integerOnly'=>true),
 			array('mediaSharingRate', 'numerical'),
 			array('dealName', 'length', 'max'=>60, 'min'=>2),
 			array('developId', 'length', 'max'=>10),
-			array('medias, adslots', 'length', 'min'=>2),
-			array('companies, campaigns, wseat', 'length', 'min'=>2),
-			array('startDate, endDate', 'length', 'max'=>20),
+			array('medias , adslots', 'length', 'min'=>2),
+			array('companies , campaigns , wseat', 'length', 'min'=>2),
+			array('startDate , endDate', 'length', 'max'=>20),
             array('payType', 'checkPayType'),
             array('startDate', 'checkDate'),
             array('developId', 'checkMediasAdslots'),
             array('dealType', 'checkCompaniesCampaigns'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, dealName, dealType, payType, mediaPrice, mediaSharingRate, developId, medias, adslots, companies, campaigns, startDate, endDate, bidfloor, wseat, status, mflag, modificationTime, creationTime', 'safe', 'on'=>'search'),
+			array('id , dealName , dealType , payType , mediaPrice , mediaSharingRate , developId, medias, adslots, companies, campaigns, startDate, endDate, bidfloor, wseat, status, mflag, modificationTime, creationTime', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -182,9 +183,9 @@ class Deal extends DbActiveRecord
 			'id' => 'ID',
 			'dealName' => '交易名称',
 			'dealType' => '交易类型deal type ,  公开竞价open = 0  私有竞价private = 1 ',
-			'payType' => 'pay type , CPM = 1, CPC = 2, CPD = 3, SHARING = 101',
-			'mediaPrice' => 'price when paytype is CPM/CPC/CPD, nonsense when paytype is SHARING',
-			'mediaSharingRate' => 'sharing rate with media side, make sense when paytype is SHARING',
+            'payType' => '结算方式',
+            'mediaPrice' => '协议支付价格',
+            'mediaSharingRate' => '媒体分成',
 			'developId' => '开发者ID',
 			'medias' => '应用id集合',
 			'adslots' => '广告位id集合',
@@ -194,6 +195,7 @@ class Deal extends DbActiveRecord
 			'endDate' => '结束时间',
 			'bidfloor' => '售出低价',
 			'wseat' => 'refer to openrtb',
+			'bidStrategy' => '售出底价开关: 固定价=1，规则=2',
 			'status' => 'Status',
 			'mflag' => '修改状态',
 			'modificationTime' => '修改时间',
@@ -234,6 +236,7 @@ class Deal extends DbActiveRecord
 		$criteria->compare('endDate',$this->endDate,true);
 		$criteria->compare('bidfloor',$this->bidfloor);
 		$criteria->compare('wseat',$this->wseat,true);
+		$criteria->compare('bidStrategy',$this->bidStrategy);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('mflag',$this->mflag);
 		$criteria->compare('modificationTime',$this->modificationTime);

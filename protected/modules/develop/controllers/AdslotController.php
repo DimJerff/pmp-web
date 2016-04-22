@@ -59,6 +59,7 @@ class AdslotController extends Controller {
         $this->checkAccess();
         // 从配置文件中获取设定的设备分辨率
         $deviceDpi = Yii::app()->params['deviceDpi'];
+        $adtype = Yii::app()->params['adtype'];
 
         // 获取当前广告位信息
         $adslot = MediaAdslot::model()->getAdslotById($id);
@@ -73,6 +74,7 @@ class AdslotController extends Controller {
 
         $this->smartyRender(array(
             'deviceDpi' => $deviceDpi,
+            'adtype'    => $adtype,
             'adslot'     => $adslot,
         ));
     }
@@ -307,6 +309,7 @@ class AdslotController extends Controller {
      * @return mixed
      */
     private function _dealDataBeforeValidate($data) {
+
         // 处理宽高信息
         $widthHeight = $data['_widthHeight' . $data['deviceType']];
         if ($widthHeight) {
@@ -314,7 +317,12 @@ class AdslotController extends Controller {
             $data['width'] = $widthHeightArr[0];
             $data['height'] = $widthHeightArr[1];
         }
-
+        if($data['_mediaPrice_mediaSharingRate']){
+            $data['payType']=$data['_mediaPrice_mediaSharingRate'];
+            $data['mediaPrice']=0;
+        }else{
+            $data['mediaSharingRate']= 0;
+        }
         // 处理频次
         if ($data['_frequencyCapUnitCapAmount'] == -1) {
             $data['frequencyCapUnit'] = -1;

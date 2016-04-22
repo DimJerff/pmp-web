@@ -33,6 +33,11 @@ class SiteController extends Controller
 
         // 获取当前公司的信息
         $company = Company::model()->findByPk($defaultCompanyId);
+        // 获取当前公司的接入方式
+        $sdkType=$company['sdkType'];
+        if($sdkType){
+            $company['sdkType']=explode(',',$sdkType);
+        }
         //print_r($company);exit;
         // 模板分配显示
         $this->smartyRender(array(
@@ -41,7 +46,28 @@ class SiteController extends Controller
             'company' => $company,
         ));
 	}
+    /*
+     *编辑公司接入,结算方式
+     */
+    public function actionPostCompany(){
+        if($_POST['company']){
+            echo 'Company';exit;
 
+            $errors = null;
+            $companyModel = Company::model()->findByPk($_POST['company']['id']);
+            $operationType = 4;
+            $companyModel->attributes=$_POST['company'];
+            if ($companyModel->validate()) {
+                $companyModel->save();
+                // 记录操作日记
+                OperationLog::model()->addModel($mediaModel);
+            } else {
+                $errors = $companyModel->getErrors();
+
+            }
+            $errors ? $this->rspJSON($errors,'error') : $this->rspJSON(null);die;
+        }
+    }
     /**
      * 获取当前当天的公司交易消耗
      */

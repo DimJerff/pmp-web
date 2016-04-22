@@ -52,7 +52,7 @@ class Media extends DbActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('companyId , os, sdkType , appName, appCategory , appBundle , appIcon , payType , mediaPrice , mediaSharingRate', 'required'),
+			array('companyId , os, sdkType, appName, appCategory , appBundle , appIcon , payType , mediaPrice , mediaSharingRate', 'required'),
 			array('companyId , os, appCategory , payType , mediaPrice , mediaSharingRate', 'numerical', 'integerOnly'=>true),
 			array('appName, ', 'length', 'max'=>32),
 			// The following rule is used by search().
@@ -129,6 +129,8 @@ class Media extends DbActiveRecord
 		$criteria->compare('creationTime',$this->creationTime);
 		$criteria->compare('modificationTime',$this->modificationTime);
 		$criteria->compare('payType',$this->payType);
+        $criteria->compare('mediaPrice',$this->mediaPrice);
+        $criteria->compare('mediaSharingRate',$this->mediaSharingRate);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

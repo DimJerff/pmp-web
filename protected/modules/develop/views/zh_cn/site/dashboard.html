@@ -10,7 +10,9 @@
             <!-- 内容头部信息 start -->
             <div class="clearfix company-info-container content-body-head">
                 <div class="company-info left">
-                    <h4><{$company.companyName}></h4>
+                    <h4><{$company.companyName}><a style="visibility: visible;" href="javascript: ;">
+                        <i class="icon-edit-custom edit-company"></i></a></h4>
+
                     <div class="company-info-detail">
                         <a href="javascript: void (0);" style="cursor: default">应用 <span> <script src="<{url route='media/mediaCount'}>"></script></span></a>
                         <a href="javascript: void (0);" style="cursor: default">广告位 <span> <script src="<{url route='adslot/adslotCount'}>"></script></span></a>
@@ -234,6 +236,50 @@ $(function() {
         return false;
     });
 
+   var check=$('input[name="company[sdkType]"]');
+    var radio=$('input[name="company[_mediaPrice_mediaSharingRate]"]:eq(0)');
+    $('.edit-company').on('click',function(){
+/*        if($(radio).attr('checked')=='checked'){console.log(33)
+            $(check).eq(1).attr('checked',true);console.log($(check).eq(1).attr('checked'));
+        }else{console.log(44)
+            $(check).eq(1).attr('checked',false);console.log($(check).eq(1).attr('checked'));
+        }*/
+        editCompany();
+    })
+    /*
+     *编辑公司接入,结算方式
+     */
+    function editCompany(){
+        var $box=document.getElementById('modalbox');
+        var $display=$box.style.display;
+        if($display=='block'){
+            $box.style.display='none';
+        }else{
+            $box.style.display='block';
+        }
+    }
+
+    $(check).on('click',function(){
+        if($(this).val()=='2'){
+            setDisabled();
+        }
+    })
+   /*
+    * 结算方式的设定
+    */
+    function setDisabled(){
+        var checkS2S=$(check).eq(1);
+ console.log($(checkS2S).attr('checked'))
+        if($(checkS2S).attr('checked')!='checked'){console.log(4)
+            $(checkS2S).attr('checked',true)
+            $(radio).attr('disabled',false);
+        }else{console.log(5)
+            $(checkS2S).attr('checked',false)
+            $(radio).attr('checked',false);
+            $(radio).attr('disabled',true);
+        }
+    }
+
 }); // onLoad End
 
 /**
@@ -263,6 +309,66 @@ function clearDiyDpi() {
 function ajaxAdslotPage(param) {
     ajaxPage("adslotList", '/develop/adslot/adslotList', param);
 }
+
+
 </script>
+
+<div id="modalbox" class="modal hide fade filter-modal in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="width: auto; margin-left: -266.090909123421px; margin-top: 100px; display: block;">
+    <form action="" method="post" id="change_form" class="">
+        <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="$('#modalbox').modal('hide')">×</button>
+            <h3>编辑——悦读网</h3>
+        </div>
+        <div class="modal-body">
+            <div style="width: 500px;">
+        <div><label class="control-label">供应商名称:</label></div>
+        <div style="padding-left: 70px;">
+            <{$company.companyName}>
+            <input type="hidden" name="company[id]" value="<{$company.id}>"/>
+        </div>
+                <div><label class="control-label">接入方式:</label></div>
+                <div style="padding-left: 70px;">
+                    <label class="radio inline">
+                        <input type="checkbox" id="ch1" name="company[sdkType]" value="1" <{if in_array('1',$company.sdkType)}>checked="checked"<{/if}>> SDK/JS
+                    </label>
+                    <label class="radio inline">
+                        <input type="checkbox" id="ch2" name="company[sdkType]" value="2" <{if in_array('2',$company.sdkType)}>checked="checked"<{/if}>> S2S
+                    </label>
+                </div>
+                <div><label class="control-label">结算方式:</label></div>
+                <div style="padding-left: 70px;">
+                    <label class="radio inline">
+                        <input type="radio" name="company[_mediaPrice_mediaSharingRate]" value="201" checked="checked" />
+                        <span>按照实时协议价</span>
+                    </label>
+                    <br />
+                    <label class="radio inline">
+                        <input type="radio" name="company[_mediaPrice_mediaSharingRate]" value="0" >
+                        <span>协议支付价格</span>
+                        <input type="text" name="company[mediaPrice]" value="<{if $media}><{if $media.payType < 100}><{$media.mediaPrice}><{/if}><{/if}>"  placeholder="金额..." style="width: 60px;" />
+                        <span>元</span>
+                <span class="radio-frequency">
+                    <select name="company[payType]" style="width: 100px;">
+                        <option value="3" <{if $media}><{if $media.payType eq 3}>selected="selected"<{/if}><{/if}> >每天</option>
+                        <option value="2" <{if $media}><{if $media.payType eq 2}>selected="selected"<{/if}><{/if}> >每次点击</option>
+                        <option value="1" <{if $media}><{if $media.payType eq 1}>selected="selected"<{/if}><{/if}> >每千次展示</option>
+                    </select>
+                </span>
+                    </label>
+                    <br />
+                    <label class="radio inline">
+                        <input type="radio" name="company[_mediaPrice_mediaSharingRate]" value="101" disabled/>
+                        <span>媒体收入占售出额比例</span>
+                        <input type="text" name="company[mediaSharingRate]" value="<{if $media}><{if $media.payType > 100}><{$media.mediaSharingRate}><{/if}><{/if}>" style="width: 60px;"  disabled/>
+                        <span>%</span>
+                    </label>
+                    <br />
+                    <button class="edit-company btn-small btn-primary applyBtn btn btn-default">提交</button>&nbsp;
+                    <button class="edit-company btn-small btn-cancel cancelBtn btn btn-default">取消</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 </body>
 </html>

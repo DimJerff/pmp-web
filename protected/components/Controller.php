@@ -122,7 +122,6 @@ class Controller extends CController
 		if(isset($_GET['callback']) && preg_match('/[a-z\_][a-z\d\_](\.[a-z\_][a-z\d\_])*/i', $_GET['callback'])) {
 			$callback = $_GET['callback'];
 		}
-
 		if($callback) echo $callback.'(';
 		echo CJSON::encode($result);
 		if($callback) echo ');';
@@ -162,7 +161,7 @@ class Controller extends CController
 		foreach($yii->request->getCookies() as $key => $item) {
 			$cookies[$key] = (array)$item;
 		}
-		
+
 		$checkAccess = new SmartyCheckAccess;
 
 		$smarty->assign(array(

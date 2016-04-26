@@ -33,11 +33,7 @@ class SiteController extends Controller
         // 获取当前公司的信息
         $company = Company::model()->findByPk($defaultCompanyId);
         //获取当前公司的应用及媒体结算价格
-        $media = Media::model()->findByPk($defaultCompanyId);
-        $notice = false;
-        if(empty($media) && empty($company['payType'])){
-            $notice = true;
-        }
+        $notice= $this -> getNotice($company,$defaultCompanyId);
         // 获取当前公司的接入方式
         $sdkType=$company['sdkType'];
         if(!empty($sdkType)){
@@ -53,6 +49,19 @@ class SiteController extends Controller
             'notice'  => $notice,
         ));
 	}
+    /*
+     * 是否获取提示信息
+     * return @notice Boolean
+     */
+    public function getNotice($obj,$id){
+        $notice = false;
+        //获取当前公司的应用及媒体结算价格
+        $media = Media::model() ->findByPk($id);
+        if(empty($media) && empty($obj['payType'])){
+            $notice = true;
+        }
+        return $notice;
+    }
     /*
      *编辑公司接入,结算方式
      */

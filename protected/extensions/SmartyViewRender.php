@@ -46,7 +46,7 @@ class SmartyViewRender extends CApplicationComponent implements IViewRenderer {
 		$this->_smarty->assign('menuFocus', array($controller->id => array($controller->action->id => 1)));
 		/* 设置变量 */
 		$this->_smarty->assign($data);
-		/* 处理并返回模板的内容 */
+		/* 处理并返回模板的内容 返回当前调用的 */
 		$html = $this->_smarty->fetch($file.$this->fileExtension);
 		if ($isReturn) {
 			return $html;

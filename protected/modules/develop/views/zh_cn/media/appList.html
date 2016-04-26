@@ -39,6 +39,10 @@
                 <a style="visibility: hidden;" href="<{url route='media/edit' id=$v.id}>">
                     <i class="icon-edit-custom"></i>
                 </a>
+                <{if !$notice}>
+                <i style="position: relative"><i class="icon-warning-sign "></i>
+                    <div class="notice" style="display: none;position: absolute;left: 30px;top: -17px;;background-color: #aaa;z-index: 1000;width: 200px">结算方式未填写,请选择结算方式<br/>并填写相应的结算价格</div></i>
+                <{/if}>
             </td>
             <td class="number_row"><{$v.adslotCount}></td>
             <td class="number_row">￥<{if $v.cost}><{$v.cost|number_format:2}><{else}>0.00<{/if}></td>
@@ -82,6 +86,12 @@
         $(this).find('i.icon-edit-custom,i.icon-eye-open').parent().css({visibility: 'hidden'});
     });
 
+    //触发提示信息
+    $('.icon-warning-sign').hover(function(){
+        $(this).parent().find('div')[0].style.display = 'block';
+    }, function () {
+        $(this).parent().find('div')[0].style.display = 'none';
+    })
     // 启动和暂停按钮
     $('i.icon-stop, i.icon-on').closest('a').click(function(){
         var object = $(this);

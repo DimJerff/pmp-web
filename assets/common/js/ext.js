@@ -1103,7 +1103,6 @@ function copyToClipboard(id){
  */
 function ajaxPage(listId, url, param) {
     var listObj = $("#" + listId);
-
     if (param == undefined || !param) {
         param = "pagenum=" + listObj.data("pagenum");
     }

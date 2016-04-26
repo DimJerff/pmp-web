@@ -282,24 +282,38 @@ class MediaController extends Controller {
     public function actionAppList($ostype = 0, $timestr='', $sort = '') {
         // 获取应用表模型
         $mediaModel = Media::model();
-
         // 提交的参数处理
         if (!empty($sort)) {
             $order = str_replace('_', ' ', $sort);
         }
-
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
+        $company = Company::model() ->findByPk($companyId);
+        //获取提示信息
+        $notice = $this -> getNotice($company,$companyId);
         list($records, $pagingData) = $mediaModel->getMediaPageList($companyId, $ostype, Util::_time2Arr($timestr), $order);
-
         // 模板分配显示
         $html = $this->smartyRender(array(
             'records'    => $records,
             'pagingData' => $pagingData,
             'amount'     => Util::listAmount($records),
-            'ajaxFun'    => 'ajaxAppPage'
+            'ajaxFun'    => 'ajaxAppPage',
+            'notice'     => $notice,
         ), null, true);
         $data = array('html' => $html);
         $this->rspJSON($data);
+    }
+    /*
+     * 是否获取提示信息
+     * return @notice Boolean
+     */
+    public function getNotice($obj,$id){
+        $notice = false;
+        //获取当前公司的应用及媒体结算价格
+        $media = Media::model() ->findByPk($id);
+        if(empty($media) && empty($obj['payType'])){
+            $notice = true;
+        }
+        return $notice;
     }
 
     // 通过提交的开发者id获取开发者应用

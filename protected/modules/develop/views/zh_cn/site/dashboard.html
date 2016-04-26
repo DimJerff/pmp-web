@@ -12,7 +12,7 @@
                 <div class="company-info left">
                     <h4 style="display: inline-block"><{$company.companyName}></h4><a style="visibility: visible;border:none "  href="javascript: ;">
                         <i class="icon-edit-custom reset-company"></i></a>
-                        <{if !$notice}>
+                        <{if $notice}>
                             <i style="position: relative"><i class="icon-warning-sign "></i>
                             <div class="notice" style="display: none;position: absolute;left: 30px;top: -17px;;background-color: #aaa;z-index: 1000;width: 200px">结算方式未填写,请选择结算方式<br/>并填写相应的结算价格</div></i>
                         <{/if}>

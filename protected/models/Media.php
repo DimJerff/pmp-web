@@ -185,6 +185,7 @@ class Media extends DbActiveRecord
             "m.appName",
             "m.appIcon",
             "m.developId",
+            "m.payType",
             "m.modificationTime",
             "m.creationTime",
             "m.`status`",
@@ -230,7 +231,6 @@ class Media extends DbActiveRecord
     public function getMediaPageList($companyId, $os=0, $dateTimeArr=array(), $order = '') {
         // 获取sql
         $sql = $this->getMediaPageListSql($companyId, $os, $dateTimeArr, $order);
-
         $paging = Paging::instance();
         $paging->setPageSize(25);
         $paging->setPageNumKey('pagenum');

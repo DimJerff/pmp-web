@@ -54,7 +54,8 @@ class MediaController extends Controller {
         $this->checkAccess();
         // 获取全部类别树
         $categoryTree = BaseMediaCategory::model()->getAllCateToTree();
-
+        $companyId = Yii::app()->session['companyID'];
+        $company = Company::model() ->findByPk($companyId);
         // 模板分配显示
         $this->smartyRender(array(
             'categoryTree' => CJSON::encode($categoryTree),
@@ -289,15 +290,15 @@ class MediaController extends Controller {
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
         $company = Company::model() ->findByPk($companyId);
         //获取提示信息
-        $notice = $this -> getNotice($company,$companyId);
         list($records, $pagingData) = $mediaModel->getMediaPageList($companyId, $ostype, Util::_time2Arr($timestr), $order);
+        $records = $this -> checkNotice($records,$companyId);
+        //echo '<pre>';var_dump($records);exit;
         // 模板分配显示
         $html = $this->smartyRender(array(
             'records'    => $records,
             'pagingData' => $pagingData,
             'amount'     => Util::listAmount($records),
             'ajaxFun'    => 'ajaxAppPage',
-            'notice'     => $notice,
         ), null, true);
         $data = array('html' => $html);
         $this->rspJSON($data);
@@ -306,14 +307,16 @@ class MediaController extends Controller {
      * 是否获取提示信息
      * return @notice Boolean
      */
-    public function getNotice($obj,$id){
-        $notice = false;
+    public function checkNotice($data,$id){
         //获取当前公司的应用及媒体结算价格
-        $media = Media::model() ->findByPk($id);
-        if(empty($media) && empty($obj['payType'])){
-            $notice = true;
+        foreach($data as $k => $v){
+            $notice = false;
+            if(empty($v['payType'])){
+                $notice = true;
+            }
+            $data[$k]['notice']=$notice;
         }
-        return $notice;
+        return $data;
     }
 
     // 通过提交的开发者id获取开发者应用

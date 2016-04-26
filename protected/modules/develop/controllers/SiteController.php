@@ -22,8 +22,8 @@ class SiteController extends Controller
 		$yii = Yii::app();
 		$user = $yii->user;
 		$userState = $user->getRecord();
-		// 获取当前用户的默认公司id
-		$this->defaultCompanyID = $defaultCompanyId = $userState->defaultCompanyID;
+		// 获取当前用户的默认公司id 存入session中
+        Yii::app()->session['companyID']=$this->defaultCompanyID = $defaultCompanyId = $userState->defaultCompanyID;
         // 对时间进行判断处理
         if (empty($time)) {
             $time = date('Y/m/d', strtotime('-7 days')) . '-' . date('Y/m/d');

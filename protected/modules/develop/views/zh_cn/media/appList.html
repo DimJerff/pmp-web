@@ -39,7 +39,7 @@
                 <a style="visibility: hidden;" href="<{url route='media/edit' id=$v.id}>">
                     <i class="icon-edit-custom"></i>
                 </a>
-                <{if !$notice}>
+                <{if $v.notice}>
                 <i style="position: relative"><i class="icon-warning-sign "></i>
                     <div class="notice" style="display: none;position: absolute;left: 30px;top: -17px;;background-color: #aaa;z-index: 1000;width: 200px">结算方式未填写,请选择结算方式<br/>并填写相应的结算价格</div></i>
                 <{/if}>

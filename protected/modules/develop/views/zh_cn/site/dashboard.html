@@ -108,6 +108,71 @@
         </div>
     </div>
 </div>
+<div id="modalbox" class="modal hide fade filter-modal in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="width: auto; margin-left: -266.090909123421px; margin-top: 100px; display: none;">
+    <form action="/develop/site/postcompany" method="post" id="change_form" class="">
+        <div class="modal-header" style="padding-left: 40px"><button type="button" class="close reset-company" data-dismiss="modal" aria-hidden="true" onclick="$('#modalbox').modal('hide')">×</button>
+            <h3>编辑——悦读网</h3>
+        </div>
+        <div class="modal-body">
+            <div style="width: 500px;padding-left: 30px">
+                <div style="float:left;"><label class="control-label">供应商名称:</label></div>
+                <div style="padding-left: 40px;float:left;">
+                    <{$company.companyName}>
+                    <input type="hidden" name="company[id]" value="<{$company.id}>"/>
+                </div>
+                <div style="clear: both"></div>
+                <div style="float: left"><label class="control-label">接入方式:</label></div>
+                <div style="padding-left: 50px;float: left">
+                    <input type="checkbox" id="ch1" name="company[sdkType][]" value="1" <{if in_array('1',$company.sdkType) || empty($company.sdkType)}>checked="checked"<{/if}>> SDK/JS
+                    <input type="checkbox" id="ch2" name="company[sdkType][]" value="2" <{if in_array('2',$company.sdkType) || empty($company.sdkType)}>checked="checked"<{/if}>> S2S
+                </div>
+                <div style="clear: both"></div>
+                <div style="padding-right: 30px;float:left;height: 100px">
+                    <label class="control-label">结算方式:</label>
+                </div>
+                <div class="if-enable" style="padding-left: 20px;float:left;display: block">
+                    <input type="checkbox" name="company[Enable]" value="1" />
+                    <span>启用</span>
+                    <br />
+                    <i id="radio-hidden" style="display: none;">
+                        <label class="radio inline">
+                            <input type="radio" name="company[_mediaPrice_mediaSharingRate]" value="201" <{if $company.payType == 201}> checked="checked" <{/if}>/>
+                            <span>按照实时协议价</span>
+                        </label>
+                        <br />
+                        <label class="radio inline">
+                            <input type="radio" name="company[_mediaPrice_mediaSharingRate]" value="0" <{if $company.payType < 100 && $company.payType > 0}> checked="checked" <{/if}>  >
+                            <span>协议支付价格</span>
+                            <input type="text" name="company[mediaPrice]" value="<{if $company}><{if $company.mediaPrice > 0 }><{$company.mediaPrice}><{/if}><{/if}>"  placeholder="金额..." style="width: 60px;height: auto" />
+                            <span>元</span>
+                        <span class="radio-frequency">
+                            <select name="company[payType]" style="width: 100px;">
+                                <option value="3" <{if $company}><{if $company.payType eq 3}>selected="selected"<{/if}><{/if}> >每天</option>
+                                <option value="2" <{if $company}><{if $company.payType eq 2}>selected="selected"<{/if}><{/if}> >每次点击</option>
+                                <option value="1" <{if $company}><{if $company.payType eq 1}>selected="selected"<{/if}><{/if}> >每千次展示</option>
+                            </select>
+                        </span>
+                        </label>
+                        <br />
+                        <label class="radio inline">
+                            <input type="radio" name="company[_mediaPrice_mediaSharingRate]" value="101" <{if $company.payType == '101'}> checked="checked" <{/if}> disabled/>
+                            <span>媒体收入占售出额比例</span>
+                            <input type="text" name="company[mediaSharingRate]" value="<{if $company}><{if $company.payType > 100}><{$company.mediaSharingRate}><{/if}><{/if}>" style="width: 60px;;"  disabled/>
+                            <span>%</span>
+                        </label></i>
+                    <br />
+                    <label class="radio inline">
+                        <input type="button" class="edit-company btn-small btn-primary applyBtn btn btn-default" value="提交">
+                        &nbsp;
+                        <input type="button" class="reset-company btn-small btn-cancel cancelBtn btn btn-default" value="取消"/>
+                    </label>
+                </div>
+                <div style="clear: both"></div>
+
+            </div>
+        </div>
+    </form>
+</div>
 <!-- 主体内容 end -->
 <!-- 页脚 -->
 <{include file="../_common/footer.html"}>
@@ -287,18 +352,6 @@ $(function() {
             $(radio).attr('disabled',true);
         }
     }
-   /*
-    * 是否启用
-    */
-    $('input[name="company[Enable]"]').click(function(){
-        var $enable= $('.if-enable')[0];
-        var $if_enable= $enable.style.display;
-        if($if_enable != 'block'){
-            $enable.style.display = 'block';
-        }else{
-            $enable.style.display = 'none';
-        }
-    })
 
 }); // onLoad End
 
@@ -332,66 +385,6 @@ function ajaxAdslotPage(param) {
 
 
 </script>
-
-<div id="modalbox" class="modal hide fade filter-modal in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="width: auto; margin-left: -266.090909123421px; margin-top: 100px; display: none;">
-    <form action="/develop/site/postcompany" method="post" id="change_form" class="">
-        <div class="modal-header" style="padding-left: 40px"><button type="button" class="close reset-company" data-dismiss="modal" aria-hidden="true" onclick="$('#modalbox').modal('hide')">×</button>
-            <h3>编辑——悦读网</h3>
-        </div>
-        <div class="modal-body">
-            <div style="width: 500px;padding-left: 30px">
-        <div style="float:left;"><label class="control-label">供应商名称:</label></div>
-        <div style="padding-left: 40px;float:left;">
-            <{$company.companyName}>
-            <input type="hidden" name="company[id]" value="<{$company.id}>"/>
-        </div>
-                <div style="clear: both"></div>
-                <div style="float: left"><label class="control-label">接入方式:</label></div>
-                <div style="padding-left: 50px;float: left">
-                        <input type="checkbox" id="ch1" name="company[sdkType][]" value="1" <{if in_array('1',$company.sdkType) || empty($company.sdkType)}>checked="checked"<{/if}>> SDK/JS
-                        <input type="checkbox" id="ch2" name="company[sdkType][]" value="2" <{if in_array('2',$company.sdkType) || empty($company.sdkType)}>checked="checked"<{/if}>> S2S
-                </div>
-                <div style="clear: both"></div>
-                <div style="padding-right: 50px;float:left;"><label class="control-label">结算方式:</label></div>
-                        <input type="checkbox" name="company[Enable]" value="1" />
-                        <span>启用</span>
-                    <div class="if-enable" style="padding-left: 110px;display: none">
-                        <label class="radio inline">
-                            <input type="radio" name="company[_mediaPrice_mediaSharingRate]" value="201" checked="checked" />
-                            <span>按照实时协议价</span>
-                        </label>
-                        <br />
-                        <label class="radio inline">
-                            <input type="radio" name="company[_mediaPrice_mediaSharingRate]" value="0" >
-                            <span>协议支付价格</span>
-                            <input type="text" name="company[mediaPrice]" value="<{if $media}><{if $media.payType < 100}><{$media.mediaPrice}><{/if}><{/if}>"  placeholder="金额..." style="width: 60px;height: auto" />
-                            <span>元</span>
-                            <span class="radio-frequency">
-                                <select name="company[payType]" style="width: 100px;">
-                                    <option value="3" <{if $media}><{if $media.payType eq 3}>selected="selected"<{/if}><{/if}> >每天</option>
-                                    <option value="2" <{if $media}><{if $media.payType eq 2}>selected="selected"<{/if}><{/if}> >每次点击</option>
-                                    <option value="1" <{if $media}><{if $media.payType eq 1}>selected="selected"<{/if}><{/if}> >每千次展示</option>
-                                </select>
-                            </span>
-                        </label>
-                        <br />
-                        <label class="radio inline">
-                            <input type="radio" name="company[_mediaPrice_mediaSharingRate]" value="101" disabled/>
-                            <span>媒体收入占售出额比例</span>
-                            <input type="text" name="company[mediaSharingRate]" value="<{if $media}><{if $media.payType > 100}><{$media.mediaSharingRate}><{/if}><{/if}>" style="width: 60px;;"  disabled/>
-                            <span>%</span>
-                        </label>
-
-                    </div><br />
-                <label class="radio inline">
-                <input type="button" class="edit-company btn-small btn-primary applyBtn btn btn-default" value="提交">
-                &nbsp;
-                <input type="button" class="reset-company btn-small btn-cancel cancelBtn btn btn-default" value="取消"/>
-                </label>
-            </div>
-            </div>
-    </form>
-</div>
 
 </body>
 </html>

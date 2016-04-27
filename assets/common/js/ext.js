@@ -806,6 +806,20 @@
     }).ajaxComplete(function(){
         NProgress.done();
     });
+
+	/*
+	 * 是否启用
+	 */
+	$('input[name*="Enable"]').click(function(){
+		var $i= document.getElementById('radio-hidden');
+		var $display = $i.style.display;
+		if($display != 'none'){
+			$i.style.display = 'none';
+		}else{
+			$i.style.display = 'block';
+		}
+	})
+
 })(jQuery);
 
 /**
@@ -1126,5 +1140,7 @@ function ajaxSdk(adslotId) {
         box.on('hidden', function () {})
     });
 }
+
+
 
 

@@ -59,6 +59,7 @@ class MediaController extends Controller {
         // 模板分配显示
         $this->smartyRender(array(
             'categoryTree' => CJSON::encode($categoryTree),
+            'company'      => $company,
         ));
     }
 

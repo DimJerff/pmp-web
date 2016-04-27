@@ -26,7 +26,7 @@
     </div>
 </div>
 <{/if}>
-<div class="control-group">
+<!--<div class="control-group">
     <label class="control-label"><span class="required">*</span>结算方式</label>
     <div class="controls">
         <{if !$deal}>
@@ -89,9 +89,9 @@
         <{/if}>
         <{/if}>
     </div>
-</div>
+</div>-->
 <div class="control-group <{if $deal.id}>v-hide<{/if}>">
-    <label class="control-label"><span class="required">*</span>开发者</label>
+    <label class="control-label"><span class="required">*</span>供应商</label>
     <div class="controls">
         <select name="deal[developId]" id="deal_developId">
             <{foreach from=$companys item=v}>
@@ -103,7 +103,7 @@
 </div>
 <{if $deal.id}>
 <div class="control-group">
-    <label class="control-label">开发者</label>
+    <label class="control-label">供应商</label>
     <div class="controls">
         <{foreach from=$companys item=v}>
         <{if $deal.developId eq $v.id}>
@@ -116,7 +116,7 @@
 </div>
 <{/if}>
 <div class="control-group">
-    <label class="control-label"><span class="required">*</span>应用/广告位</label>
+    <label class="control-label">应用/广告位</label>
     <div class="controls ">
         <input type="hidden" name="deal[medias]" value="<{if $deal}><{$deal.medias}><{/if}>">
         <input type="hidden" name="deal[adslots]" value="<{if $deal}><{$deal.adslots}><{/if}>">
@@ -164,11 +164,16 @@
 </div>
 
 <div class="control-group">
+    <label class="control-label"><span class="required">*</span>售出底价</label>
     <div class="controls">
     <label class="radio inline">
         <input type="radio" name="deal[bidStrategy]" value="2" <{if $deal.bidStrategy=='2'}>checked="checked"<{/if}>/>
-        <span>按规则</span>
+        <span style="padding-right: 20px;height: 20px">按规则</span>
     </label>
+        <i style="position: relative"><i class="icon-question-sign "></i>
+            <div class="notice" style="display: none;position: absolute;left: 30px;top: -17px;;background-color: #bbb;z-index: 1000;width: 200px">若媒体按C结算，则系统按照规则转化成M后给到DSP；若媒体M结算，则直接将M的价格给到DSP</div></i>
+
+        <br />
     <br />
     <label class="radio inline">
         <input type="radio" name="deal[bidStrategy]" value="1" <{if $deal}><{if $deal.bidStrategy=='1'}>checked="checked"<{/if}><{else}>checked="checked"<{/if}>/>
@@ -178,3 +183,15 @@
         <span>元 每千次展示</span>
     </div>
 </div>
+<script type="application/javascript">
+    (function(){
+        /*
+         * 提示信息
+         * */
+        $('.icon-question-sign').hover(function(){
+            $(this).parent().find('div')[0].style.display = 'block';
+        }, function () {
+            $(this).parent().find('div')[0].style.display = 'none';
+        })
+    })();
+</script>

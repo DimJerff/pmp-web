@@ -214,7 +214,7 @@ class AdslotController extends Controller {
                 $operationType = 3;
             }
 
-            $adslotModel->attributes = $this->_dealDataBeforeValidate($_POST['adslot']);
+            $adslotModel->attributes = $this->_dealDataBeforeValidate($_POST['adslot']);//echo '<pre>';print_r($adslotModel -> attributes);exit;
             if ($adslotModel->validate()) {
                 $adslotModel->save();
                 $data = array();
@@ -317,11 +317,19 @@ class AdslotController extends Controller {
             $data['width'] = $widthHeightArr[0];
             $data['height'] = $widthHeightArr[1];
         }
-        if($data['_mediaPrice_mediaSharingRate']){
-            $data['payType']=$data['_mediaPrice_mediaSharingRate'];
+        if($data['sdkType'] == 1){
+            $data['relationId'] = '';
+        }
+        if($data['Enable']){
+            $data['payType'] = -1;
             $data['mediaPrice']=0;
         }else{
-            $data['mediaSharingRate']= 0;
+            if($data['_mediaPrice_mediaSharingRate']){
+                $data['payType']=$data['_mediaPrice_mediaSharingRate'];
+                $data['mediaPrice']=0;
+            }else{
+                $data['mediaSharingRate']= 0;
+            }
         }
         // 处理频次
         if ($data['_frequencyCapUnitCapAmount'] == -1) {

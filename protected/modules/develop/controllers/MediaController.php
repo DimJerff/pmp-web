@@ -32,12 +32,11 @@ class MediaController extends Controller {
         $mediaModel = Media::model();
         // 通过主键id获取当前应用的信息
         $media = $mediaModel->getMediaById($id);
-
+        Yii::app() -> session['mediaID'] = $id;
         // 实例化广告位
         $adslotModel = MediaAdslot::model();
         // 获取当前广告位的个数
         $adslotCount = $adslotModel->getCountByMediaId($id);
-
         // 模板分配显示
         $this->smartyRender(array(
             'media'       => $media,
@@ -380,12 +379,17 @@ class MediaController extends Controller {
      * 验证提交数据前的处理
      */
     public function _mediaDataBeforeValidate ($data){
-        if($data['_mediaPrice_mediaSharingRate']){
-            $data['payType']=$data['_mediaPrice_mediaSharingRate'];
+        if($data['Enable']){
+            $data['payType'] = -1;
             $data['mediaPrice']=0;
         }else{
-            $data['mediaSharingRate']= 0;
+            if($data['_mediaPrice_mediaSharingRate']){
+                $data['payType']    = $data['_mediaPrice_mediaSharingRate'];
+                $data['mediaPrice'] = 0;
+            }else{
+                $data['mediaSharingRate']= 0;
+            }
+            return $data;
         }
-        return $data;
     }
 }

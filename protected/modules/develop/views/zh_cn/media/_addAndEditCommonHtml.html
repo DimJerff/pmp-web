@@ -117,7 +117,7 @@
         <label class="radio inline">
             <input type="radio" name="media[_mediaPrice_mediaSharingRate]" value="101" <{if $company.payType == '101'}> checked="checked" <{/if}> disabled/>
             <span>媒体收入占售出额比例</span>
-            <input type="text" name="media[mediaSharingRate]" value="<{if $media}><{if $media.payType > 100}><{$media.mediaSharingRate}><{/if}><{/if}>" style="width: 60px;"  disabled/>
+            <input type="text" name="media[mediaSharingRate]" value="<{if $company}><{if $company.payType > 100}><{$company.mediaSharingRate}><{/if}><{/if}>" style="width: 60px;"  disabled/>
             <span>%</span>
         </label>
         <{else}>

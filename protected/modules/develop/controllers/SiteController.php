@@ -70,22 +70,22 @@ class SiteController extends Controller
             $errors = null;
             $companyModel = Company::model()->findByPk($_POST['company']['id']);
             $operationType = 4;
-            $data=$this->_mediaDataBeforeValidate($_POST['company']);
+            $data=$this ->_mediaDataBeforeValidate($_POST['company']);
             if($data['sdkType']){
-            $data['sdkType']=implode(',',$data['sdkType']);
+            $data['sdkType'] = implode(',',$data['sdkType']);
             }
-            $companyModel->attributes=$data;
-            if ($companyModel->validate()) {
-                $companyModel->save();
+            $companyModel -> attributes = $data;//echo '<pre>';print_r($companyModel -> attributes);exit;
+            if ($companyModel -> validate()) {
+                $companyModel -> save();
                 // 记录操作日记
-                OperationLog::model()->addModel($companyModel);
+                OperationLog::model() -> addModel($companyModel);
             } else {
-                $errors = $companyModel->getErrors();
+                $errors = $companyModel -> getErrors();
 
             }
-            $errors ? $this->rspJSON($errors,'error') : $this->rspJSON(null);
+            $errors ? $this -> rspJSON($errors,'error') : $this -> rspJSON(null);
         }
-        $this->redirect($this->createUrl('site/dashboard'),array('errors',$errors));
+        $this -> redirect($this -> createUrl('site/dashboard'),array('errors',$errors));
     }
     /**
      * 获取当前当天的公司交易消耗

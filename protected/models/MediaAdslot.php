@@ -45,7 +45,7 @@ class MediaAdslot extends DbActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-            array('mediaId, adslotName, adslotIdStr, refreshTime, deviceType, width, height, frequencyCapUnit, frequencyCapAmount , relationId , payType , mediaPrice , mediaSharingRate', 'required'),
+            array('mediaId, adslotName, adslotIdStr, refreshTime, deviceType, width, height, frequencyCapUnit, frequencyCapAmount , payType , mediaPrice , mediaSharingRate', 'required'),
 			array('deviceType, frequencyCapUnit, frequencyCapAmount', 'numerical', 'integerOnly'=>true),
 			array('mediaId, refreshTime, width, height', 'length', 'max'=>11),
 			array('adslotName', 'length', 'max'=>64),
@@ -92,7 +92,7 @@ class MediaAdslot extends DbActiveRecord
 			'mflag' => '修改状态',
 			'modificationTime' => '修改时间',
 			'creationTime' => '创建时间',
-            'relationId'   => '广告位',
+            'relationId'   => '标识位',
 		);
 	}
 

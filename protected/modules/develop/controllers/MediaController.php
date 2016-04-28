@@ -32,8 +32,8 @@ class MediaController extends Controller {
         $mediaModel = Media::model();
         // 通过主键id获取当前应用的信息
         $media = $mediaModel->getMediaById($id);
-        Yii::app() -> session['mediaID'] = $id;
-        Yii::app()->session['sdkType'] = $media['sdkType'];
+        Yii::app()->session['mediaID'] = $id;
+        Yii::app()->session['mediaSdkType'] = $media['sdkType'];
 // 实例化广告位
         $adslotModel = MediaAdslot::model();
         // 获取当前广告位的个数
@@ -56,6 +56,7 @@ class MediaController extends Controller {
         $categoryTree = BaseMediaCategory::model()->getAllCateToTree();
         $companyId = Yii::app()->session['companyID'];
         $company = Company::model() ->findByPk($companyId);
+        $company['sdkType'] = explode(',',$company['sdkType']);
         // 模板分配显示
         $this->smartyRender(array(
             'categoryTree' => CJSON::encode($categoryTree),
@@ -292,7 +293,7 @@ class MediaController extends Controller {
         $company = Company::model() ->findByPk($companyId);
         //获取提示信息
         list($records, $pagingData) = $mediaModel->getMediaPageList($companyId, $ostype, Util::_time2Arr($timestr), $order);
-        $records = $this -> checkNotice($records,$companyId);
+        //$records = $this -> checkNotice($records,$companyId);
         //echo '<pre>';var_dump($records);exit;
         // 模板分配显示
         $html = $this->smartyRender(array(
@@ -308,17 +309,17 @@ class MediaController extends Controller {
      * 是否获取提示信息
      * return @notice Boolean
      */
-    public function checkNotice($data,$id){
-        //获取当前公司的应用及媒体结算价格
-        foreach($data as $k => $v){
-            $notice = false;
-            if(empty($v['payType'])){
-                $notice = true;
+/*    public function checkNotice($data,$id){
+            //获取当前公司的应用及媒体结算价格
+            foreach($data as $k => $v){
+                $notice = false;
+                if(empty($v['payType'])){
+                    $notice = true;
+                }
+                $data[$k]['notice']=$notice;
             }
-            $data[$k]['notice']=$notice;
-        }
-        return $data;
-    }
+            return $data;
+        }*/
 
     // 通过提交的开发者id获取开发者应用
     public function actionGetMediaByDevelopId($developId) {
@@ -380,17 +381,16 @@ class MediaController extends Controller {
      * 验证提交数据前的处理
      */
     public function _mediaDataBeforeValidate ($data){
-        if($data['Enable']){
+        //是否是不启用状态 或 启用了但是未选择
+        if(empty($data['Enable']) || empty($data['_mediaPrice_mediaSharingRate'])){
             $data['payType'] = -1;
-            $data['mediaPrice']=0;
         }else{
             if($data['_mediaPrice_mediaSharingRate']){
                 $data['payType']    = $data['_mediaPrice_mediaSharingRate'];
-                $data['mediaPrice'] = 0;
-            }else{
-                $data['mediaSharingRate']= 0;
             }
-            return $data;
         }
+        $data['mediaPrice']=empty($data['mediaPrice'])?0:$data['mediaPrice'] ;
+        $data['mediaSharingRate']=empty($data['mediaSharingRate'])?0:$data['mediaSharingRate'] ;
+        return $data;
     }
 }

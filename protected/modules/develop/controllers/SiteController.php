@@ -33,7 +33,7 @@ class SiteController extends Controller
         // 获取当前公司的信息
         $company = Company::model()->findByPk($defaultCompanyId);
         //获取当前公司的应用及媒体结算价格
-        $notice= $this -> getNotice($company,$defaultCompanyId);
+        //$notice= $this -> getNotice($company,$defaultCompanyId);
         // 获取当前公司的接入方式
         $sdkType=$company['sdkType'];
         if(!empty($sdkType)){
@@ -41,12 +41,13 @@ class SiteController extends Controller
         }else{
             $company['sdkType']=array();
         }
+        Yii::app()->session['companySdkType'] = $company['sdkType'];
         // 模板分配显示
         $this->smartyRender(array(
             'time'    => $time,
             'timeStr' => strtotime($timeArr[0]) . '_' . strtotime($timeArr[1]),
             'company' => $company,
-            'notice'  => $notice,
+            //'notice'  => $notice,
         ));
 	}
     /*
@@ -131,20 +132,19 @@ class SiteController extends Controller
     }
 
     /*
- * 验证提交数据前的处理
- */
+     * 验证提交数据前的处理
+     */
     public function _mediaDataBeforeValidate ($data){
-        if(empty($data['Enable'])){
-            $data['payType']=-1;
-            $data['mediaPrice']=0;
+        //是否是不启用状态 或 启用了但是未选择
+        if(empty($data['Enable']) || empty($data['_mediaPrice_mediaSharingRate'])){
+            $data['payType'] = -1;
         }else{
             if($data['_mediaPrice_mediaSharingRate']){
-                $data['payType']=$data['_mediaPrice_mediaSharingRate'];
-                $data['mediaPrice']=0;
-            }else{
-                $data['mediaSharingRate']= 0;
+                $data['payType']    = $data['_mediaPrice_mediaSharingRate'];
             }
         }
+        $data['mediaPrice']=empty($data['mediaPrice'])?0:$data['mediaPrice'] ;
+        $data['mediaSharingRate']=empty($data['mediaSharingRate'])?0:$data['mediaSharingRate'] ;
         return $data;
     }
 }

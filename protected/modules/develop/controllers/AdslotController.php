@@ -50,7 +50,7 @@ class AdslotController extends Controller {
             'deviceDpi' => $deviceDpi,
             'adtype'    => $adtype,
             'media'     => $media,
-            'sdkType'   => Yii::app()->session['sdkType'],
+            'sdkType'   => Yii::app()->session['mediaSdkType'],
         ));
     }
 
@@ -75,7 +75,7 @@ class AdslotController extends Controller {
             'deviceDpi' => $deviceDpi,
             'adtype'    => $adtype,
             'adslot'    => $adslot,
-            'sdkType'   => Yii::app()->session['sdkType'],
+            'sdkType'   => Yii::app()->session['mediaSdkType'],
         ));
     }
 
@@ -320,7 +320,19 @@ class AdslotController extends Controller {
         if($data['sdkType'] == 1){
             $data['relationId'] = '';
         }
-        if($data['Enable']){
+
+        //是否是不启用状态 或 启用了但是未选择
+        if(empty($data['Enable']) || empty($data['_mediaPrice_mediaSharingRate'])){
+            $data['payType'] = -1;
+        }else{
+            if($data['_mediaPrice_mediaSharingRate']){
+                $data['payType']    = $data['_mediaPrice_mediaSharingRate'];
+            }
+        }
+        $data['mediaPrice']=empty($data['mediaPrice'])?0:$data['mediaPrice'] ;
+        $data['mediaSharingRate']=empty($data['mediaSharingRate'])?0:$data['mediaSharingRate'] ;
+
+/*        if($data['Enable']){
             $data['payType'] = -1;
             $data['mediaPrice']=0;
         }else{
@@ -330,7 +342,7 @@ class AdslotController extends Controller {
             }else{
                 $data['mediaSharingRate']= 0;
             }
-        }
+        }*/
         // 处理频次
         if ($data['_frequencyCapUnitCapAmount'] == -1) {
             $data['frequencyCapUnit'] = -1;

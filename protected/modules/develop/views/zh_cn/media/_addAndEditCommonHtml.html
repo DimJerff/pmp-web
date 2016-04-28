@@ -9,14 +9,16 @@
     <label class="control-label">平台类型</label>
     <div class="controls" value="1">
         <label class="radio inline">
-            <input type="radio" name="media[os]" value="1"> Android
+            <input type="radio" name="media[os]" value="1" > Android
         </label>
         <label class="radio inline">
-            <input type="radio" name="media[os]" value="2"> iOS
+            <input type="radio" name="media[os]" value="2" > iOS
         </label>
     </div>
 </div>
+
 <{if $media.id}>
+<!-- 编辑 -->
 <div class="control-group">
     <label class="control-label">平台类型</label>
     <div class="controls" value="1">
@@ -25,27 +27,25 @@
         </label>
     </div>
 </div>
-<{/if}>
 
-<div class="control-group <{if $media.id}>v-hide<{/if}>">
-    <label class="control-label">接入方式</label>
-    <div class="controls" value="1">
-        <label class="radio inline">
-            <input type="radio" name="media[sdkType]" value="1" <{if $company.sdkType=='1'}> checked="checked"<{/if}>> SDK/JS
-        </label>
-        <label class="radio inline">
-            <input type="radio" name="media[sdkType]" value="2" <{if $company.sdkType=='2'}> checked="checked"<{/if}>> S2S
-        </label>
-    </div>
-</div>
-<{if $media.id}>
-<!-- 编辑 -->
 <div class="control-group">
     <label class="control-label">接入方式</label>
     <div class="controls" value="1">
         <label class="radio inline" style="padding-left: 0px;">
             <{if $media.sdkType eq 1}>SDK/JS
             <{else if $media.sdkType   eq 2}>S2S<{/if}>
+        </label>
+    </div>
+</div>
+<{else}>
+<div class="control-group <{if $media.id}>v-hide<{/if}>">
+    <label class="control-label">接入方式</label>
+    <div class="controls" value="1">
+        <label class="radio inline">
+            <input type="radio" name="media[sdkType]" value="1" <{if in_array('1',$company.sdkType)}><{if count($company.sdkType) == 1}>checked='checked'<{/if}><{else}>disabled="disabled"<{/if}>> SDK/JS
+        </label>
+        <label class="radio inline">
+            <input type="radio" name="media[sdkType]" value="2" <{if in_array('2',$company.sdkType)}><{if count($company.sdkType) == 1}>checked='checked'<{/if}><{else}>disabled="disabled"<{/if}>> S2S
         </label>
     </div>
 </div>
@@ -94,7 +94,7 @@
         <span>启用</span>
         <br />
         <i id="radio-hidden" style="display: none;">
-        <{if !$media}>
+        <{if !$media || $media.payType lt 0}>
         <label class="radio inline">
             <input type="radio" name="media[_mediaPrice_mediaSharingRate]" value="201" <{if $company.payType == 201}> checked="checked" <{/if}>/>
             <span>按照实时协议价</span>

@@ -53,8 +53,9 @@ class Media extends DbActiveRecord
 		// will receive user inputs.
 		return array(
 			array('companyId , os, sdkType, appName, appCategory , appBundle , appIcon , payType , mediaPrice , mediaSharingRate', 'required'),
-			array('companyId , os, appCategory , payType , mediaPrice , mediaSharingRate', 'numerical', 'integerOnly'=>true),
+			array('companyId , os, appCategory , payType , mediaPrice ', 'numerical', 'integerOnly'=>true),
 			array('appName, ', 'length', 'max'=>32),
+			array('mediaSharingRate', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, companyId, os, appName, appCategory, appBundle', 'safe', 'on'=>'search'),

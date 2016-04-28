@@ -815,11 +815,15 @@
 		var $display = $i.style.display;
 		if($display != 'none'){
 			$i.style.display = 'none';
+			$('.icon-info').css('visibility','visible');
 		}else{
 			$i.style.display = 'block';
+			$('.icon-info').css('visibility','hidden');
 		}
 	})
 
+	//提示信息
+	$('.icon-info').popover('hide');
 })(jQuery);
 
 /**

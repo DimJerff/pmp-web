@@ -42,14 +42,14 @@
         </span>
     </div>
 </div>
-<{if $media.sdkType == 2}>
+<{if $sdkType == 2}>
 <div class="control-group">
     <label class="control-label"><span class="required">*</span>标识位</label>
     <div class="controls">
         <input type="text" placeholder="标识位…" name="adslot[relationId]" value="<{if $adslot}><{$adslot.relationId}><{/if}>">
     </div>
 </div>
-<{elseif $media.sdkType == 1}>
+<{elseif $sdkType == 1}>
 <div class="control-group">
     <label class="control-label"><span class="required">*</span>刷新时间间隔</label>
     <div class="controls">
@@ -60,19 +60,19 @@
     <label class="control-label">频次限制</label>
     <div class="controls">
         <label class="radio inline">
-            <input type="radio" value="-1" name="adslot[_frequencyCapUnitCapAmount]">
+            <input type="radio" value="-1" name="adslot[_frequencyCapUnitCapAmount]" >
             无限制
         </label>
         <br>
         <label class="radio inline">
-            <input type="radio" value="" name="adslot[_frequencyCapUnitCapAmount]">
+            <input type="radio" value="" name="adslot[_frequencyCapUnitCapAmount]" >
                 <span class="radio-frequency">
-                    <select name="adslot[frequencyCapUnit]" style="width: 100px;" disabled="disabled">
+                    <select name="adslot[frequencyCapUnit]" style="width: 100px;" >
                         <option value="1" <{if $adslot}><{if $adslot.frequencyCapUnit == 1}>selected="selected"<{/if}><{/if}>>每小时</option>
                         <option value="2" <{if $adslot}><{if $adslot.frequencyCapUnit == 2}>selected="selected"<{/if}><{/if}>>每天</option>
                     </select>
                     在每个设备上展示
-                    <input name="adslot[frequencyCapAmount]" type="text" value="<{if $adslot}><{if $adslot.frequencyCapAmount gt 0}><{$adslot.frequencyCapAmount}><{/if}><{/if}>" style="width: 40px;" disabled="disabled" /> 次
+                    <input name="adslot[frequencyCapAmount]" type="text" value="<{if $adslot}><{if $adslot.frequencyCapAmount gt 0}><{$adslot.frequencyCapAmount}><{/if}><{/if}>" style="width: 40px;"  /> 次
                 </span>
         </label>
     </div>
@@ -86,7 +86,7 @@
         <br />
         <i id="radio-hidden" style="display: none;">
         <{if !$adslot}>
-            <{if $media.sdkType == 2}>
+            <{if $sdkType == 2}>
                 <label class="radio inline">
                     <input type="radio" name="adslot[_mediaPrice_mediaSharingRate]" value="201" checked="checked" />
                     <span>按照实时协议价</span>
@@ -114,7 +114,7 @@
             <span>%</span>
         </label>
         <{else}>
-            <{if $adslot.payType lt 100 && $adslot.payType gt 0}>
+            <{if $adslot.payType lt 100 && $adslot.payType gt 0}>111
             <label class="radio inline" style="padding-left: 0px;">
                 <input type="hidden" name="adslot[_mediaPrice_mediaSharingRate]" value="0">
                 <span>协议支付价格</span>
@@ -133,12 +133,12 @@
                 <{/if}>
                 </span>
             </label>
-            <{else if $adslot.payType gt 200}>
+            <{else if $adslot.payType gt 200}>2222
                 <label class="radio inline" style="padding-left: 0px;">
                 <input type="hidden" name="adslot[_mediaPrice_mediaSharingRate]" value="201" />
                 <span>按照实时协议价</span>
                 </label>
-            <{else}>
+            <{else}>333
             <label class="radio inline" style="padding-left: 0px;">
                 <input type="hidden" name="adslot[_mediaPrice_mediaSharingRate]" value="101" />
                 <span>媒体收入占售出额比例</span>

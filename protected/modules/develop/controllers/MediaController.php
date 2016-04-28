@@ -33,7 +33,8 @@ class MediaController extends Controller {
         // 通过主键id获取当前应用的信息
         $media = $mediaModel->getMediaById($id);
         Yii::app() -> session['mediaID'] = $id;
-        // 实例化广告位
+        Yii::app()->session['sdkType'] = $media['sdkType'];
+// 实例化广告位
         $adslotModel = MediaAdslot::model();
         // 获取当前广告位的个数
         $adslotCount = $adslotModel->getCountByMediaId($id);

@@ -25,7 +25,6 @@ class AdslotController extends Controller {
             $time = date('Y/m/d', strtotime('-7 days')) . '-' . date('Y/m/d');
         }
         $timeArr = explode('-', $time);
-
         // 实例化广告表实例模型
         $adslotModel = MediaAdslot::model();
         $adslot = $adslotModel->getAdslotInfoByAid($adslotId);
@@ -51,6 +50,7 @@ class AdslotController extends Controller {
             'deviceDpi' => $deviceDpi,
             'adtype'    => $adtype,
             'media'     => $media,
+            'sdkType'   => Yii::app()->session['sdkType'],
         ));
     }
 
@@ -60,7 +60,6 @@ class AdslotController extends Controller {
         // 从配置文件中获取设定的设备分辨率
         $deviceDpi = Yii::app()->params['deviceDpi'];
         $adtype = Yii::app()->params['adtype'];
-
         // 获取当前广告位信息
         $adslot = MediaAdslot::model()->getAdslotById($id);
 
@@ -75,7 +74,8 @@ class AdslotController extends Controller {
         $this->smartyRender(array(
             'deviceDpi' => $deviceDpi,
             'adtype'    => $adtype,
-            'adslot'     => $adslot,
+            'adslot'    => $adslot,
+            'sdkType'   => Yii::app()->session['sdkType'],
         ));
     }
 

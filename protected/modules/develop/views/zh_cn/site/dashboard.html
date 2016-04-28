@@ -10,12 +10,10 @@
             <!-- 内容头部信息 start -->
             <div class="clearfix company-info-container content-body-head">
                 <div class="company-info left">
-                    <h4 style="display: inline-block"><{$company.companyName}></h4><a style="visibility: visible;border:none "  href="javascript: ;">
+                    <h4 style="display: inline-block"><{$company.companyName}></h4>
+                    <a style="visibility: visible;border:none "  href="javascript: ;">
                         <i class="icon-edit-custom reset-company"></i></a>
-                        <{if $notice}>
-                            <i style="position: relative"><i class="icon-warning-sign "></i>
-                            <div class="notice" style="display: none;position: absolute;left: 30px;top: -17px;;background-color: #aaa;z-index: 1000;width: 200px">结算方式未填写,请选择结算方式<br/>并填写相应的结算价格</div></i>
-                        <{/if}>
+                            <i data-toggle="popover" data-placement="right" data-content="结算方式未填写,请选择结算方式并填写相应的结算价格" class="icon-info part-avaliable-state"></i>
                     <div class="company-info-detail">
                         <a href="javascript: void (0);" style="cursor: default">应用 <span> <script src="<{url route='media/mediaCount'}>"></script></span></a>
                         <a href="javascript: void (0);" style="cursor: default">广告位 <span> <script src="<{url route='adslot/adslotCount'}>"></script></span></a>
@@ -122,7 +120,7 @@
                 </div>
                 <div style="clear: both"></div>
                 <div style="float: left"><label class="control-label">接入方式:</label></div>
-                <div style="padding-left: 50px;float: left">
+                <div style="padding-left: 50px;float: left;">
                     <input type="checkbox" id="ch1" name="company[sdkType][]" value="1" <{if in_array('1',$company.sdkType) || empty($company.sdkType)}>checked="checked"<{/if}>> SDK/JS
                     <input type="checkbox" id="ch2" name="company[sdkType][]" value="2" <{if in_array('2',$company.sdkType) || empty($company.sdkType)}>checked="checked"<{/if}>> S2S
                 </div>

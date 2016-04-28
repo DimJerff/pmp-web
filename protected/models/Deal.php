@@ -43,17 +43,19 @@ class Deal extends DbActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('dealName , dealType , payType , mediaPrice , mediaSharingRate , developId , startDate , bidfloor , bidStrategy', 'required'),
-			array('dealType , payType , mediaPrice , bidfloor , status , mflag , modificationTime , creationTime', 'numerical', 'integerOnly'=>true),
+			//array('dealName , dealType , payType , mediaPrice , mediaSharingRate , developId , startDate , bidfloor , bidStrategy', 'required'),
+			array('dealName , dealType , developId , startDate , bidfloor , bidStrategy', 'required'),
+			//array('dealType , payType , mediaPrice , bidfloor , status , mflag , modificationTime , creationTime', 'numerical', 'integerOnly'=>true),
+			array('dealType , bidfloor , status , mflag , modificationTime , creationTime', 'numerical', 'integerOnly'=>true),
 			array('mediaSharingRate', 'numerical'),
 			array('dealName', 'length', 'max'=>60, 'min'=>2),
 			array('developId', 'length', 'max'=>10),
 			array('medias , adslots', 'length', 'min'=>2),
 			array('companies , campaigns , wseat', 'length', 'min'=>2),
 			array('startDate , endDate', 'length', 'max'=>20),
-            array('payType', 'checkPayType'),
+            //array('payType', 'checkPayType'),
             array('startDate', 'checkDate'),
-            array('developId', 'checkMediasAdslots'),
+            //array('developId', 'checkMediasAdslots'),
             array('dealType', 'checkCompaniesCampaigns'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -144,9 +146,6 @@ class Deal extends DbActiveRecord
         if (count($errMsg) != 1) {
             $this->addError('dealType', implode('<br />', $errMsg));
         }
-
-
-
 
     }
 

@@ -685,7 +685,6 @@ class DealController extends Controller {
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
         list($records, $pagingData) = $dealModel
             ->getDealPageList($companyId, Util::_time2Arr($timestr), $order, $mediaid, $adslotid, $dealname, $throw);
-
         // 模板分配显示
         $html = $this->smartyRender(array(
             'records' => $records,

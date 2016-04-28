@@ -44,6 +44,10 @@
             ￥<{$v.mediaPrice|number_format:2}><br />CPC
             <{else if $v.payType eq 3}>
             ￥<{$v.mediaPrice|number_format:2}><br />CPD
+            <{else if $v.payType eq 201}>
+            按实时协议价
+            <{else if $v.payType eq -1}>
+            未选择交易价
             <{/if}>
         </td>
         <td class=""><{$v.developName}></td>

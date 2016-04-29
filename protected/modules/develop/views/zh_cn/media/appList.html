@@ -39,6 +39,9 @@
                 <a style="visibility: hidden;" href="<{url route='media/edit' id=$v.id}>">
                     <i class="icon-edit-custom"></i>
                 </a>
+                <{if $v.payType == -1}>
+                <i data-toggle="popover" data-placement="right" data-content="结算方式未填写,请选择结算方式并填写相应的结算价格" class="icon-info part-avaliable-state"></i>
+                <{/if}>
             </td>
             <td class="number_row"><{$v.adslotCount}></td>
             <td class="number_row">￥<{if $v.cost}><{$v.cost|number_format:2}><{else}>0.00<{/if}></td>
@@ -82,6 +85,12 @@
         $(this).find('i.icon-edit-custom,i.icon-eye-open').parent().css({visibility: 'hidden'});
     });
 
+    //触发提示信息
+    $('.icon-warning-sign').hover(function(){
+        $(this).parent().find('div')[0].style.display = 'block';
+    }, function () {
+        $(this).parent().find('div')[0].style.display = 'none';
+    })
     // 启动和暂停按钮
     $('i.icon-stop, i.icon-on').closest('a').click(function(){
         var object = $(this);
@@ -92,4 +101,6 @@
         }, null, 200);
         return false;
     });
+    //提示信息
+    $('.icon-info').popover('hide');
 </script>

@@ -15,6 +15,10 @@
  * @property integer $city
  * @property integer $state
  * @property string $address
+ * @property integer $sdkType
+ * @property integer $payType
+ * @property integer $mediaPrice
+ * @property integer $mediaSharingRate
  * @property integer $status
  * @property integer $mflag
  * @property integer $creationTime
@@ -38,7 +42,7 @@ class Company extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('roleID, companyName, currency, timezone, creationTime', 'required'),
+			array('roleID, companyName, currency, timezone, creationTime, payType, sdkType, mediaPrice , mediaSharingRate', 'required'),
 			array('currency, timezone, postalCode, country, city, state, mflag, creationTime, modificationTime, status', 'numerical', 'integerOnly'=>true),
 			array('companyName', 'length', 'max'=>32),
 			array('telephone', 'length', 'max'=>16),
@@ -77,6 +81,10 @@ class Company extends CActiveRecord
 			'city' => 'City',
 			'state' => 'State',
 			'address' => 'Address',
+			'sdkType' => '接入方式',
+			'payType' => '结算方式',
+			'mediaPrice' => '协议支付价格',
+			'mediaSharingRate' => '媒体分成',
 			'status' => 'Status',
 			'mflag' => 'Mflag',
 			'creationTime' => 'Creation Time',
@@ -113,6 +121,10 @@ class Company extends CActiveRecord
 		$criteria->compare('city',$this->city);
 		$criteria->compare('state',$this->state);
 		$criteria->compare('address',$this->address,true);
+		$criteria->compare('sdkType',$this->sdkType);
+		$criteria->compare('payType',$this->payType);
+		$criteria->compare('mediaPrice',$this->mediaPrice);
+		$criteria->compare('mediaSharingRate',$this->mediaSharingRate);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('mflag',$this->mflag);
 		$criteria->compare('creationTime',$this->creationTime);

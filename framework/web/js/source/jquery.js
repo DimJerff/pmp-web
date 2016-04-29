@@ -1724,7 +1724,7 @@ jQuery.extend({
 });
 
 jQuery.fn.extend({
-	data: function( key, value ) {
+	data: function( key, value ) {console.log(key);console.log(valu)
 		var parts, part, attr, name, l,
 			elem = this[0],
 			i = 0,

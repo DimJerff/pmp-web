@@ -49,7 +49,36 @@ class UserController extends Controller
             'errors' => $errors,
         ));
     }
+    /* 编辑用户密码 */
+    public function actionEdit_passwd() {
+        $this->checkAccess();
+        $user = Yii::app()->user;
+        $userState = $user->getRecord();
 
+        $errors = null;
+        if($_POST['edit'] && $this->checkAccess('save')) {
+            /* 用户信息 */
+            $formModel = new UserForm('edit');
+            $_POST['edit']['email'] = $userState->email;
+            $formModel->attributes = $_POST['edit'];
+            if($formModel->validate()) {
+                $userModel = User::model();
+                if($userModel->updateByPk($user->id, array(
+
+                ))) {
+                    /* 更新状态 */
+                    $user->setState('user', $userModel->findByPk($user->id));
+                }
+                $errors = array('normal' => true,);
+            }else{
+                /* get format errors */
+                $errors = $formModel->getErrors();
+            }
+        }
+        $this->smartyRender(array(
+            'errors' => $errors,
+        ));
+    }
     /**
      * 切换公司
      * @param int $companyId 公司id

@@ -897,14 +897,16 @@ class DealController extends Controller {
     private function _dealDataBeforeValidate($data) {
         $data['startDate'] = strtotime($data['startDate']);
         $data['endDate'] = strtotime($data['endDate']);
-
+        if($data['bidStrategy'] == 2){
+            $data['bidfloor'] = 0;
+        }
         /*if ($data['_mediaPrice_mediaSharingRate']) {
             $data['mediaPrice'] = 0;
             $data['payType'] = $data['_mediaPrice_mediaSharingRate'];
         } else {
             $data['mediaSharingRate'] = 0;
         }
-
-        return $data;*/
+*/
+        return $data;
     }
 }

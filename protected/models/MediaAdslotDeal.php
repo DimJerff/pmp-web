@@ -8,6 +8,7 @@
  * @property integer $mediaId
  * @property integer $adslotId
  * @property integer $dealId
+ * @property integer $companyId
  */
 class MediaAdslotDeal extends DbActiveRecord
 {
@@ -27,7 +28,7 @@ class MediaAdslotDeal extends DbActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('mediaId, adslotId, dealId', 'numerical', 'integerOnly'=>true),
+			array('mediaId, adslotId, dealId, companyId', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('mediaId, adslotId, dealId', 'safe', 'on'=>'search'),
@@ -54,6 +55,7 @@ class MediaAdslotDeal extends DbActiveRecord
 			'mediaId' => '应用id',
 			'adslotId' => '广告位id 0:应用全选时 广告位默认为0',
 			'dealId' => '交易id',
+			'companyId' => '供应商id',
 		);
 	}
 
@@ -78,6 +80,7 @@ class MediaAdslotDeal extends DbActiveRecord
 		$criteria->compare('mediaId',$this->mediaId);
 		$criteria->compare('adslotId',$this->adslotId);
 		$criteria->compare('dealId',$this->dealId);
+		$criteria->compare('companyId',$this->companyId);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -155,6 +158,8 @@ class MediaAdslotDeal extends DbActiveRecord
             "mad.dealId",
             "d.dealName",
             "d.dealType",
+            "d.bidStrategy",
+            "d.bidfloor",
             "d.payType",
             "d.mediaPrice",
             "d.startDate",

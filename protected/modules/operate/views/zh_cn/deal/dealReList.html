@@ -4,7 +4,7 @@
             <th>&nbsp;</th>
             <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="交易名称" sort="dealName"}>
             <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="类型" sort="dealType"}>
-            <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="结算方式" sort="mediaPrice" class="number_row"}>
+            <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="售出底价" sort="mediaPrice" class="number_row"}>
             <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="开始日期" sort="startDate"}>
             <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="结束日期" sort="endDate"}>
             <{include file="../../../../develop/views/zh_cn/_common/column_sort.html" name="收入" sort="cost" class="number_row"}>
@@ -28,7 +28,12 @@
             </td>
             <td><{if $v.dealType eq 0}>公开<{else if $v.dealType eq 1}>私有<{/if}></td>
             <td class="number_row">
-                <{if $v.payType eq 101}>
+                <{if $v.bidStrategy eq 2}>
+                按规则
+                <{else if $v.bidStrategy eq 1}>
+                ￥<{$v.bidfloor|number_format:2}><br />CPM
+                <{/if}>
+                <!--<{if $v.payType eq 101}>
                 <{$v.mediaSharingRate}>%
                 <{else if $v.payType eq 1}>
                 ￥<{$v.mediaPrice|number_format:2}><br />CPM
@@ -40,7 +45,7 @@
                 按实时协议价
                 <{else if $v.payType eq -1}>
                 未选择交易价
-                <{/if}>
+                <{/if}>-->
             </td>
             <td><{$v.startDate|date_format:'%Y/%m/%d'}></td>
             <td><{$v.endDate|date_format:'%Y/%m/%d'}></td>

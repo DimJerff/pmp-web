@@ -113,19 +113,26 @@ class MediaAdslotDeal extends DbActiveRecord
      * @return mixed
      */
     public function upDealRelation($dealId, $mediaIdArr, $adslotIdArr) {
-        // 先清理旧数据
+        // 先清理旧数据 通过交易id删除对应的交易关系
         $this->delDealById($dealId);
         $arr = array();
-        if (!empty($mediaIdArr)) {
-            foreach ($mediaIdArr as $v) {
-                $arr[] = "({$v}, 0, {$dealId}, 1)";
-            }
+        $compamyID = Yii::app()->session['companyID'];
+        if(!$compamyID){
+            return false;
         }
-
-        if (!empty($adslotIdArr)) {
-            $adslotIdArr = MediaAdslot::model()->getMediaIdsByIds($adslotIdArr);
-            foreach ($adslotIdArr as $v) {
-                $arr[] = "({$v['mediaId']}, {$v['adslotId']}, {$dealId}, 1)";
+        if (empty($mediaIdArr) && empty($adslotIdArr)) {
+            $arr[] = "(0, 0, {$dealId}, {$compamyID}, 1)";
+        }else{
+            if (!empty($mediaIdArr)) {
+                foreach ($mediaIdArr as $v) {
+                    $arr[] = "({$v}, 0, {$dealId}, {$compamyID}, 1)";
+                }
+            }
+            if (!empty($adslotIdArr)) {
+                $adslotIdArr = MediaAdslot::model()->getMediaIdsByIds($adslotIdArr);
+                foreach ($adslotIdArr as $v) {
+                    $arr[] = "({$v['mediaId']}, {$v['adslotId']}, {$dealId}, {$compamyID}, 1)";
+                }
             }
         }
         $sql = "INSERT INTO ".$this->tableName()." VALUES " . implode(", ", $arr);

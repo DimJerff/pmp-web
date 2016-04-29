@@ -852,7 +852,6 @@ class DealController extends Controller {
                 $model = new Deal();
                 $operationType = 3;
             }
-
             $model->attributes = $this->_dealDataBeforeValidate($postData);
             if ($model->validate()) {
                 $transaction = Yii::app()->db->beginTransaction(); //开启事务
@@ -899,13 +898,13 @@ class DealController extends Controller {
         $data['startDate'] = strtotime($data['startDate']);
         $data['endDate'] = strtotime($data['endDate']);
 
-        if ($data['_mediaPrice_mediaSharingRate']) {
+        /*if ($data['_mediaPrice_mediaSharingRate']) {
             $data['mediaPrice'] = 0;
             $data['payType'] = $data['_mediaPrice_mediaSharingRate'];
         } else {
             $data['mediaSharingRate'] = 0;
         }
 
-        return $data;
+        return $data;*/
     }
 }

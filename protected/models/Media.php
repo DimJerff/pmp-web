@@ -52,7 +52,7 @@ class Media extends DbActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('companyId , os, sdkType, appName, appCategory , appBundle , appIcon , payType , mediaPrice , mediaSharingRate', 'required'),
+			array('companyId , os, sdkType, appName, appCategory , appIcon, appBundle  , payType , mediaPrice , mediaSharingRate', 'required'),
 			array('companyId , os, appCategory , payType , mediaPrice ', 'numerical', 'integerOnly'=>true),
 			array('appName, ', 'length', 'max'=>32),
 			array('mediaSharingRate', 'numerical'),

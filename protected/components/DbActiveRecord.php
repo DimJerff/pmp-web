@@ -130,7 +130,7 @@ class DbActiveRecord extends CActiveRecord {
     }
 
     // field
-    public function _field($field ) {
+    public function _field($field) {
         if (is_array($field)) {
             $field = implode(', ', $field);
         } else if (is_string($field)) {

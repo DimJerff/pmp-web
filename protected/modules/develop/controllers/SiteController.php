@@ -86,7 +86,7 @@ class SiteController extends Controller
             }
             $errors ? $this -> rspJSON($errors,'error') : $this -> rspJSON(null);
         }
-        $this -> redirect($this -> createUrl('site/dashboard'),array('errors',$errors));
+        $this -> redirect($this -> createUrl('site/dashboard'),array('errors',$errors));die;
     }
     /**
      * 获取当前当天的公司交易消耗
@@ -136,15 +136,20 @@ class SiteController extends Controller
      */
     public function _mediaDataBeforeValidate ($data){
         //是否是不启用状态 或 启用了但是未选择
-        if(empty($data['Enable']) || empty($data['_mediaPrice_mediaSharingRate'])){
+        if(empty($data['Enable'])){
             $data['payType'] = -1;
+            $data['mediaPrice'] = 0;
+            $data['mediaSharingRate'] = 0;
         }else{
-            if($data['_mediaPrice_mediaSharingRate']){
+            if($data['_mediaPrice_mediaSharingRate']){echo 11;
                 $data['payType']    = $data['_mediaPrice_mediaSharingRate'];
+                if($data['_mediaPrice_mediaSharingRate'] >200){
+                    $data['mediaPrice'] = 0;
+                }else{
+                    $data['mediaSharingRate'] =0;
+                }
             }
         }
-        $data['mediaPrice']=empty($data['mediaPrice'])?0:$data['mediaPrice'] ;
-        $data['mediaSharingRate']=empty($data['mediaSharingRate'])?0:$data['mediaSharingRate'] ;
         return $data;
     }
 }

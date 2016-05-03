@@ -900,13 +900,6 @@ class DealController extends Controller {
         if($data['bidStrategy'] == 2){
             $data['bidfloor'] = 0;
         }
-        /*if ($data['_mediaPrice_mediaSharingRate']) {
-            $data['mediaPrice'] = 0;
-            $data['payType'] = $data['_mediaPrice_mediaSharingRate'];
-        } else {
-            $data['mediaSharingRate'] = 0;
-        }
-*/
         return $data;
     }
 }

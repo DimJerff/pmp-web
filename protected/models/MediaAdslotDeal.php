@@ -119,22 +119,22 @@ class MediaAdslotDeal extends DbActiveRecord
         // 先清理旧数据 通过交易id删除对应的交易关系
         $this->delDealById($dealId);
         $arr = array();
-        $compamyID = Yii::app()->session['companyID'];
-        if(!$compamyID){
+        $compamyId = Yii::app()->session['companyID'];
+        if(!$compamyId){
             return false;
         }
         if (empty($mediaIdArr) && empty($adslotIdArr)) {
-            $arr[] = "(0, 0, {$dealId}, {$compamyID}, 1)";
+            $arr[] = "(0, 0, {$dealId}, {$compamyId}, 1)";
         }else{
             if (!empty($mediaIdArr)) {
                 foreach ($mediaIdArr as $v) {
-                    $arr[] = "({$v}, 0, {$dealId}, {$compamyID}, 1)";
+                    $arr[] = "({$v}, 0, {$dealId}, {$compamyId}, 1)";
                 }
             }
             if (!empty($adslotIdArr)) {
                 $adslotIdArr = MediaAdslot::model()->getMediaIdsByIds($adslotIdArr);
                 foreach ($adslotIdArr as $v) {
-                    $arr[] = "({$v['mediaId']}, {$v['adslotId']}, {$dealId}, {$compamyID}, 1)";
+                    $arr[] = "({$v['mediaId']}, {$v['adslotId']}, {$dealId}, {$compamyId}, 1)";
                 }
             }
         }
@@ -425,7 +425,7 @@ class MediaAdslotDeal extends DbActiveRecord
      * @param int $endDate 结果时间戳
      * @return array|mixed
      */
-    public function getCheckedAdslotList($companyId, $adslotIdArr, $dealId, $startDate, $endDate=0) {
+    public function getCheckedAdslotList($companyId, $adslotIdArr=array(), $dealId, $startDate, $endDate=0) {
         if (empty($adslotIdArr)) {
             return array();
         }
@@ -443,7 +443,36 @@ class MediaAdslotDeal extends DbActiveRecord
         if (!empty($dealId)) {
             $where[] = "t.dealId != {$dealId}";
         }
-
         return $this->_select()->_field($field)->_from()->_join($join)->_where($where)->_query();
+    }
+
+    /**
+     * 查询一段时间范围内供应商的在交易列表信息[不包含制定交易id]
+     * @param $companyId 公司id
+     * @param $adslotIdArr 应用id集合
+     * @param $dealId 交易id
+     * @param $startDate 开始时间戳
+     * @param int $endDate 结果时间戳
+     * @return array|mixed
+     */
+    public function getCheckedCompanyDealLIst($companyId, $dealId, $startDate, $endDate=0){
+        if (!isset($companyId)) {
+            return array();
+        }
+        $field = "t.*,c.companyName";
+        $join = array(
+            "c_company c ON c.id = t.companyId",
+        );
+        $where[] = "companyId = {$companyId}";
+        if (!empty($dealId)) {
+            $where[] = "t.id != {$dealId}";
+        }
+        if (empty($endDate)) {
+            $where[] = "endDate >= {$startDate} OR (endDate = 0)";
+        } else {
+            $where[] = "endDate >= {$startDate} OR (startDate>= {$startDate} AND endDate = 0)";
+        }
+
+        return $this->_select()->_field($field)->_from('c_deal t')->_join($join)->_where($where)->_query();
     }
 }

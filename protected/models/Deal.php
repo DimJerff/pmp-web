@@ -126,12 +126,15 @@ class Deal extends DbActiveRecord
         }
 
         // 交易类型下检测选择的广告位同一时段内是否已经被选择
-        $errMsg = array(
+/*        $errMsg = array(
             '以下应用或广告位同一时段已经被其他交易选择',
+        );*/
+        $errMsg = array(
+            '该供应商正在进行其他交易',
         );
         // 获取公司id
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
-        $checkedMediaList = MediaAdslotDeal::model()->getCheckedMediaList($companyId, CJSON::decode($this->medias, true), $this->id, $this->startDate, $this->endDate);
+ /*       $checkedMediaList = MediaAdslotDeal::model()->getCheckedMediaList($companyId, CJSON::decode($this->medias, true), $this->id, $this->startDate, $this->endDate);
         $checkedAdslotList = MediaAdslotDeal::model()->getCheckedAdslotList($companyId, CJSON::decode($this->adslots, true), $this->id, $this->startDate, $this->endDate);
         if (!empty($checkedMediaList)) {
             foreach ($checkedMediaList as $k=>$v) {
@@ -141,6 +144,12 @@ class Deal extends DbActiveRecord
         if (!empty($checkedAdslotList)) {
             foreach ($checkedAdslotList as $k=>$v) {
                 $errMsg[] = $v['dealName'].' > '.$v['appName'].' > '.$v['adslotName'];
+            }
+        }*/
+        $checkedCompanyDealList = MediaAdslotDeal::model()->getCheckedCompanyDealLIst($companyId, $this->id, $this->startDate, $this->endDate);
+        if (!empty($checkedCompanyDealList)) {
+            foreach ($checkedCompanyDealList as $k=>$v) {
+                $errMsg[] = $v['companyName'].' > '.$v['dealName'];
             }
         }
         if (count($errMsg) != 1) {

@@ -382,15 +382,20 @@ class MediaController extends Controller {
      */
     public function _mediaDataBeforeValidate ($data){
         //是否是不启用状态 或 启用了但是未选择
-        if(empty($data['Enable']) || empty($data['_mediaPrice_mediaSharingRate'])){
+        if(empty($data['Enable'])){
             $data['payType'] = -1;
+            $data['mediaPrice'] = 0;
+            $data['mediaSharingRate'] = 0;
         }else{
-            if($data['_mediaPrice_mediaSharingRate']){
+            if($data['_mediaPrice_mediaSharingRate']){echo 11;
                 $data['payType']    = $data['_mediaPrice_mediaSharingRate'];
+                if($data['_mediaPrice_mediaSharingRate'] >200){
+                    $data['mediaPrice'] = 0;
+                }else{
+                    $data['mediaSharingRate'] =0;
+                }
             }
         }
-        $data['mediaPrice']=empty($data['mediaPrice'])?0:$data['mediaPrice'] ;
-        $data['mediaSharingRate']=empty($data['mediaSharingRate'])?0:$data['mediaSharingRate'] ;
         return $data;
     }
 }

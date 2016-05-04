@@ -54,7 +54,7 @@ class MediaController extends Controller {
         $this->checkAccess();
         // 获取全部类别树
         $categoryTree = BaseMediaCategory::model()->getAllCateToTree();
-        $companyId = Yii::app()->session['companyID'];
+        $companyId = Yii::app()->user->getRecord();
         $company = Company::model() ->findByPk($companyId);
         $company['sdkType'] = explode(',',$company['sdkType']);
         // 模板分配显示

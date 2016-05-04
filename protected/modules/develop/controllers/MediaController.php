@@ -32,9 +32,7 @@ class MediaController extends Controller {
         $mediaModel = Media::model();
         // 通过主键id获取当前应用的信息
         $media = $mediaModel->getMediaById($id);
-        Yii::app()->session['mediaID'] = $id;
-        Yii::app()->session['mediaSdkType'] = $media['sdkType'];
-// 实例化广告位
+        // 实例化广告位
         $adslotModel = MediaAdslot::model();
         // 获取当前广告位的个数
         $adslotCount = $adslotModel->getCountByMediaId($id);
@@ -54,7 +52,7 @@ class MediaController extends Controller {
         $this->checkAccess();
         // 获取全部类别树
         $categoryTree = BaseMediaCategory::model()->getAllCateToTree();
-        $companyId = Yii::app()->user->getRecord();
+        $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
         $company = Company::model() ->findByPk($companyId);
         $company['sdkType'] = explode(',',$company['sdkType']);
         // 模板分配显示

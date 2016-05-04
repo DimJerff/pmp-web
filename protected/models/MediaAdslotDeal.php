@@ -119,7 +119,7 @@ class MediaAdslotDeal extends DbActiveRecord
         // 先清理旧数据 通过交易id删除对应的交易关系
         $this->delDealById($dealId);
         $arr = array();
-        $companyId = Yii::app()->user->getRecord();
+        $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
         if(!$companyId){
             return false;
         }

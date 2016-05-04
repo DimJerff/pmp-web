@@ -22,7 +22,6 @@ class SiteController extends Controller
 		$yii = Yii::app();
 		$user = $yii->user;
 		$userState = $user->getRecord();
-		// 获取当前用户的默认公司id 存入session中
         $this->defaultCompanyID = $defaultCompanyId = $userState->defaultCompanyID;
         // 对时间进行判断处理
         if (empty($time)) {
@@ -32,16 +31,15 @@ class SiteController extends Controller
         $timeArr = explode('-', $time);
         // 获取当前公司的信息
         $company = Company::model()->findByPk($defaultCompanyId);
+        $sdkType=$company['sdkType'];
         //获取当前公司的应用及媒体结算价格
         //$notice= $this -> getNotice($company,$defaultCompanyId);
         // 获取当前公司的接入方式
-        $sdkType=$company['sdkType'];
         if(!empty($sdkType)){
             $company['sdkType']=explode(',',$sdkType);
         }else{
             $company['sdkType']=array();
         }
-        Yii::app()->session['companySdkType'] = $company['sdkType'];
         // 模板分配显示
         $this->smartyRender(array(
             'time'    => $time,

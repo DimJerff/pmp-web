@@ -46,11 +46,13 @@ class AdslotController extends Controller {
         // 获取当前操作的应用信息
         $media = Media::model()->findByPk($mediaId);
         // 模板分配显示
+        $defaultCompanyId = Yii::app()->user->getRecord()->defaultCompanyID;
+        $company = Company::model()->findByPk($defaultCompanyId);
         $this->smartyRender(array(
             'deviceDpi' => $deviceDpi,
             'adtype'    => $adtype,
             'media'     => $media,
-            'sdkType'   => Yii::app()->session['mediaSdkType'],
+            'sdkType'   => $company['sdkType'],
         ));
     }
 
@@ -70,12 +72,13 @@ class AdslotController extends Controller {
                 $adslot['_widthHeight'] = $v[0] . ',' . $v[1];
             }
         }
-
-        $this->smartyRender(array(
+        $defaultCompanyId = Yii::app()->user->getRecord()->defaultCompanyID;
+        $company = Company::model()->findByPk($defaultCompanyId);
+                $this->smartyRender(array(
             'deviceDpi' => $deviceDpi,
             'adtype'    => $adtype,
             'adslot'    => $adslot,
-            'sdkType'   => Yii::app()->session['mediaSdkType'],
+            'sdkType'   => $company['sdkType'],
         ));
     }
 

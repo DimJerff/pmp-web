@@ -31,10 +31,14 @@
 <div class="control-group">
     <label class="control-label">接入方式</label>
     <div class="controls" value="1">
-        <label class="radio inline" style="padding-left: 0px;">
-            <{if $media.sdkType eq 1}>SDK/JS
-            <{else if $media.sdkType   eq 2}>S2S<{/if}>
-        </label>
+        <{if $media.sdkType eq 1}><label class="radio inline" style="padding-left: 0px;" >SDK</label>
+        <{else if $media.sdkType eq 2}><label class="radio inline" style="padding-left: 0px;" >S2S</label>
+        <{else}>
+        <label class="radio inline" >
+        <input type="radio" name="media[sdkType]" value="1"/> SDK</label>
+        <label class="radio inline">
+        <input type="radio" name="media[sdkType]" value="2"/> S2S</label>
+        <{/if}>
     </div>
 </div>
 <{else}>

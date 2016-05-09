@@ -44,7 +44,7 @@ class UserForm extends CFormModel
 			$this->addError($attr, '邮箱已存在');
 	}
 
-	/* 检查邮箱是否已存在 */
+	/* 检查电话号码是否已存在 */
 	public function checkTelephone($attr, $params)
 	{
 		/* 检查电话号码是否准确 */
@@ -55,6 +55,7 @@ class UserForm extends CFormModel
 	/* 验证密码 */
 	public function authPasswd($attr, $params)
 	{
+		//获取UserIdentity实例
 		$this->_identity = new UserIdentity($this->email, $this->$attr);
 		if(!$this->_identity->authenticate()) {
 			switch ($this->_identity->errorCode) {

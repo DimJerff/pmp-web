@@ -15,10 +15,23 @@
     </div>
 </div>
 <div class="control-group">
+    <label class="control-label"><span class="required">*</span>广告形式</label>
+    <div class="controls">
+        <select class="select-adtype" name="adslot[adtype]" id="select-adtype">
+            <option value="">请选择</option>
+            <{foreach from=$adtype key=k item=v}>
+            <option value="<{$k}>" <{if $adslot.adtype == $k}>selected='selected'<{/if}>><{$v}></option>
+            <{/foreach}>
+        </select>
+    </div>
+</div>
+
+<div class="control-group">
     <label class="control-label"><span class="required">*</span>尺寸</label>
     <div class="controls">
         <{foreach from=$deviceDpi key=k item=v}>
         <select class="select-dpi hide" name="adslot[_widthHeight<{$k}>]" id="select-dpi-<{$v.enName}>">
+            <option value="">请选择</option>
             <{foreach from=$v.type item=vv}>
             <option value="<{$vv[0]}>,<{$vv[1]}>"><{$vv[2]}></option>
             <{/foreach}>
@@ -31,6 +44,15 @@
         </span>
     </div>
 </div>
+<{if $sdkType == 2}>
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>标识位</label>
+    <div class="controls">
+        <input type="text" placeholder="标识位…" name="adslot[relationId]" value="<{if $adslot}><{$adslot.relationId}><{/if}>">
+        <span class="required"></span><i data-toggle="popover" data-placement="right" data-content="S2S对接时,填写在协议中的广告位ID" class="icon-info part-avaliable-state"></i>
+    </div>
+</div>
+<{elseif $sdkType == 1}>
 <div class="control-group">
     <label class="control-label"><span class="required">*</span>刷新时间间隔</label>
     <div class="controls">
@@ -41,20 +63,93 @@
     <label class="control-label">频次限制</label>
     <div class="controls">
         <label class="radio inline">
-            <input type="radio" value="-1" name="adslot[_frequencyCapUnitCapAmount]">
+            <input type="radio" value="-1" name="adslot[_frequencyCapUnitCapAmount]" >
             无限制
         </label>
         <br>
         <label class="radio inline">
-            <input type="radio" value="" name="adslot[_frequencyCapUnitCapAmount]">
+            <input type="radio" value="" name="adslot[_frequencyCapUnitCapAmount]" >
                 <span class="radio-frequency">
-                    <select name="adslot[frequencyCapUnit]" style="width: 100px;" disabled="disabled">
+                    <select name="adslot[frequencyCapUnit]" style="width: 100px;" >
                         <option value="1" <{if $adslot}><{if $adslot.frequencyCapUnit == 1}>selected="selected"<{/if}><{/if}>>每小时</option>
                         <option value="2" <{if $adslot}><{if $adslot.frequencyCapUnit == 2}>selected="selected"<{/if}><{/if}>>每天</option>
                     </select>
                     在每个设备上展示
-                    <input name="adslot[frequencyCapAmount]" type="text" value="<{if $adslot}><{if $adslot.frequencyCapAmount gt 0}><{$adslot.frequencyCapAmount}><{/if}><{/if}>" style="width: 40px;" disabled="disabled" /> 次
+                    <input name="adslot[frequencyCapAmount]" type="text" value="<{if $adslot}><{if $adslot.frequencyCapAmount gt 0}><{$adslot.frequencyCapAmount}><{/if}><{/if}>" style="width: 40px;"  /> 次
                 </span>
         </label>
+    </div>
+</div>
+<{/if}>
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>结算方式</label>
+    <div class="controls">
+        <input type="checkbox" name="media[Enable]" value="1" />
+        <span>启用</span>
+        <br />
+        <i id="radio-hidden" style="display: none;">
+        <{if !$adslot}>
+            <{if $sdkType == 2}>
+                <label class="radio inline">
+                    <input type="radio" name="adslot[_mediaPrice_mediaSharingRate]" value="201" checked="checked" />
+                    <span>按照实时协议价</span>
+                </label>
+                <br />
+            <{/if}>
+        <label class="radio inline">
+            <input type="radio" name="adslot[_mediaPrice_mediaSharingRate]" value="0">
+            <span>协议支付价格</span>
+            <input type="text" name="adslot[mediaPrice]" value="<{if $adslot}><{if $adslot.payType < 100}><{$adslot.mediaPrice}><{/if}><{/if}>"  placeholder="金额..." style="width: 60px;" />
+            <span>元</span>
+            <span class="radio-frequency">
+                <select name="adslot[payType]" style="width: 100px;">
+                    <option value="3" <{if $adslot}><{if $adslot.payType eq 3}>selected="selected"<{/if}><{/if}> >每天</option>
+                    <option value="2" <{if $adslot}><{if $adslot.payType eq 2}>selected="selected"<{/if}><{/if}> >每次点击</option>
+                    <option value="1" <{if $adslot}><{if $adslot.payType eq 1}>selected="selected"<{/if}><{/if}> >每千次展示</option>
+                </select>
+            </span>
+        </label>
+        <br />
+        <label class="radio inline">
+            <input type="radio" name="adslot[_mediaPrice_mediaSharingRate]" value="101" />
+            <span>媒体收入占售出额比例</span>
+            <input type="text" name="adslot[mediaSharingRate]" value="<{if $adslot}><{if $adslot.payType > 100}><{$adslot.mediaSharingRate}><{/if}><{/if}>" style="width: 60px;"  />
+            <span>%</span>
+        </label>
+        <{else}>
+            <{if $adslot.payType lt 100 && $adslot.payType gt 0}>
+            <label class="radio inline" style="padding-left: 0px;">
+                <input type="hidden" name="adslot[_mediaPrice_mediaSharingRate]" value="0">
+                <span>协议支付价格</span>
+                <input type="text" name="adslot[mediaPrice]" value="<{$adslot.mediaPrice}>"  placeholder="金额..." style="width: 60px;" />
+                <span>元</span>
+                <input type="hidden" name="adslot[payType]" value="<{$adslot.payType}>" />
+                <span>
+                <{if $adslot.payType eq 3}>
+                    每天
+                <{/if}>
+                <{if $adslot.payType eq 2}>
+                    每次点击
+                <{/if}>
+                <{if $adslot.payType eq 1}>
+                    每千次展示
+                <{/if}>
+                </span>
+            </label>
+            <{else if $adslot.payType gt 200}>
+                <label class="radio inline" style="padding-left: 0px;">
+                <input type="hidden" name="adslot[_mediaPrice_mediaSharingRate]" value="201" />
+                <span>按照实时协议价</span>
+                </label>
+            <{else}>333
+            <label class="radio inline" style="padding-left: 0px;">
+                <input type="hidden" name="adslot[_mediaPrice_mediaSharingRate]" value="101" />
+                <span>媒体收入占售出额比例</span>
+                <input type="text" name="adslot[mediaSharingRate]" value="<{$adslot.mediaSharingRate}>" style="width: 60px;"  />
+                <span>%</span>
+            </label>
+            <{/if}>
+        <{/if}>
+        </i>
     </div>
 </div>

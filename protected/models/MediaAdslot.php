@@ -18,6 +18,10 @@
  * @property integer $adtype
  * @property integer $apiFramework
  * @property integer $privateAuction
+ * @property integer $relationId
+ * @property integer $payType
+ * @property integer $mediaPrice
+ * @property double $mediaSharingRate
  * @property integer $status
  * @property integer $mflag
  * @property integer $modificationTime
@@ -41,13 +45,13 @@ class MediaAdslot extends DbActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-            array('mediaId, adslotName, adslotIdStr, refreshTime, deviceType, width, height, frequencyCapUnit, frequencyCapAmount', 'required'),
+            array('mediaId, adslotName, adslotIdStr, refreshTime, deviceType, width, height, frequencyCapUnit, frequencyCapAmount , payType , mediaPrice , mediaSharingRate', 'required'),
 			array('deviceType, frequencyCapUnit, frequencyCapAmount', 'numerical', 'integerOnly'=>true),
 			array('mediaId, refreshTime, width, height', 'length', 'max'=>11),
 			array('adslotName', 'length', 'max'=>64),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, mediaId, adslotName, adslotIdStr, refreshTime, deviceType, width, height, frequencyCapUnit, frequencyCapAmount, adtype, apiFramework, privateAuction, status, mflag, modificationTime, creationTime', 'safe', 'on'=>'search'),
+			array('id, mediaId, adslotName, adslotIdStr, refreshTime, deviceType, width, height, frequencyCapUnit, frequencyCapAmount, adtype, apiFramework, privateAuction, status, mflag, modificationTime, creationTime , relationId', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -81,10 +85,14 @@ class MediaAdslot extends DbActiveRecord
 			'adtype' => 'ad type , unknown = 0, Interstitial = 1, full-screen = 2, complete full screen = 3, banner = 4, topbanner = 5, bottombanner = 6',
 			'apiFramework' => 'api_framework , refer to openrtb',
 			'privateAuction' => 'refer to openrtb',
-			'status' => 'on/off state of this adslot , on = 1',
+            'relationId' => '标识位',
+            'payType' => '结算方式',
+            'mediaPrice' => '协议支付价格',
+            'mediaSharingRate' => '媒体分成','status' => 'on/off state of this adslot , on = 1',
 			'mflag' => '修改状态',
 			'modificationTime' => '修改时间',
 			'creationTime' => '创建时间',
+            'relationId'   => '标识位',
 		);
 	}
 
@@ -119,7 +127,11 @@ class MediaAdslot extends DbActiveRecord
 		$criteria->compare('adtype',$this->adtype);
 		$criteria->compare('apiFramework',$this->apiFramework);
 		$criteria->compare('privateAuction',$this->privateAuction);
-		$criteria->compare('status',$this->status);
+        $criteria->compare('relationId',$this->relationId);
+        $criteria->compare('payType',$this->payType);
+        $criteria->compare('mediaPrice',$this->mediaPrice);
+        $criteria->compare('mediaSharingRate',$this->mediaSharingRate);
+        $criteria->compare('status',$this->status);
 		$criteria->compare('mflag',$this->mflag);
 		$criteria->compare('modificationTime',$this->modificationTime);
 		$criteria->compare('creationTime',$this->creationTime);

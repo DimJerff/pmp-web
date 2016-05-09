@@ -806,6 +806,24 @@
     }).ajaxComplete(function(){
         NProgress.done();
     });
+
+	/*
+	 * 是否启用
+	 */
+	$('input[name*="Enable"]').click(function(){
+		var $i= document.getElementById('radio-hidden');
+		var $display = $i.style.display;
+		if($display != 'none'){
+			$i.style.display = 'none';
+			$('.icon-info').css('visibility','visible');
+		}else{
+			$i.style.display = 'block';
+			$('.icon-info').css('visibility','hidden');
+		}
+	})
+
+	//提示信息
+	$('.icon-info').popover('hide');
 })(jQuery);
 
 /**
@@ -1103,7 +1121,6 @@ function copyToClipboard(id){
  */
 function ajaxPage(listId, url, param) {
     var listObj = $("#" + listId);
-
     if (param == undefined || !param) {
         param = "pagenum=" + listObj.data("pagenum");
     }
@@ -1127,5 +1144,7 @@ function ajaxSdk(adslotId) {
         box.on('hidden', function () {})
     });
 }
+
+
 
 

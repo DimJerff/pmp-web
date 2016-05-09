@@ -10,7 +10,12 @@
             <!-- 内容头部信息 start -->
             <div class="clearfix company-info-container content-body-head">
                 <div class="company-info left">
-                    <h4><{$company.companyName}></h4>
+                    <h4 style="display: inline-block"><{$company.companyName}></h4>
+                    <a style="visibility: visible;border:none "  href="javascript: ;">
+                        <i class="icon-edit-custom reset-company"></i></a>
+                        <{if $company.payType == -1}>
+                            <i data-toggle="popover" data-placement="right" data-content="结算方式未填写,请选择结算方式并填写相应的结算价格" class="icon-info part-avaliable-state"></i>
+                        <{/if}>
                     <div class="company-info-detail">
                         <a href="javascript: void (0);" style="cursor: default">应用 <span> <script src="<{url route='media/mediaCount'}>"></script></span></a>
                         <a href="javascript: void (0);" style="cursor: default">广告位 <span> <script src="<{url route='adslot/adslotCount'}>"></script></span></a>
@@ -103,6 +108,71 @@
         </div>
     </div>
 </div>
+<div id="modalbox" class="modal hide fade filter-modal in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="width: auto; margin-left: -266.090909123421px; margin-top: 100px; display: none;">
+    <form action="/develop/site/postcompany" method="post" id="change_form" class="">
+        <div class="modal-header" style="padding-left: 40px"><button type="button" class="close reset-company" data-dismiss="modal" aria-hidden="true" onclick="$('#modalbox').modal('hide')">×</button>
+            <h3>编辑——悦读网</h3>
+        </div>
+        <div class="modal-body">
+            <div style="width: 500px;padding-left: 30px">
+                <div style="float:left;"><label class="control-label">供应商名称:</label></div>
+                <div style="padding-left: 40px;float:left;">
+                    <{$company.companyName}>
+                    <input type="hidden" name="company[id]" value="<{$company.id}>"/>
+                </div>
+                <div style="clear: both"></div>
+                <div style="float: left"><label class="control-label">接入方式:</label></div>
+                <div style="padding-left: 50px;float: left;">
+                    <input type="checkbox" id="ch1" name="company[sdkType][]" value="1" <{if in_array('1',$company.sdkType) || empty($company.sdkType)}>checked="checked"<{/if}>> SDK/JS
+                    <input type="checkbox" id="ch2" name="company[sdkType][]" value="2" <{if in_array('2',$company.sdkType) || empty($company.sdkType)}>checked="checked"<{/if}>> S2S
+                </div>
+                <div style="clear: both"></div>
+                <div style="padding-right: 30px;float:left;height: 100px">
+                    <label class="control-label">结算方式:</label>
+                </div>
+                <div class="if-enable" style="padding-left: 20px;float:left;display: block">
+                    <input type="checkbox" name="company[Enable]" value="1" />
+                    <span>启用</span>
+                    <br />
+                    <i id="radio-hidden" style="display: none;">
+                        <label class="radio inline">
+                            <input type="radio" name="company[_mediaPrice_mediaSharingRate]" value="201" <{if $company.payType == 201}> checked="checked" <{/if}>/>
+                            <span>按照实时协议价</span>
+                        </label>
+                        <br />
+                        <label class="radio inline">
+                            <input type="radio" name="company[_mediaPrice_mediaSharingRate]" value="0" <{if $company.payType < 100 && $company.payType > 0}> checked="checked" <{/if}>  >
+                            <span>协议支付价格</span>
+                            <input type="text" name="company[mediaPrice]" value="<{if $company}><{if $company.mediaPrice > 0 }><{$company.mediaPrice}><{/if}><{/if}>"  placeholder="金额..." style="width: 60px;height: auto" />
+                            <span>元</span>
+                        <span class="radio-frequency">
+                            <select name="company[payType]" style="width: 100px;">
+                                <option value="3" <{if $company}><{if $company.payType eq 3}>selected="selected"<{/if}><{/if}> >每天</option>
+                                <option value="2" <{if $company}><{if $company.payType eq 2}>selected="selected"<{/if}><{/if}> >每次点击</option>
+                                <option value="1" <{if $company}><{if $company.payType eq 1}>selected="selected"<{/if}><{/if}> >每千次展示</option>
+                            </select>
+                        </span>
+                        </label>
+                        <br />
+                        <label class="radio inline">
+                            <input type="radio" name="company[_mediaPrice_mediaSharingRate]" value="101" <{if $company.payType == '101'}> checked="checked" <{/if}> disabled/>
+                            <span>媒体收入占售出额比例</span>
+                            <input type="text" name="company[mediaSharingRate]" value="<{if $company}><{if $company.payType > 100}><{$company.mediaSharingRate}><{/if}><{/if}>" style="width: 60px;;"  disabled/>
+                            <span>%</span>
+                        </label></i>
+                    <br />
+                    <label class="radio inline">
+                        <input type="button" class="edit-company btn-small btn-primary applyBtn btn btn-default" value="提交">
+                        &nbsp;
+                        <input type="button" class="reset-company btn-small btn-cancel cancelBtn btn btn-default" value="取消"/>
+                    </label>
+                </div>
+                <div style="clear: both"></div>
+
+            </div>
+        </div>
+    </form>
+</div>
 <!-- 主体内容 end -->
 <!-- 页脚 -->
 <{include file="../_common/footer.html"}>
@@ -166,7 +236,6 @@ $(function() {
                 var diy_width = $("#diy_width_input").val();
                 var diy_height = $("#diy_height_input").val();
 
-
                 if (!parseInt(diy_width)) {
                     //$.alert("自定义宽度 不能为空且数字", null, 320);
                     $("#diy_msg").html("自定义宽度 不能为必填且数字").show();
@@ -186,8 +255,6 @@ $(function() {
                 $("select[name='adslot-dpi']").val(dpi).change();
                 $("#modalboxContent > div").modal('hide');
             });
-
-
             return false;
         }
         ajaxAdslotPage("dpi=" + $(this).val());
@@ -234,6 +301,61 @@ $(function() {
         return false;
     });
 
+   var check=$('input[name="company[sdkType][]"]');
+    var radio=$('input[name="company[_mediaPrice_mediaSharingRate]"]:eq(0)');
+    $(check).on('click',function(){
+        if($(this).val()=='2'){
+            setDisabled();
+        }
+    })
+    $('.reset-company').on('click',function(e){
+        var $box=document.getElementById('modalbox');
+        var $display=$box.style.display;
+        if($display=='block'){
+            $box.style.display='none';
+        }else{
+            $box.style.display='block';
+        }
+    })
+    /*
+     *编辑公司接入,结算方式
+     */
+    $('.edit-company').on('click',function(){
+        $(this).closest('form').submit();
+        /*var subUrl='/develop/site/postcompany';
+        $.ajax({
+            url : subUrl,
+            data : 'company[id]=holle boy',
+            data: { id : '10' , sdkType : 2},
+            dataType : 'json',
+            success : function(data){
+            }
+        });*/
+    });
+    /*
+    * 提示信息
+    * */
+    $('.icon-warning-sign').hover(function(){
+        $(this).parent().find('div')[0].style.display = 'block';
+    }, function () {
+        $(this).parent().find('div')[0].style.display = 'none';
+    })
+   /*
+    * 结算方式的设定
+    */
+    function setDisabled(){
+        var checkS2S=$(check).eq(1);
+        //console.log($(checkS2S).attr('checked'))
+        if($(checkS2S).attr('checked')!='checked'){
+            $(checkS2S).attr('checked',true)
+            $(radio).attr('disabled',false);
+        }else{
+            $(checkS2S).attr('checked',false)
+            $(radio).attr('checked',false);
+            $(radio).attr('disabled',true);
+        }
+    }
+
 }); // onLoad End
 
 /**
@@ -263,6 +385,9 @@ function clearDiyDpi() {
 function ajaxAdslotPage(param) {
     ajaxPage("adslotList", '/develop/adslot/adslotList', param);
 }
+
+
 </script>
+
 </body>
 </html>

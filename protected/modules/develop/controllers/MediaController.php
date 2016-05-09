@@ -32,12 +32,10 @@ class MediaController extends Controller {
         $mediaModel = Media::model();
         // 通过主键id获取当前应用的信息
         $media = $mediaModel->getMediaById($id);
-
         // 实例化广告位
         $adslotModel = MediaAdslot::model();
         // 获取当前广告位的个数
         $adslotCount = $adslotModel->getCountByMediaId($id);
-
         // 模板分配显示
         $this->smartyRender(array(
             'media'       => $media,
@@ -54,10 +52,13 @@ class MediaController extends Controller {
         $this->checkAccess();
         // 获取全部类别树
         $categoryTree = BaseMediaCategory::model()->getAllCateToTree();
-
+        $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
+        $company = Company::model() ->findByPk($companyId);
+        $company['sdkType'] = explode(',',$company['sdkType']);
         // 模板分配显示
         $this->smartyRender(array(
             'categoryTree' => CJSON::encode($categoryTree),
+            'company'      => $company,
         ));
     }
 
@@ -239,6 +240,7 @@ class MediaController extends Controller {
      * 处理应用提交的表单数据
      */
     public function actionPostMedia() {
+        $postData=$_POST['media'];
         if ($_POST['media']) {
             $errors = null;
             if (isset($_POST['media']['id']) && !empty($_POST['media']['id'])) {
@@ -248,8 +250,8 @@ class MediaController extends Controller {
                 $mediaModel = new Media();
                 $operationType = 3;
             }
-            $mediaModel->attributes = $_POST['media'];
             $mediaModel->companyId = Yii::app()->user->getRecord()->defaultCompanyID;
+            $mediaModel->attributes=$this->_mediaDataBeforeValidate($postData);
             if ($mediaModel->validate()) {
                 $mediaModel->save();
                 if ($_POST['media']['addadslot']) {
@@ -281,25 +283,41 @@ class MediaController extends Controller {
     public function actionAppList($ostype = 0, $timestr='', $sort = '') {
         // 获取应用表模型
         $mediaModel = Media::model();
-
         // 提交的参数处理
         if (!empty($sort)) {
             $order = str_replace('_', ' ', $sort);
         }
-
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
+        $company = Company::model() ->findByPk($companyId);
+        //获取提示信息
         list($records, $pagingData) = $mediaModel->getMediaPageList($companyId, $ostype, Util::_time2Arr($timestr), $order);
-
+        //$records = $this -> checkNotice($records,$companyId);
+        //echo '<pre>';var_dump($records);exit;
         // 模板分配显示
         $html = $this->smartyRender(array(
             'records'    => $records,
             'pagingData' => $pagingData,
             'amount'     => Util::listAmount($records),
-            'ajaxFun'    => 'ajaxAppPage'
+            'ajaxFun'    => 'ajaxAppPage',
         ), null, true);
         $data = array('html' => $html);
         $this->rspJSON($data);
     }
+    /*
+     * 是否获取提示信息
+     * return @notice Boolean
+     */
+/*    public function checkNotice($data,$id){
+            //获取当前公司的应用及媒体结算价格
+            foreach($data as $k => $v){
+                $notice = false;
+                if(empty($v['payType'])){
+                    $notice = true;
+                }
+                $data[$k]['notice']=$notice;
+            }
+            return $data;
+        }*/
 
     // 通过提交的开发者id获取开发者应用
     public function actionGetMediaByDevelopId($developId) {
@@ -356,4 +374,26 @@ class MediaController extends Controller {
     }
 
     /******************************************************************************************************************/
+
+    /*
+     * 验证提交数据前的处理
+     */
+    public function _mediaDataBeforeValidate ($data){
+        //是否是不启用状态 或 启用了但是未选择
+        if(empty($data['Enable'])){
+            $data['payType'] = -1;
+            $data['mediaPrice'] = 0;
+            $data['mediaSharingRate'] = 0;
+        }else{
+            if($data['_mediaPrice_mediaSharingRate']){echo 11;
+                $data['payType']    = $data['_mediaPrice_mediaSharingRate'];
+                if($data['_mediaPrice_mediaSharingRate'] >200){
+                    $data['mediaPrice'] = 0;
+                }else{
+                    $data['mediaSharingRate'] =0;
+                }
+            }
+        }
+        return $data;
+    }
 }

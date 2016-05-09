@@ -9,14 +9,16 @@
     <label class="control-label">平台类型</label>
     <div class="controls" value="1">
         <label class="radio inline">
-            <input type="radio" name="media[os]" value="1"> Android
+            <input type="radio" name="media[os]" value="1" > Android
         </label>
         <label class="radio inline">
-            <input type="radio" name="media[os]" value="2"> iOS
+            <input type="radio" name="media[os]" value="2" > iOS
         </label>
     </div>
 </div>
+
 <{if $media.id}>
+<!-- 编辑 -->
 <div class="control-group">
     <label class="control-label">平台类型</label>
     <div class="controls" value="1">
@@ -25,7 +27,34 @@
         </label>
     </div>
 </div>
+
+<div class="control-group">
+    <label class="control-label">接入方式</label>
+    <div class="controls" value="1">
+        <{if $media.sdkType eq 1}><label class="radio inline" style="padding-left: 0px;" >SDK</label>
+        <{else if $media.sdkType eq 2}><label class="radio inline" style="padding-left: 0px;" >S2S</label>
+        <{else}>
+        <label class="radio inline" >
+        <input type="radio" name="media[sdkType]" value="1"/> SDK</label>
+        <label class="radio inline">
+        <input type="radio" name="media[sdkType]" value="2"/> S2S</label>
+        <{/if}>
+    </div>
+</div>
+<{else}>
+<div class="control-group <{if $media.id}>v-hide<{/if}>">
+    <label class="control-label">接入方式</label>
+    <div class="controls" value="1">
+        <label class="radio inline">
+            <input type="radio" name="media[sdkType]" value="1" <{if in_array('1',$company.sdkType)}><{if count($company.sdkType) == 1}>checked='checked'<{/if}><{else}>disabled="disabled"<{/if}>> SDK/JS
+        </label>
+        <label class="radio inline">
+            <input type="radio" name="media[sdkType]" value="2" <{if in_array('2',$company.sdkType)}><{if count($company.sdkType) == 1}>checked='checked'<{/if}><{else}>disabled="disabled"<{/if}>> S2S
+        </label>
+    </div>
+</div>
 <{/if}>
+
 <div class="control-group" data-image-choosed="1">
     <label class="control-label"><span class="required">*</span>图标</label>
     <div class="controls ">
@@ -60,5 +89,75 @@
     <label class="control-label"><span class="required">*</span>媒体类型</label>
     <input type="hidden" name="media[appCategory]" value="" />
     <div class="controls" id="media_appCategory">
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><span class="required">*</span>结算方式</label>
+    <div class="controls">
+        <input type="checkbox" name="media[Enable]" value="1" />
+        <span>启用</span>
+        <br />
+        <i id="radio-hidden" style="display: none;">
+        <{if !$media || $media.payType lt 0}>
+        <label class="radio inline">
+            <input type="radio" name="media[_mediaPrice_mediaSharingRate]" value="201" <{if $company.payType == 201}> checked="checked" <{/if}>/>
+            <span>按照实时协议价</span>
+        </label>
+        <br />
+        <label class="radio inline">
+            <input type="radio" name="media[_mediaPrice_mediaSharingRate]" value="0" <{if $company.payType < 100 && $company.payType > 0}> checked="checked" <{/if}>>
+            <span>协议支付价格</span>
+            <input type="text" name="media[mediaPrice]" value="<{if $company}><{if $company.mediaPrice > 0 }><{$company.mediaPrice}><{/if}><{/if}>"  placeholder="金额..." style="width: 60px;" />
+            <span>元</span>
+            <span class="radio-frequency">
+                <select name="company[payType]" style="width: 100px;">
+                    <option value="3" <{if $company}><{if $company.payType eq 3}>selected="selected"<{/if}><{/if}> >每天</option>
+                    <option value="2" <{if $company}><{if $company.payType eq 2}>selected="selected"<{/if}><{/if}> >每次点击</option>
+                    <option value="1" <{if $company}><{if $company.payType eq 1}>selected="selected"<{/if}><{/if}> >每千次展示</option>
+                </select>
+            </span>
+        </label>
+        <br />
+        <label class="radio inline">
+            <input type="radio" name="media[_mediaPrice_mediaSharingRate]" value="101" <{if $company.payType == '101'}> checked="checked" <{/if}> disabled/>
+            <span>媒体收入占售出额比例</span>
+            <input type="text" name="media[mediaSharingRate]" value="<{if $company}><{if $company.payType > 100}><{$company.mediaSharingRate}><{/if}><{/if}>" style="width: 60px;"  disabled/>
+            <span>%</span>
+        </label>
+        <{else}>
+            <{if $media.payType lt 100}>
+            <label class="radio inline" style="padding-left: 0px;">
+                <input type="hidden" name="media[_mediaPrice_mediaSharingRate]" value="0">
+                <span>协议支付价格</span>
+                <input type="text" name="media[mediaPrice]" value="<{$media.mediaPrice}>"  placeholder="金额..." style="width: 60px;" />
+                <span>元</span>
+                <input type="hidden" name="media[payType]" value="<{$media.payType}>" />
+                <span>
+                <{if $media.payType eq 3}>
+                    每天
+                <{/if}>
+                <{if $media.payType eq 2}>
+                    每次点击
+                <{/if}>
+                <{if $media.payType eq 1}>
+                    每千次展示
+                <{/if}>
+                </span>
+            </label>
+            <{else if $media.payType gt 200}>
+            <label class="radio inline" style="padding-left: 0px;">
+                <input type="hidden" name="adslot[_mediaPrice_mediaSharingRate]" value="201" />
+                <span>按照实时协议价</span>
+            </label>
+            <{else}>
+            <label class="radio inline" style="padding-left: 0px;">
+                <input type="hidden" name="media[_mediaPrice_mediaSharingRate]" value="101" />
+                <span>媒体收入占售出额比例</span>
+                <input type="text" name="media[mediaSharingRate]" value="<{$media.mediaSharingRate}>" style="width: 60px;"  />
+                <span>%</span>
+            </label>
+            <{/if}>
+        <{/if}>
+        </i>
     </div>
 </div>

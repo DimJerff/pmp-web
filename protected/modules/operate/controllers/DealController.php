@@ -685,7 +685,6 @@ class DealController extends Controller {
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
         list($records, $pagingData) = $dealModel
             ->getDealPageList($companyId, Util::_time2Arr($timestr), $order, $mediaid, $adslotid, $dealname, $throw);
-
         // 模板分配显示
         $html = $this->smartyRender(array(
             'records' => $records,
@@ -853,7 +852,6 @@ class DealController extends Controller {
                 $model = new Deal();
                 $operationType = 3;
             }
-
             $model->attributes = $this->_dealDataBeforeValidate($postData);
             if ($model->validate()) {
                 $transaction = Yii::app()->db->beginTransaction(); //开启事务
@@ -899,14 +897,9 @@ class DealController extends Controller {
     private function _dealDataBeforeValidate($data) {
         $data['startDate'] = strtotime($data['startDate']);
         $data['endDate'] = strtotime($data['endDate']);
-
-        if ($data['_mediaPrice_mediaSharingRate']) {
-            $data['mediaPrice'] = 0;
-            $data['payType'] = $data['_mediaPrice_mediaSharingRate'];
-        } else {
-            $data['mediaSharingRate'] = 0;
+        if($data['bidStrategy'] == 2){
+            $data['bidfloor'] = 0;
         }
-
         return $data;
     }
 }

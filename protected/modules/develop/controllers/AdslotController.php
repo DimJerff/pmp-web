@@ -25,7 +25,6 @@ class AdslotController extends Controller {
             $time = date('Y/m/d', strtotime('-7 days')) . '-' . date('Y/m/d');
         }
         $timeArr = explode('-', $time);
-
         // 实例化广告表实例模型
         $adslotModel = MediaAdslot::model();
         $adslot = $adslotModel->getAdslotInfoByAid($adslotId);
@@ -43,14 +42,17 @@ class AdslotController extends Controller {
         $this->checkAccess();
         // 从配置文件中获取设定的设备分辨率
         $deviceDpi = Yii::app()->params['deviceDpi'];
-
+        $adtype = Yii::app()->params['adtype'];
         // 获取当前操作的应用信息
         $media = Media::model()->findByPk($mediaId);
-
         // 模板分配显示
+        $defaultCompanyId = Yii::app()->user->getRecord()->defaultCompanyID;
+        $company = Company::model()->findByPk($defaultCompanyId);
         $this->smartyRender(array(
             'deviceDpi' => $deviceDpi,
+            'adtype'    => $adtype,
             'media'     => $media,
+            'sdkType'   => $company['sdkType'],
         ));
     }
 
@@ -59,7 +61,7 @@ class AdslotController extends Controller {
         $this->checkAccess();
         // 从配置文件中获取设定的设备分辨率
         $deviceDpi = Yii::app()->params['deviceDpi'];
-
+        $adtype = Yii::app()->params['adtype'];
         // 获取当前广告位信息
         $adslot = MediaAdslot::model()->getAdslotById($id);
 
@@ -70,10 +72,13 @@ class AdslotController extends Controller {
                 $adslot['_widthHeight'] = $v[0] . ',' . $v[1];
             }
         }
-
-        $this->smartyRender(array(
+        $defaultCompanyId = Yii::app()->user->getRecord()->defaultCompanyID;
+        $company = Company::model()->findByPk($defaultCompanyId);
+                $this->smartyRender(array(
             'deviceDpi' => $deviceDpi,
-            'adslot'     => $adslot,
+            'adtype'    => $adtype,
+            'adslot'    => $adslot,
+            'sdkType'   => $company['sdkType'],
         ));
     }
 
@@ -212,7 +217,7 @@ class AdslotController extends Controller {
                 $operationType = 3;
             }
 
-            $adslotModel->attributes = $this->_dealDataBeforeValidate($_POST['adslot']);
+            $adslotModel->attributes = $this->_dealDataBeforeValidate($_POST['adslot']);//echo '<pre>';print_r($adslotModel -> attributes);exit;
             if ($adslotModel->validate()) {
                 $adslotModel->save();
                 $data = array();
@@ -307,6 +312,7 @@ class AdslotController extends Controller {
      * @return mixed
      */
     private function _dealDataBeforeValidate($data) {
+
         // 处理宽高信息
         $widthHeight = $data['_widthHeight' . $data['deviceType']];
         if ($widthHeight) {
@@ -314,7 +320,32 @@ class AdslotController extends Controller {
             $data['width'] = $widthHeightArr[0];
             $data['height'] = $widthHeightArr[1];
         }
+        if($data['sdkType'] == 1){
+            $data['relationId'] = '';
+        }
 
+        //是否是不启用状态 或 启用了但是未选择
+        if(empty($data['Enable']) || empty($data['_mediaPrice_mediaSharingRate'])){
+            $data['payType'] = -1;
+        }else{
+            if($data['_mediaPrice_mediaSharingRate']){
+                $data['payType']    = $data['_mediaPrice_mediaSharingRate'];
+            }
+        }
+        $data['mediaPrice']=empty($data['mediaPrice'])?0:$data['mediaPrice'] ;
+        $data['mediaSharingRate']=empty($data['mediaSharingRate'])?0:$data['mediaSharingRate'] ;
+
+/*        if($data['Enable']){
+            $data['payType'] = -1;
+            $data['mediaPrice']=0;
+        }else{
+            if($data['_mediaPrice_mediaSharingRate']){
+                $data['payType']=$data['_mediaPrice_mediaSharingRate'];
+                $data['mediaPrice']=0;
+            }else{
+                $data['mediaSharingRate']= 0;
+            }
+        }*/
         // 处理频次
         if ($data['_frequencyCapUnitCapAmount'] == -1) {
             $data['frequencyCapUnit'] = -1;

@@ -107,14 +107,14 @@ class CComponent
 	public function __get($name)
 	{
 		$getter='get'.$name;
-		//ç±»ä¸­å­˜åœ¨ 'get'.xx
+		//ÀàÖÐ´æÔÚ 'get'.xx
 		if(method_exists($this,$getter)){
 			return $this->$getter();}
-		//å¦‚æžœè¯¥å±žæ€§æˆ–æ–¹æ³•ä»¥'on'å¼€å¤´åŒæ—¶åœ¨ç±»ä¸­å­˜åœ¨	xx
+		//Èç¹û¸ÃÊôÐÔ»ò·½·¨ÒÔ'on'¿ªÍ·Í¬Ê±ÔÚÀàÖÐ´æÔÚ	xx
 		elseif(strncasecmp($name,'on',2)===0 && method_exists($this,$name))
 		{
 			// duplicating getEventHandlers() here for performance
-			/* å•ä¾‹æ¨¡å¼ */
+			/* µ¥ÀýÄ£Ê½ */
 			$name=strtolower($name);
 			if(!isset($this->_e[$name]))
 				$this->_e[$name]=new CList;

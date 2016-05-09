@@ -22,27 +22,70 @@ class SiteController extends Controller
 		$yii = Yii::app();
 		$user = $yii->user;
 		$userState = $user->getRecord();
-
-		// 获取当前用户的默认公司id
-		$this->defaultCompanyID = $defaultCompanyId = $userState->defaultCompanyID;
-
+        $this->defaultCompanyID = $defaultCompanyId = $userState->defaultCompanyID;
         // 对时间进行判断处理
         if (empty($time)) {
             $time = date('Y/m/d', strtotime('-7 days')) . '-' . date('Y/m/d');
         }
-        $timeArr = explode('-', $time);
 
+        $timeArr = explode('-', $time);
         // 获取当前公司的信息
         $company = Company::model()->findByPk($defaultCompanyId);
-
+        $sdkType=$company['sdkType'];
+        //获取当前公司的应用及媒体结算价格
+        //$notice= $this -> getNotice($company,$defaultCompanyId);
+        // 获取当前公司的接入方式
+        if(!empty($sdkType)){
+            $company['sdkType']=explode(',',$sdkType);
+        }else{
+            $company['sdkType']=array();
+        }
         // 模板分配显示
         $this->smartyRender(array(
             'time'    => $time,
             'timeStr' => strtotime($timeArr[0]) . '_' . strtotime($timeArr[1]),
             'company' => $company,
+            //'notice'  => $notice,
         ));
 	}
+    /*
+     * 是否获取提示信息
+     * return @notice Boolean
+     */
+    public function getNotice($obj,$id){
+        $notice = false;
+        //获取当前公司的应用及媒体结算价格
+        $media = Media::model() ->findByPk($id);
+        if(empty($media) && empty($obj['payType'])){
+            $notice = true;
+        }
+        return $notice;
+    }
+    /*
+     *编辑公司接入,结算方式
+     */
+    public function actionPostCompany(){
+        if($_REQUEST['company']){
+            $errors = null;
+            $companyModel = Company::model()->findByPk($_POST['company']['id']);
+            $operationType = 4;
+            $data=$this ->_mediaDataBeforeValidate($_POST['company']);
+            if($data['sdkType']){
+            $data['sdkType'] = implode(',',$data['sdkType']);
+            }
+            $companyModel -> attributes = $data;//echo '<pre>';print_r($companyModel -> attributes);exit;
+            if ($companyModel -> validate()) {
+                $companyModel -> save();
+                // 记录操作日记
+                OperationLog::model() -> addModel($companyModel);
+            } else {
+                $errors = $companyModel -> getErrors();
 
+            }
+            $errors ? $this -> rspJSON($errors,'error') : $this -> rspJSON(null);
+        }
+        $this -> redirect($this -> createUrl('site/dashboard'),array('errors',$errors));die;
+    }
     /**
      * 获取当前当天的公司交易消耗
      */
@@ -84,5 +127,27 @@ class SiteController extends Controller
         // 累计消耗
         $allCost = ReportDealDaily::model()->getAllCost();
         echo "document.write('". number_format($allCost, 2) . "');";
+    }
+
+    /*
+     * 验证提交数据前的处理
+     */
+    public function _mediaDataBeforeValidate ($data){
+        //是否是不启用状态 或 启用了但是未选择
+        if(empty($data['Enable'])){
+            $data['payType'] = -1;
+            $data['mediaPrice'] = 0;
+            $data['mediaSharingRate'] = 0;
+        }else{
+            if($data['_mediaPrice_mediaSharingRate']){echo 11;
+                $data['payType']    = $data['_mediaPrice_mediaSharingRate'];
+                if($data['_mediaPrice_mediaSharingRate'] >200){
+                    $data['mediaPrice'] = 0;
+                }else{
+                    $data['mediaSharingRate'] =0;
+                }
+            }
+        }
+        return $data;
     }
 }

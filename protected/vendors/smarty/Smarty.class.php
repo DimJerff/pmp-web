@@ -694,7 +694,6 @@ class Smarty extends Smarty_Internal_TemplateBase
         'compile_dir' => 'setCompileDir',
         'cache_dir' => 'setCacheDir',
         );
-
         if (isset($allowed[$name])) {
             $this->{$allowed[$name]}($value);
         } else {
@@ -833,7 +832,6 @@ class Smarty extends Smarty_Internal_TemplateBase
         foreach ((array) $template_dir as $k => $v) {
             $this->template_dir[$k] = rtrim($v, '/\\') . DS;
         }
-
         $this->joined_template_dir = join(DIRECTORY_SEPARATOR, $this->template_dir);
 
         return $this;

@@ -8,6 +8,7 @@
  * @property integer $mediaId
  * @property integer $adslotId
  * @property integer $dealId
+ * @property integer $companyId
  */
 class MediaAdslotDeal extends DbActiveRecord
 {
@@ -27,7 +28,7 @@ class MediaAdslotDeal extends DbActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('mediaId, adslotId, dealId', 'numerical', 'integerOnly'=>true),
+			array('mediaId, adslotId, dealId, companyId', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('mediaId, adslotId, dealId', 'safe', 'on'=>'search'),
@@ -54,6 +55,7 @@ class MediaAdslotDeal extends DbActiveRecord
 			'mediaId' => '应用id',
 			'adslotId' => '广告位id 0:应用全选时 广告位默认为0',
 			'dealId' => '交易id',
+			'companyId' => '供应商id',
 		);
 	}
 
@@ -78,6 +80,7 @@ class MediaAdslotDeal extends DbActiveRecord
 		$criteria->compare('mediaId',$this->mediaId);
 		$criteria->compare('adslotId',$this->adslotId);
 		$criteria->compare('dealId',$this->dealId);
+		$criteria->compare('companyId',$this->companyId);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -113,19 +116,26 @@ class MediaAdslotDeal extends DbActiveRecord
      * @return mixed
      */
     public function upDealRelation($dealId, $mediaIdArr, $adslotIdArr) {
-        // 先清理旧数据
+        // 先清理旧数据 通过交易id删除对应的交易关系
         $this->delDealById($dealId);
         $arr = array();
-        if (!empty($mediaIdArr)) {
-            foreach ($mediaIdArr as $v) {
-                $arr[] = "({$v}, 0, {$dealId}, 1)";
-            }
+        $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
+        if(!$companyId){
+            return false;
         }
-
-        if (!empty($adslotIdArr)) {
-            $adslotIdArr = MediaAdslot::model()->getMediaIdsByIds($adslotIdArr);
-            foreach ($adslotIdArr as $v) {
-                $arr[] = "({$v['mediaId']}, {$v['adslotId']}, {$dealId}, 1)";
+        if (empty($mediaIdArr) && empty($adslotIdArr)) {
+            $arr[] = "(0, 0, {$dealId}, {$companyId}, 1)";
+        }else{
+            if (!empty($mediaIdArr)) {
+                foreach ($mediaIdArr as $v) {
+                    $arr[] = "({$v}, 0, {$dealId}, {$companyId}, 1)";
+                }
+            }
+            if (!empty($adslotIdArr)) {
+                $adslotIdArr = MediaAdslot::model()->getMediaIdsByIds($adslotIdArr);
+                foreach ($adslotIdArr as $v) {
+                    $arr[] = "({$v['mediaId']}, {$v['adslotId']}, {$dealId}, {$companyId}, 1)";
+                }
             }
         }
         $sql = "INSERT INTO ".$this->tableName()." VALUES " . implode(", ", $arr);
@@ -148,6 +158,8 @@ class MediaAdslotDeal extends DbActiveRecord
             "mad.dealId",
             "d.dealName",
             "d.dealType",
+            "d.bidStrategy",
+            "d.bidfloor",
             "d.payType",
             "d.mediaPrice",
             "d.startDate",
@@ -413,7 +425,7 @@ class MediaAdslotDeal extends DbActiveRecord
      * @param int $endDate 结果时间戳
      * @return array|mixed
      */
-    public function getCheckedAdslotList($companyId, $adslotIdArr, $dealId, $startDate, $endDate=0) {
+    public function getCheckedAdslotList($companyId, $adslotIdArr=array(), $dealId, $startDate, $endDate=0) {
         if (empty($adslotIdArr)) {
             return array();
         }
@@ -431,7 +443,37 @@ class MediaAdslotDeal extends DbActiveRecord
         if (!empty($dealId)) {
             $where[] = "t.dealId != {$dealId}";
         }
-
         return $this->_select()->_field($field)->_from()->_join($join)->_where($where)->_query();
+    }
+
+    /**
+     * 查询一段时间范围内供应商的在交易列表信息[不包含制定交易id]
+     * @param $companyId 公司id
+     * @param $adslotIdArr 应用id集合
+     * @param $dealId 交易id
+     * @param $startDate 开始时间戳
+     * @param int $endDate 结果时间戳
+     * @return array|mixed
+     */
+    public function getCheckedCompanyDealLIst($companyId, $dealId, $startDate, $endDate=0){
+        if (!isset($companyId)) {
+            return array();
+        }
+        $field = "t.*,c.companyName";
+        $join = array(
+            "c_company c ON c.id = t.companyId",
+        );
+        $where[] = "companyId = {$companyId}";
+        if (!empty($dealId)) {
+            $where[] = "t.id != {$dealId}";
+        }
+        if (empty($endDate)) {
+            //没有结束时间
+            $where[] = "endDate >= {$startDate} OR (endDate = 0)";
+        } else {
+            $where[] = "endDate >= {$startDate} OR (startDate<= {$startDate} AND endDate = 0)";
+        }
+
+        return $this->_select()->_field($field)->_from('c_deal t')->_join($join)->_where($where)->_query();
     }
 }

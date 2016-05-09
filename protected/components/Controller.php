@@ -1,7 +1,20 @@
 <?php
 class Controller extends CController
 {
+	/* 角色 */
+	//超级管理员
+	static $Administrators=1;
+	//运营
+	static $Operations=2;
+	//开发者
+	static $Developers=3;
+
 	public $authItemPrefix = 'frontend';
+	/*
+	 * 是否验证 boolean
+	 * false 需验证
+	 * true 不需验证
+	 */
 	public $noCheckPermission = FALSE;
 	public $smartyControllerId = '';
 	public $domainModel;
@@ -47,7 +60,7 @@ class Controller extends CController
 			$user = Yii::app()->user;
 			/* auto login */
 			if($user->isGuest) $user->autoLogin();
-			/* check permission */
+			/* check permission 是否验证 */
 			if(!$this->noCheckPermission) $this->checkAccess();
 		}
 		return true;
@@ -57,18 +70,24 @@ class Controller extends CController
 	public function filters()
 	{
 		return array(
-			'accessControl',
+			'accessControl',//定义过滤器
 		);
 	}
-	
+
 	/* 访问规则 */
 	public function accessRules()
 	{
 		/* 没登陆禁止访问所有方法 */
 		return array(
 			array('allow',
-					'actions' => array('error'),
+				'actions' => array('error'),
 			),
+			/*array('allow',
+				'actions' => array('edit','delete'),
+				//'roles' => array(1),
+				//'expression' => 'isset($user->role) && ($user->role==1)',
+			),*/
+			//匿名用户禁用
 			array('deny',
 				'actions' => array(),
 				'users' => array('?'),
@@ -103,7 +122,6 @@ class Controller extends CController
 		if(isset($_GET['callback']) && preg_match('/[a-z\_][a-z\d\_](\.[a-z\_][a-z\d\_])*/i', $_GET['callback'])) {
 			$callback = $_GET['callback'];
 		}
-
 		if($callback) echo $callback.'(';
 		echo CJSON::encode($result);
 		if($callback) echo ');';
@@ -143,9 +161,9 @@ class Controller extends CController
 		foreach($yii->request->getCookies() as $key => $item) {
 			$cookies[$key] = (array)$item;
 		}
-		
+
 		$checkAccess = new SmartyCheckAccess;
-		
+
 		$smarty->assign(array(
 			'assetsUrl' => $this->assetsUrl,
 			'assetsCommon' => $this->assetsUrl,
@@ -157,7 +175,6 @@ class Controller extends CController
             'basePath' => Yii::app()->basePath,
 			'domainModel' => '',
 		));
-
 		return $smarty->renderFile(Null, $path, $params, $isReturn);
 	}
 	

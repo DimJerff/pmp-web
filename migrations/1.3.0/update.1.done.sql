@@ -19,13 +19,10 @@ ALTER TABLE `c_media_adslot` ADD COLUMN `mediaPrice`  int(11) UNSIGNED NOT NULL 
 ALTER TABLE `c_media_adslot` ADD COLUMN `mediaSharingRate`  float(10,2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '媒体分成: sharing rate with media side, make sense when paytype is SHARING' AFTER `mediaPrice`;
 
 -- 媒体添加 接入方式.结算方式.固定价.售出底价开关
-ALTER TABLE `c_deal` ADD COLUMN `payType`  smallint(3) NOT NULL DEFAULT -1 COMMENT '结算方式：pay type ,不启用 = -1, CPM = 1, CPC = 2, CPD = 3, SHARING = 101,agreement = 201' AFTER `dealType`;
-ALTER TABLE `c_deal` ADD COLUMN `mediaPrice`  int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '固定价: price when paytype is CPM/CPC/CPD, nonsense when paytype is SHARING' AFTER `payType`;
-ALTER TABLE `c_deal` ADD COLUMN `mediaSharingRate`  float(10,2) UNSIGNED NOT NULL DEFAULT 0.00 COMMENT '媒体分成: sharing rate with media side, make sense when paytype is SHARING' AFTER `mediaPrice`;
-ALTER TABLE `c_deal` ADD COLUMN `bidStrategy `  tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '售出底价开关: 固定价=1，规则=2' AFTER `wseat`;
+ALTER TABLE `c_deal` ADD COLUMN `bidStrategy`  tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '售出底价开关: 固定价=1，规则=2' AFTER `wseat`;
 
 -- 媒体_广告_交易关系表添加 供应商ID
-ALTER TABLE `c_media_adslot_deal` ADD COLUMN `company_id`  int(11)  UNSIGNED  NOT NULL  COMMENT '供应商ID' AFTER `dealId`;
+ALTER TABLE `c_media_adslot_deal` ADD COLUMN `companyId`  int(11)  UNSIGNED  NOT NULL  COMMENT '供应商ID' AFTER `dealId`;
 
 -- 媒体_广告_交易关系表更改 状态status
 ALTER TABLE `c_media_adslot_deal` MODIFY COLUMN `status`  tinyint(1)   NOT NULL DEFAULT 1 COMMENT '状态: 1:运行; 2:停止;' AFTER `companyId`;

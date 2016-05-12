@@ -46,11 +46,9 @@
 </div>
 <{if $sdkType == 2}>
 <div class="control-group">
-    <label class="control-label"><span class="required">*</span>标识位</label>
+    <label class="control-label">标识位</label>
     <div class="controls">
         <input type="text" placeholder="标识位…" name="adslot[relationId]" value="<{if $adslot}><{$adslot.relationId}><{/if}>">
-        <span class="required"></span>
-        <i data-trigger="hover" data-html="true" data-placement="right" data-content="结算方式未填写,请选择结算方式并填写相应的结算价格" class="icon-info part-avaliable-state" ></i>
     </div>
 </div>
 <{elseif $sdkType == 1}>
@@ -83,10 +81,12 @@
 </div>
 <{/if}>
 <div class="control-group">
-    <label class="control-label"><span class="required">*</span>结算方式</label>
+    <label class="control-label">结算方式</label>
     <div class="controls">
         <input type="checkbox" name="media[Enable]" value="1" />
         <span>启用</span>
+        <span class="required"></span>
+        <i data-trigger="hover" data-html="true" data-placement="right" data-content="结算方式未填写,请选择结算方式并填写相应的结算价格" class="icon-info part-avaliable-state" ></i>
         <br />
         <i id="radio-hidden" style="display: none;">
         <{if !$adslot}>

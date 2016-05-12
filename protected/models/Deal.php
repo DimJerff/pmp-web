@@ -44,7 +44,7 @@ class Deal extends DbActiveRecord
 		// will receive user inputs.
 		return array(
 			//array('dealName , dealType , payType , mediaPrice , mediaSharingRate , developId , startDate , bidfloor , bidStrategy', 'required'),
-			array('dealName , dealType , developId , startDate , bidfloor , bidStrategy', 'required'),
+			array('dealName , dealType , developId , startDate , bidfloor , bidStrategy , companyId ', 'required'),
 			//array('dealType , payType , mediaPrice , bidfloor , status , mflag , modificationTime , creationTime', 'numerical', 'integerOnly'=>true),
 			array('dealType , bidfloor , status , mflag , modificationTime , creationTime', 'numerical', 'integerOnly'=>true),
 			array('mediaSharingRate', 'numerical'),
@@ -77,7 +77,7 @@ class Deal extends DbActiveRecord
         $this->modificationTime = $_SERVER['REQUEST_TIME'];
         if(!isset($this->status)) {
             $this->status = 1;
-            $this->companyId = Yii::app()->user->getRecord()->defaultCompanyID;
+            //$this->companyId = Yii::app()->user->getRecord()->defaultCompanyID;
         }
         return true;
     }
@@ -134,8 +134,14 @@ class Deal extends DbActiveRecord
         );
         // 获取公司id
         $companyId = Yii::app()->user->getRecord()->defaultCompanyID;
-        $checkedMediaList = MediaAdslotDeal::model()->getCheckedMediaList($companyId, CJSON::decode($this->medias, true), $this->id, $this->startDate, $this->endDate);
-        $checkedAdslotList = MediaAdslotDeal::model()->getCheckedAdslotList($companyId, CJSON::decode($this->adslots, true), $this->id, $this->startDate, $this->endDate);
+        $checkedCompanyDealList = MediaAdslotDeal::model()->getCheckedCompanyDealLIst($this->companyId, $this->id, $this->startDate, $this->endDate);
+        if (!empty($checkedCompanyDealList)) {
+            foreach ($checkedCompanyDealList as $k=>$v) {
+                $errMsg[] = $v['dealName'].' > '.$v['companyName'];
+            }
+        }
+        $checkedMediaList = MediaAdslotDeal::model()->getCheckedMediaList($this->companyId, CJSON::decode($this->medias, true), $this->id, $this->startDate, $this->endDate);
+        $checkedAdslotList = MediaAdslotDeal::model()->getCheckedAdslotList($this->companyId, CJSON::decode($this->adslots, true), $this->id, $this->startDate, $this->endDate);
         if (!empty($checkedMediaList)) {
             foreach ($checkedMediaList as $k=>$v) {
                 $errMsg[] = $v['dealName'].' > '.$v['appName'];
@@ -146,12 +152,7 @@ class Deal extends DbActiveRecord
                 $errMsg[] = $v['dealName'].' > '.$v['appName'].' > '.$v['adslotName'];
             }
         }
-        $checkedCompanyDealList = MediaAdslotDeal::model()->getCheckedCompanyDealLIst($companyId, $this->id, $this->startDate, $this->endDate);
-        if (!empty($checkedCompanyDealList)) {
-            foreach ($checkedCompanyDealList as $k=>$v) {
-                $errMsg[] = $v['dealName'].' > '.$v['companyName'];
-            }
-        }
+
         if (count($errMsg) != 1) {
             $this->addError('dealType', implode('<br />', $errMsg));
         }

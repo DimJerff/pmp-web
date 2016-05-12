@@ -843,6 +843,7 @@ class DealController extends Controller {
      */
     public function actionPostData() {
         $postData = $_POST['deal'];
+        $postData['developId'] = $postData['companyId'];
         if ($postData) {
             // 获取广告位数据模型实例
             if (isset($postData['id']) && !empty($postData['id'])) {
@@ -853,6 +854,7 @@ class DealController extends Controller {
                 $operationType = 3;
             }
             $model->attributes = $this->_dealDataBeforeValidate($postData);
+            print_r($model->attributes);exit;
             if ($model->validate()) {
                 $transaction = Yii::app()->db->beginTransaction(); //开启事务
                 $model->save();

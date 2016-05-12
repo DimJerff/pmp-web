@@ -463,17 +463,16 @@ class MediaAdslotDeal extends DbActiveRecord
         $join = array(
             "c_company c ON c.id = t.companyId",
         );
-        $where[] = "companyId = {$companyId}";
+        $where[] = "t.companyId = {$companyId}";
         if (!empty($dealId)) {
             $where[] = "t.id != {$dealId}";
         }
         if (empty($endDate)) {
             //没有结束时间
-            $where[] = "endDate >= {$startDate} OR (endDate = 0)";
+            $where[] = "(endDate >= {$startDate} OR (endDate = 0))";
         } else {
-            $where[] = "endDate >= {$startDate} OR (startDate<= {$startDate} AND endDate = 0)";
+            $where[] = "(endDate >= {$startDate} OR (startDate<= {$startDate} AND endDate = 0))";
         }
-
         return $this->_select()->_field($field)->_from('c_deal t')->_join($join)->_where($where)->_query();
     }
 }

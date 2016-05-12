@@ -93,7 +93,7 @@
 <div class="control-group <{if $deal.id}>v-hide<{/if}>">
     <label class="control-label"><span class="required">*</span>供应商</label>
     <div class="controls">
-        <select name="deal[developId]" id="deal_developId">
+        <select name="deal[companyId]" id="deal_developId">
             <{foreach from=$companys item=v}>
             <option value="<{$v.id}>"  <{if $deal}><{if $deal.developId eq $v.id}>selected="selected"<{/if}><{/if}> ><{$v.companyName}></option>
             <{/foreach}>
@@ -106,10 +106,11 @@
     <label class="control-label">供应商</label>
     <div class="controls">
         <{foreach from=$companys item=v}>
-        <{if $deal.developId eq $v.id}>
+        <{if $deal.companyId eq $v.id}>
         <label class="radio inline" style="padding-left: 0px;">
         <{$v.companyName}>
         </label>
+        <input type="hidden" name="deal[companyId]" value="<{if $deal}><{$deal.companyId}><{/if}>">
         <{/if}>
         <{/foreach}>
     </div>

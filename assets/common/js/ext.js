@@ -821,7 +821,6 @@
 			$('.icon-info').css('visibility','hidden');
 		}
 	})
-
 	//提示信息
 	$('.icon-info').popover('hide');
 })(jQuery);

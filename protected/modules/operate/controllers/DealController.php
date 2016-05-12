@@ -854,7 +854,6 @@ class DealController extends Controller {
                 $operationType = 3;
             }
             $model->attributes = $this->_dealDataBeforeValidate($postData);
-            print_r($model->attributes);exit;
             if ($model->validate()) {
                 $transaction = Yii::app()->db->beginTransaction(); //开启事务
                 $model->save();

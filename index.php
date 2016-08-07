@@ -1,4 +1,9 @@
 <?php
+//这是练习测试
+//这是练习测试
+//这是练习测试
+//这是练习测试
+//这是练习测试
 date_default_timezone_set('PRC');
 ini_set('display_errors',1);
 error_reporting(E_WARNING | E_ERROR);

@@ -20,3 +20,7 @@ require_once($yii);
 // 根据服务器情况加载调试类函数
 if (getenv('DEPLOYMENT') == 'localhost') { require_once('./protected/functions.php'); }
 Yii::createWebApplication($config)->run();
+Yii::createWebApplication($config)->run();
+Yii::createWebApplication($config)->run();
+Yii::createWebApplication($config)->run();
+Yii::createWebApplication($config)->run();
